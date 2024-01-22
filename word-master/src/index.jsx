@@ -8,13 +8,6 @@ import App from "./App";
 // theme
 import { createTheme, ThemeProvider } from "@mui/material";
 
-// roboto 폰트
-import "@fontsource/roboto/300.css";
-import "@fontsource/roboto/400.css";
-import "@fontsource/roboto/500.css";
-import "@fontsource/roboto/700.css";
-
-// theme
 const theme = createTheme({
   palette: {
     primary: {
