@@ -4,15 +4,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 // MUI
 import { useTheme } from "@mui/material";
-import {
-  Box,
-  AppBar,
-  Toolbar,
-  Typography,
-  Tooltip,
-  IconButton,
-} from "@mui/material";
-import LoginIcon from "@mui/icons-material/Login";
+import { Box, AppBar, Toolbar, Tooltip, IconButton } from "@mui/material";
 
 // 로고 이미지
 const Logo = styled.img`
