@@ -1,3 +1,7 @@
+// Context
+import { AuthContext } from "../contexts/AuthContext";
+// Hook
+import { useContext } from "react";
 // Router
 import { useNavigate } from "react-router-dom";
 // Styled-components
@@ -5,6 +9,10 @@ import styled from "styled-components";
 // MUI
 import { useTheme } from "@mui/material";
 import { Box, AppBar, Toolbar, Tooltip, IconButton } from "@mui/material";
+import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
+import WavingHandIcon from "@mui/icons-material/WavingHand";
+// API
+import { logout } from "../service/auth";
 
 // 로고 이미지
 const Logo = styled.img`
@@ -20,6 +28,10 @@ const TitleLogo = styled.img`
 const Header = () => {
   // 테마 색
   const { primary } = useTheme().palette;
+
+  // 사용자 정보
+  const user = useContext(AuthContext);
+
   // navigate
   const navigate = useNavigate();
 
@@ -55,12 +67,11 @@ const Header = () => {
                 />
               </Box>
             </Box>
-            <Tooltip title="로그인">
+            {/* 로그인 또는 로그아웃 버튼 */}
+            <Tooltip title={user ? "로그아웃" : "로그인"}>
               <IconButton
-                onClick={() => {
-                  navigate("/Join/Login");
-                }}
-                aria-label="로그인" // aria-label : 대체 텍스트
+                onClick={user ? () => logout() : () => navigate("/Join")}
+                aria-label={user ? "로그아웃" : "로그인"} // aria-label : 대체 텍스트
                 disableTouchRipple // disableTouchRipple : 눌림 효과 비활성화
                 sx={{
                   p: 1,
@@ -76,7 +87,11 @@ const Header = () => {
                   MUI는 아이콘을 일반적으로 텍스트로 취급함.
                   따라서 아이콘 크기를 조정할 때 fontSize로 지정.
                 */}
-                <LoginIcon sx={{ fontSize: "15px" }} />
+                {user ? (
+                  <WavingHandIcon sx={{ fontSize: "20px" }} />
+                ) : (
+                  <DirectionsRunIcon sx={{ fontSize: "20px" }} />
+                )}
               </IconButton>
             </Tooltip>
           </Toolbar>
