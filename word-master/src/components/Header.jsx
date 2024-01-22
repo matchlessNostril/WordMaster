@@ -23,7 +23,7 @@ const Logo = styled.img`
 
 const Header = () => {
   // 테마 색
-  const { secondary } = useTheme().palette;
+  const { primary } = useTheme().palette;
   // navigate
   const navigate = useNavigate();
 
@@ -33,7 +33,10 @@ const Header = () => {
         <AppBar
           position="static"
           elevation={0}
-          sx={{ borderBottom: `1px solid ${secondary.main}` }}
+          sx={{
+            backgroundColor: "white",
+            borderBottom: `1px solid ${primary.light}`,
+          }}
         >
           <Toolbar>
             {/* 
@@ -61,11 +64,11 @@ const Header = () => {
                 disableTouchRipple // disableTouchRipple : 눌림 효과 비활성화
                 sx={{
                   p: 1,
-                  border: `1px solid ${secondary.main}`,
+                  border: `1.3px solid ${primary.light}`,
                   borderRadius: "10px",
                   transition: "background-color 0.3s ease",
                   "&:active": {
-                    backgroundColor: `${secondary.light}`,
+                    backgroundColor: `${primary.main}`,
                   },
                 }}
               >
