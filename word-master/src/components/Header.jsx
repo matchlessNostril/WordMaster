@@ -18,7 +18,11 @@ import LoginIcon from "@mui/icons-material/Login";
 const Logo = styled.img`
   width: 40px;
   height: 40px;
-  margin-right: 20px;
+`;
+
+const TitleLogo = styled.img`
+  width: auto;
+  height: 40px;
 `;
 
 const Header = () => {
@@ -45,15 +49,19 @@ const Header = () => {
               felxGrow : 남는 공간을 얼마나 가져가는지, 1이면 가능한 공간을 모두 가져감
             */}
             <Box display="flex" alignItems="center" sx={{ flexGrow: 1 }}>
-              <Logo src={require("../assets/images/logo.png")} alt="로고" />
-              <Typography
-                variant="h5"
-                fontWeight={600}
-                // xs breakpoint에 속하면 안 보이게, sm 부터는 보이게
-                sx={{ display: { xs: "none", sm: "block" } }}
+              <IconButton onClick={() => navigate("/")}>
+                <Logo src={require("../assets/images/logo.png")} alt="로고" />
+              </IconButton>
+              <Box
+                sx={{
+                  display: { xs: "none", sm: "block" },
+                }}
               >
-                Word Master
-              </Typography>
+                <TitleLogo
+                  src={require("../assets/images/titleLogo.png")}
+                  alt="타이틀"
+                />
+              </Box>
             </Box>
             <Tooltip title="로그인">
               <IconButton
