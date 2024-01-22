@@ -4,9 +4,8 @@ import { AnimatePresence } from "framer-motion";
 import { Routes, Route, useLocation } from "react-router-dom";
 // Pages
 import Start from "../pages/Start";
-import Join from "../pages/join/Join";
-import Login from "../pages/join/Login";
-import Regist from "../pages/join/Regist";
+import Join from "../pages/Join";
+import Main from "../pages/Main";
 
 const Router = () => {
   const location = useLocation();
@@ -15,11 +14,8 @@ const Router = () => {
     <AnimatePresence>
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Start />} />
-        <Route path="/Join" element={<Join />}>
-          {/* [중첩 라우팅] Outlet : 하위 컴포넌트를 렌더링할 곳을 표시 */}
-          <Route path="Login" element={<Login />} />
-          <Route path="Regist" element={<Regist />} />
-        </Route>
+        <Route path="/Join" element={<Join />} />
+        <Route path="/Main" element={<Main />} />
       </Routes>
     </AnimatePresence>
   );
