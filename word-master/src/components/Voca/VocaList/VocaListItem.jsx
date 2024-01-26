@@ -2,8 +2,8 @@ import React from "react";
 // Router
 import { useNavigate } from "react-router-dom";
 // Custom Hook
-import usePopOver from "../../hooks/usePopOver";
-import useModal from "../../hooks/useModal";
+import usePopOver from "../../../hooks/usePopOver";
+import useModal from "../../../hooks/useModal";
 // MUI
 import {
   ListItem,
@@ -16,16 +16,16 @@ import {
 } from "@mui/material";
 import KeyboardArrowDownSharpIcon from "@mui/icons-material/KeyboardArrowDownSharp";
 // Component
-import BtnPopover from "../BtnPopover";
-import ActionModal from "../ActionModal";
+import BtnPopover from "../../BtnPopover";
+import ActionModal from "../../ActionModal";
 // API
-import { getList } from "../../service/database/getList";
+import { getList } from "../../../service/database/getList";
 import {
   getData,
   setData,
   updateData,
   removeData,
-} from "../../service/database/dataOperation";
+} from "../../../service/database/dataOperation";
 // Utils
 import { isEmpty } from "lodash";
 
@@ -146,8 +146,8 @@ const VocaListItem = ({ itemKey, title, path, isDir = false }) => {
               <img
                 src={
                   isDir
-                    ? require("../../assets/icons/folder_closed.png")
-                    : require("../../assets/icons/document.png")
+                    ? require("../../../assets/icons/folder_closed.png")
+                    : require("../../../assets/icons/document.png")
                 }
                 style={{
                   width: "25px",

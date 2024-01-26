@@ -20,7 +20,7 @@ import BtnPopover from "../../components/BtnPopover";
 import ActionModal from "../../components/ActionModal";
 import Loading from "../../components/Loading";
 import NoFile from "../../components/NoFile";
-import VocaListItem from "../../components/Voca/VocaListItem";
+import VocaListItem from "../../components/Voca/VocaList/VocaListItem";
 // API
 import {
   autoFetchList,
