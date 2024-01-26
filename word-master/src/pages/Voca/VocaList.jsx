@@ -10,7 +10,7 @@ import useLoading from "../../hooks/useLoading";
 import usePopOver from "../../hooks/usePopOver";
 import useModal from "../../hooks/useModal";
 // MUI
-import { Box, Stack, List, Typography, IconButton } from "@mui/material";
+import { Box, Stack, Typography, IconButton } from "@mui/material";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 // Component
@@ -22,6 +22,7 @@ import NoFile from "../../components/NoFile";
 import VocaListItem from "../../components/Voca/VocaList/VocaListItem";
 // Layout
 import RowSpaceBetween from "../../layout/RowSpaceBetween";
+import ScrollList from "../../layout/ScrollList";
 // API
 import {
   autoFetchList,
@@ -176,21 +177,7 @@ const VocaList = () => {
             {isEmpty(dirList) && isEmpty(vocaList) ? (
               <NoFile />
             ) : (
-              <List
-                sx={{
-                  maxHeight: "72vh",
-                  overflow: "auto",
-                  "&::-webkit-scrollbar": {
-                    width: "10px",
-                  },
-                  "&::-webkit-scrollbar-thumb": {
-                    backgroundColor: "#535353",
-                  },
-                  "&::-webkit-scrollbar-track": {
-                    backgroundColor: "#dbdbdb",
-                  },
-                }}
-              >
+              <ScrollList>
                 {Object.entries(dirList).map(([key, value]) => (
                   <VocaListItem
                     key={key}
@@ -208,7 +195,7 @@ const VocaList = () => {
                     path={path}
                   />
                 ))}
-              </List>
+              </ScrollList>
             )}
           </>
         )}
