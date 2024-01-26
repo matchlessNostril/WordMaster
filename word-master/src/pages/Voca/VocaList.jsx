@@ -79,6 +79,9 @@ const VocaList = () => {
     };
   }, [path]);
 
+  // navigate
+  const navigate = useNavigate();
+
   // PopOver, Modal 연결되어 있음
   // (+) 버튼 PopOver
   const [popoverAnchor, setPopoverAnchor, onClickPopoverBtn] = usePopOver();
@@ -87,15 +90,14 @@ const VocaList = () => {
       name: "폴더 생성",
       onClickHandler: () => {
         setPopoverAnchor(null);
-        onClickOpenModal(modalContents[0]);
+        onClickOpenModal(modalContents);
       },
     },
     {
       name: "단어장 생성",
-      // *****************임시****************** createVoca 화면으로 가야됨 여기서 만드는 거 아님
       onClickHandler: () => {
         setPopoverAnchor(null);
-        onClickOpenModal(modalContents[1]);
+        navigate(`/CreateVoca?path=${path}`);
       },
     },
   ];
@@ -127,32 +129,17 @@ const VocaList = () => {
   );
 
   // 내용
-  const modalContents = [
-    // inex 0 : 폴더 생성 클릭
-    {
-      title: "새로운 폴더 만들기",
-      textField: {
-        label: "폴더 이름",
-      },
-      btnName: "만들기",
-      btnClickHandler: onClickCreateDir,
+  const modalContents = {
+    title: "새로운 폴더 만들기",
+    textField: {
+      label: "폴더 이름",
     },
-    // index 1 : 단어장 생성 클릭
-    {
-      title: "새로운 단어장 만들기",
-      textField: {
-        label: "단어장 이름",
-      },
-      btnName: "만들기",
-      btnClickHandler: () => {},
-    },
-  ];
+    btnName: "만들기",
+    btnClickHandler: onClickCreateDir,
+  };
 
   // theme
   const theme = useTheme();
-
-  // navigate
-  const navigate = useNavigate();
 
   return (
     <>
