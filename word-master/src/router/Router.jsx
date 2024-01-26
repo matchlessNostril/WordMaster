@@ -6,6 +6,8 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import Start from "../pages/Start";
 import Join from "../pages/Join";
 import Main from "../pages/Main";
+import VocaList from "../pages/Voca/VocaList";
+import TestList from "../pages/Test/TestList";
 
 const Router = () => {
   const location = useLocation();
@@ -16,6 +18,8 @@ const Router = () => {
         <Route path="/" element={<Start />} />
         <Route path="/Join" element={<Join />} />
         <Route path="/Main" element={<Main />} />
+        <Route path="/VocaList" element={<VocaList />} />
+        <Route path="/TestList" element={<TestList />} />
       </Routes>
     </AnimatePresence>
   );
