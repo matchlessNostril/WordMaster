@@ -20,11 +20,6 @@ const Logo = styled.img`
   height: 40px;
 `;
 
-const TitleLogo = styled.img`
-  width: auto;
-  height: 40px;
-`;
-
 const Header = () => {
   // 테마 색
   const { primary } = useTheme().palette;
@@ -54,18 +49,11 @@ const Header = () => {
             */}
             <Box display="flex" alignItems="center" sx={{ flexGrow: 1 }}>
               <IconButton onClick={() => navigate("/")}>
-                <Logo src={require("../assets/images/logo.png")} alt="로고" />
-              </IconButton>
-              <Box
-                sx={{
-                  display: { xs: "none", sm: "block" },
-                }}
-              >
-                <TitleLogo
-                  src={require("../assets/images/titleLogo.png")}
-                  alt="타이틀"
+                <Logo
+                  src={require("../assets/images/logo.png")}
+                  alt="Word Master 로고"
                 />
-              </Box>
+              </IconButton>
             </Box>
             {/* 로그인 또는 로그아웃 버튼 */}
             <Tooltip title={user ? "로그아웃" : "로그인"}>
