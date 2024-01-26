@@ -39,7 +39,7 @@ const Header = () => {
     <>
       <Box component="header">
         <AppBar
-          position="static"
+          position="fixed"
           elevation={0}
           sx={{
             backgroundColor: "white",
