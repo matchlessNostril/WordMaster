@@ -5,7 +5,7 @@ const ScrollList = ({ children }) => {
   return (
     <List
       sx={{
-        maxHeight: "72vh",
+        maxHeight: "75vh",
         overflow: "auto",
         "&::-webkit-scrollbar": {
           width: "10px",
