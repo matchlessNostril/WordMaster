@@ -13,7 +13,7 @@ const CreateVoca = () => {
         <ListItem>
           <TextField
             label="단어장 이름"
-            variant="standard"
+            variant="outlined"
             sx={{ width: "100%" }}
           />
         </ListItem>
