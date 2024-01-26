@@ -94,7 +94,7 @@ const VocaList = () => {
       },
     },
     {
-      name: "단어장 생성",
+      name: "단어 세트 생성",
       onClickHandler: () => {
         setPopoverAnchor(null);
         navigate(`/CreateVoca?path=${path}`);
