@@ -1,3 +1,5 @@
+// Hook
+import { useState, useEffect } from "react";
 // MUI
 import { Box, TextField, ListItem, IconButton } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
@@ -8,6 +10,14 @@ import WordCard from "../../components/Voca/CreateOrModifyVoca/WordCard";
 import ScrollList from "../../layout/ScrollList";
 
 const CreateVoca = () => {
+  // 단어장 이름 State
+  const [vocaName, setVocaName] = useState("");
+
+  // -----------확인용---------
+  useEffect(() => {
+    console.log(vocaName);
+  }, [vocaName]);
+
   const numbers = Array.from({ length: 20 }, (_, index) => index + 1);
 
   return (
@@ -18,6 +28,8 @@ const CreateVoca = () => {
           <TextField
             label="단어장 이름"
             variant="outlined"
+            value={vocaName}
+            onChange={(event) => setVocaName(event.target.value)}
             sx={{ width: "100%" }}
           />
         </ListItem>
