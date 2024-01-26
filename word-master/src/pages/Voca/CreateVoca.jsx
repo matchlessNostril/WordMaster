@@ -8,7 +8,7 @@ import ScrollList from "../../layout/ScrollList";
 const CreateVoca = () => {
   return (
     <Box sx={{ minWidth: "85vw", minHeight: "85vh" }}>
-      <Header isMdisabled={false} onClickHandler={() => {}} />
+      <Header disabled={false} onClickHandler={() => {}} />
       <ScrollList>
         <ListItem>
           <TextField
