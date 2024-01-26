@@ -1,9 +1,9 @@
+// Router
+import { useNavigate } from "react-router-dom";
 // Context
 import { AuthContext } from "../contexts/AuthContext";
 // Hook
 import { useContext } from "react";
-// Router
-import { useNavigate } from "react-router-dom";
 // Styled-components
 import styled from "styled-components";
 // MUI
