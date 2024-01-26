@@ -1,3 +1,4 @@
+import React from "react";
 // Hook
 import { useState } from "react";
 // MUI
@@ -96,4 +97,4 @@ const WordCard = ({ index }) => {
   );
 };
 
-export default WordCard;
+export default React.memo(WordCard);

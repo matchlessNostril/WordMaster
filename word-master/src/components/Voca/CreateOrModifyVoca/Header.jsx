@@ -1,3 +1,4 @@
+import React from "react";
 // MUI
 import { Typography, Button } from "@mui/material";
 // Component
@@ -21,4 +22,4 @@ const Header = ({ isModify = false, disabled, onClickHandler }) => {
   );
 };
 
-export default Header;
+export default React.memo(Header);
