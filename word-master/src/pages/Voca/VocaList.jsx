@@ -10,7 +10,6 @@ import useLoading from "../../hooks/useLoading";
 import usePopOver from "../../hooks/usePopOver";
 import useModal from "../../hooks/useModal";
 // MUI
-import { useTheme } from "@mui/material/styles";
 import { Box, Stack, List, Typography, IconButton } from "@mui/material";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
@@ -21,6 +20,8 @@ import ActionModal from "../../components/ActionModal";
 import Loading from "../../components/Loading";
 import NoFile from "../../components/NoFile";
 import VocaListItem from "../../components/Voca/VocaList/VocaListItem";
+// Layout
+import RowSpaceBetween from "../../layout/RowSpaceBetween";
 // API
 import {
   autoFetchList,
@@ -138,23 +139,10 @@ const VocaList = () => {
     btnClickHandler: onClickCreateDir,
   };
 
-  // theme
-  const theme = useTheme();
-
   return (
     <>
       <Box sx={{ minWidth: "85vw", minHeight: "85vh" }}>
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-          mb={1}
-          sx={{
-            [theme.breakpoints.down("sm")]: {
-              width: "90vw",
-            },
-          }}
-        >
+        <RowSpaceBetween>
           {path !== "root" ? (
             <Stack direction="row" alignItems="center">
               <IconButton onClick={() => navigate(-1)}>
@@ -180,7 +168,7 @@ const VocaList = () => {
             setAnchor={setPopoverAnchor}
             buttons={popoverBtns}
           />
-        </Stack>
+        </RowSpaceBetween>
         {onLoading ? (
           <Loading />
         ) : (
