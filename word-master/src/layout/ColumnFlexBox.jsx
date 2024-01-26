@@ -6,7 +6,8 @@ const ColumnFlexBox = ({ children }) => {
       display="flex"
       flexDirection="Column"
       alignItems="center"
-      sx={{ width: "100vw" }}
+      justifyContent="center"
+      sx={{ width: "100%", height: "100%" }}
     >
       {children}
     </Box>
