@@ -1,11 +1,21 @@
 // Router
 import { useLocation, useNavigate } from "react-router-dom";
 // Hook
-import { useCallback } from "react";
+import { useState, useCallback } from "react";
 // MUI
-import { Box, Divider } from "@mui/material";
+import {
+  Box,
+  Divider,
+  FormControl,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  Checkbox,
+} from "@mui/material";
 // Component
 import SubHeader from "../../components/SubHeader";
+// Layout
+import RowSpaceBetween from "../../layout/RowSpaceBetween";
 
 const Voca = () => {
   // location.state로 전달된 key, title, path 값 불러오기
@@ -29,6 +39,12 @@ const Voca = () => {
     });
   }, []);
 
+  // 단어, 뜻 선택 Radio State
+  const [radio, setRadio] = useState("word");
+
+  // 답 숨기기 체크박스 State
+  const [checked, setChecked] = useState(false);
+
   return (
     <>
       <Box sx={{ minWidth: "85vw", minHeight: "85vh" }}>
@@ -39,6 +55,25 @@ const Voca = () => {
           onClickHandler={onClickModifyBtn}
         />
         <Divider sx={{ mt: 3, mb: 3 }} />
+        <FormControl>
+          <RowSpaceBetween>
+            <RadioGroup
+              row
+              value={radio}
+              onChange={(event) => setRadio(event.target.value)}
+              sx={{ ml: 2 }}
+            >
+              <FormControlLabel value="word" control={<Radio />} label="단어" />
+              <FormControlLabel value="mean" control={<Radio />} label="뜻" />
+            </RadioGroup>
+            <FormControlLabel
+              control={
+                <Checkbox onChange={() => setChecked((prev) => !prev)} />
+              }
+              label="답 숨기기"
+            />
+          </RowSpaceBetween>
+        </FormControl>
       </Box>
     </>
   );
