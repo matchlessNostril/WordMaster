@@ -3,12 +3,14 @@ import { useLocation, useNavigate } from "react-router-dom";
 // Hook
 import { useState, useCallback, useEffect } from "react";
 // Custom Hook
+import useLoading from "../../hooks/useLoading";
 import useWordListReducer from "../../hooks/useWordListReducer";
 // MUI
 import { Box, TextField, ListItem, IconButton } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 // Component
 import Header from "../../components/Voca/SaveVoca/Header";
+import Loading from "../../components/Loading";
 import WordCard from "../../components/Voca/SaveVoca/WordCard";
 // Layout
 import ScrollList from "../../layout/ScrollList";
@@ -37,12 +39,18 @@ const SaveVoca = () => {
   // 단어 리스트 State와 Dispatch
   const { wordList, wordListDispatch } = useWordListReducer();
 
+  // 로딩 State와 Setter
+  const [onLoading, setOnLoading] = useLoading();
+
   // Modify(수정) 모드인 경우, 마운트 시 데이터 불러오기
   useEffect(() => {
     if (mode !== "Modify") return;
 
+    setOnLoading(true);
+    // useEffect에서 콜백 함수에 async, await를 사용하는 것은 불가능하지만, then은 가능
     getList(`Voca/${path}/${title}`).then((originalWordList) => {
       wordListDispatch({ type: "FETCH_WORD_LIST", wordList: originalWordList });
+      setOnLoading(false);
     });
   }, []);
 
@@ -116,20 +124,28 @@ const SaveVoca = () => {
             sx={{ width: "100%" }}
           />
         </ListItem>
-        {wordList.map((word, index) => (
-          <WordCard
-            key={index}
-            index={index}
-            word={word}
-            wordListDispatch={wordListDispatch}
-          />
-        ))}
+        {onLoading ? (
+          <Loading />
+        ) : (
+          <>
+            {wordList.map((word, index) => (
+              <WordCard
+                key={index}
+                index={index}
+                word={word}
+                wordListDispatch={wordListDispatch}
+              />
+            ))}
 
-        <ListItem sx={{ display: "flex", justifyContent: "center" }}>
-          <IconButton onClick={() => wordListDispatch({ type: "ADD_WORD" })}>
-            <AddCircleIcon sx={{ fontSize: "40px" }} />
-          </IconButton>
-        </ListItem>
+            <ListItem sx={{ display: "flex", justifyContent: "center" }}>
+              <IconButton
+                onClick={() => wordListDispatch({ type: "ADD_WORD" })}
+              >
+                <AddCircleIcon sx={{ fontSize: "40px" }} />
+              </IconButton>
+            </ListItem>
+          </>
+        )}
       </ScrollList>
     </Box>
   );
