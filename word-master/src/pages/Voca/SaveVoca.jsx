@@ -57,7 +57,7 @@ const SaveVoca = () => {
   const navigate = useNavigate();
 
   // 만들기 버튼 핸들러 함수
-  const onCreateBtnHandler = useCallback(() => {
+  const onCreateBtnHandler = useCallback(async () => {
     // 제대로 입력되지 않은 단어가 있는지 먼저 확인
     let isValid = true;
     for (let i = 0; i < wordList.length; i++) {
@@ -83,6 +83,22 @@ const SaveVoca = () => {
       alert(`이름에 '.', '#', '$', '[', ']' 기호는 들어갈 수 없습니다.`);
       return;
     }
+
+    // 버튼 클릭 시점의 현재 path의 dirList와 vocaList 배열 값 불러오기
+    const dirList = await getList(`Voca/${path}/dirList`, "name");
+    const vocaList = await getList(`Voca/${path}/vocaList`, "name");
+    const entireList = dirList.concat(vocaList);
+
+    // 현재 디렉토리 내에서 중복된 이름으로 생성 불가능
+    if (entireList.includes(vocaName)) {
+      alert(
+        `현재 폴더 내에 이미 존재하는 이름으로는 ${
+          mode === "Modify" ? "수정" : "생성"
+        }할 수 없습니다.`
+      );
+      return;
+    }
+
     // Modify(수정) 모드인 경우 먼저 기존 데이터 삭제
     if (mode === "Modify") {
       // 기존 단어 리스트 삭제
