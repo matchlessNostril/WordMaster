@@ -7,7 +7,7 @@ import Start from "../pages/Start";
 import Join from "../pages/Join";
 import Main from "../pages/Main";
 import VocaList from "../pages/Voca/VocaList";
-import CreateVoca from "../pages/Voca/CreateVoca";
+import SaveVoca from "../pages/Voca/SaveVoca";
 import TestList from "../pages/Test/TestList";
 
 const Router = () => {
