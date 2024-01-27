@@ -19,7 +19,7 @@ import BtnPopover from "../../components/BtnPopover";
 import ActionModal from "../../components/ActionModal";
 import Loading from "../../components/Loading";
 import NoFile from "../../components/NoFile";
-import VocaListItem from "../../components/Voca/VocaList/VocaListItem";
+import VocaListItemCard from "../../components/Voca/VocaList/VocaListItemCard";
 // Layout
 import RowSpaceBetween from "../../layout/RowSpaceBetween";
 import ScrollList from "../../layout/ScrollList";
@@ -190,7 +190,7 @@ const VocaList = () => {
             ) : (
               <ScrollList>
                 {Object.entries(dirList).map(([key, value]) => (
-                  <VocaListItem
+                  <VocaListItemCard
                     key={key}
                     itemKey={key}
                     title={value}
@@ -199,7 +199,7 @@ const VocaList = () => {
                   />
                 ))}
                 {Object.entries(vocaList).map(([key, value]) => (
-                  <VocaListItem
+                  <VocaListItemCard
                     key={key}
                     itemKey={key}
                     title={value}
