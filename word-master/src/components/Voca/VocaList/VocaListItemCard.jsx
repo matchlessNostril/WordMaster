@@ -29,7 +29,7 @@ import {
 // Utils
 import { isEmpty } from "lodash";
 
-const VocaListItem = ({ itemKey, title, path, isDir = false }) => {
+const VocaListItemCard = ({ itemKey, title, path, isDir = false }) => {
   // navigate
   const navigate = useNavigate();
 
@@ -193,4 +193,4 @@ const VocaListItem = ({ itemKey, title, path, isDir = false }) => {
   );
 };
 
-export default React.memo(VocaListItem);
+export default React.memo(VocaListItemCard);
