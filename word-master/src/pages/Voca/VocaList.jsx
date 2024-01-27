@@ -99,7 +99,12 @@ const VocaList = () => {
       name: "단어 세트 생성",
       onClickHandler: () => {
         setPopoverAnchor(null);
-        navigate(`/CreateVoca?path=${path}`);
+        navigate("/SaveVoca", {
+          state: {
+            mode: "Create",
+            path: path,
+          },
+        });
       },
     },
   ];

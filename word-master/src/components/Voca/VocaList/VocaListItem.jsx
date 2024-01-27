@@ -39,7 +39,13 @@ const VocaListItem = ({ itemKey, title, path, isDir = false }) => {
     if (isDir) {
       navigate(`/VocaList?path=${path + "/" + title}`);
     } else {
-      navigate("/Main");
+      navigate("/Voca", {
+        state: {
+          key: itemKey,
+          title: title,
+          path: path,
+        },
+      });
     }
   };
 
