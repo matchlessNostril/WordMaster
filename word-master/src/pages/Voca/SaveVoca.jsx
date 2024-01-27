@@ -9,7 +9,7 @@ import useWordListReducer from "../../hooks/useWordListReducer";
 import { Box, TextField, ListItem, IconButton } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 // Component
-import Header from "../../components/Voca/SaveVoca/Header";
+import SubHeader from "../../components/SubHeader";
 import Loading from "../../components/Loading";
 import WordCard from "../../components/Voca/SaveVoca/WordCard";
 // Layout
@@ -109,9 +109,10 @@ const SaveVoca = () => {
 
   return (
     <Box sx={{ minWidth: "85vw", minHeight: "85vh" }}>
-      <Header
-        isModify={mode === "Modify" ? true : false}
+      <SubHeader
+        title={mode === "Modify" ? "단어장 수정" : "단어장 만들기"}
         disabled={vocaName ? false : true}
+        btnName={mode === "Modify" ? "수정" : "만들기"}
         onClickHandler={onCreateBtnHandler}
       />
       <ScrollList>
