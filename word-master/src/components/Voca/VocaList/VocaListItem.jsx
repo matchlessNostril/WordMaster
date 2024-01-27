@@ -69,8 +69,8 @@ const VocaListItem = ({ itemKey, title, path, isDir = false }) => {
   // 1. 이름 바꾸기
   const onClickChangeBtn = async (inputValue) => {
     // 버튼 클릭 시점의 현재 path의 dirList와 vocaList 배열 값 불러오기
-    const dirList = await getList(`Voca/${path}/dirList`);
-    const vocaList = await getList(`Voca/${path}/vocaList`);
+    const dirList = await getList(`Voca/${path}/dirList`, "name");
+    const vocaList = await getList(`Voca/${path}/vocaList`, "name");
     const entireList = dirList.concat(vocaList);
 
     // 현재 디렉토리 내에서 중복된 이름으로 생성 불가능
