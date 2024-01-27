@@ -20,7 +20,7 @@ const Router = () => {
         <Route path="/Join" element={<Join />} />
         <Route path="/Main" element={<Main />} />
         <Route path="/VocaList" element={<VocaList />} />
-        <Route path="/CreateVoca" element={<CreateVoca />} />
+        <Route path="/SaveVoca" element={<SaveVoca />} />
         <Route path="/TestList" element={<TestList />} />
       </Routes>
     </AnimatePresence>
