@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 const useLoading = () => {
-  const [onLoading, setOnLoading] = useState(true);
+  const [onLoading, setOnLoading] = useState(false);
 
   return [onLoading, setOnLoading];
 };

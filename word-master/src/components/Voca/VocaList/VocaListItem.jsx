@@ -2,8 +2,8 @@ import React from "react";
 // Router
 import { useNavigate } from "react-router-dom";
 // Custom Hook
-import usePopOver from "../../hooks/usePopOver";
-import useModal from "../../hooks/useModal";
+import usePopOver from "../../../hooks/usePopOver";
+import useModal from "../../../hooks/useModal";
 // MUI
 import {
   ListItem,
@@ -16,16 +16,16 @@ import {
 } from "@mui/material";
 import KeyboardArrowDownSharpIcon from "@mui/icons-material/KeyboardArrowDownSharp";
 // Component
-import BtnPopover from "../BtnPopover";
-import ActionModal from "../ActionModal";
+import BtnPopover from "../../BtnPopover";
+import ActionModal from "../../ActionModal";
 // API
-import { getList } from "../../service/database/getList";
+import { getList } from "../../../service/database/getList";
 import {
   getData,
   setData,
   updateData,
   removeData,
-} from "../../service/database/dataOperation";
+} from "../../../service/database/dataOperation";
 // Utils
 import { isEmpty } from "lodash";
 
@@ -39,7 +39,13 @@ const VocaListItem = ({ itemKey, title, path, isDir = false }) => {
     if (isDir) {
       navigate(`/VocaList?path=${path + "/" + title}`);
     } else {
-      navigate("/Main");
+      navigate("/Voca", {
+        state: {
+          key: itemKey,
+          title: title,
+          path: path,
+        },
+      });
     }
   };
 
@@ -68,9 +74,15 @@ const VocaListItem = ({ itemKey, title, path, isDir = false }) => {
   // 버튼 클릭 핸들러 함수
   // 1. 이름 바꾸기
   const onClickChangeBtn = async (inputValue) => {
+    // 포함될 수 없는 문자가 있는 지 확인
+    if (/[.#$\[\]]/.test(inputValue)) {
+      alert(`이름에 '.', '#', '$', '[', ']' 기호는 들어갈 수 없습니다.`);
+      return;
+    }
+
     // 버튼 클릭 시점의 현재 path의 dirList와 vocaList 배열 값 불러오기
-    const dirList = await getList(`Voca/${path}/dirList`);
-    const vocaList = await getList(`Voca/${path}/vocaList`);
+    const dirList = await getList(`Voca/${path}/dirList`, "name");
+    const vocaList = await getList(`Voca/${path}/vocaList`, "name");
     const entireList = dirList.concat(vocaList);
 
     // 현재 디렉토리 내에서 중복된 이름으로 생성 불가능
@@ -146,8 +158,8 @@ const VocaListItem = ({ itemKey, title, path, isDir = false }) => {
               <img
                 src={
                   isDir
-                    ? require("../../assets/icons/folder_closed.png")
-                    : require("../../assets/icons/document.png")
+                    ? require("../../../assets/icons/folder_closed.png")
+                    : require("../../../assets/icons/document.png")
                 }
                 style={{
                   width: "25px",

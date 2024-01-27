@@ -10,8 +10,7 @@ import useLoading from "../../hooks/useLoading";
 import usePopOver from "../../hooks/usePopOver";
 import useModal from "../../hooks/useModal";
 // MUI
-import { useTheme } from "@mui/material/styles";
-import { Box, Stack, List, Typography, IconButton } from "@mui/material";
+import { Box, Stack, Typography, IconButton } from "@mui/material";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 // Component
@@ -20,7 +19,10 @@ import BtnPopover from "../../components/BtnPopover";
 import ActionModal from "../../components/ActionModal";
 import Loading from "../../components/Loading";
 import NoFile from "../../components/NoFile";
-import VocaListItem from "../../components/Voca/VocaListItem";
+import VocaListItem from "../../components/Voca/VocaList/VocaListItem";
+// Layout
+import RowSpaceBetween from "../../layout/RowSpaceBetween";
+import ScrollList from "../../layout/ScrollList";
 // API
 import {
   autoFetchList,
@@ -79,6 +81,9 @@ const VocaList = () => {
     };
   }, [path]);
 
+  // navigate
+  const navigate = useNavigate();
+
   // PopOver, Modal 연결되어 있음
   // (+) 버튼 PopOver
   const [popoverAnchor, setPopoverAnchor, onClickPopoverBtn] = usePopOver();
@@ -87,15 +92,19 @@ const VocaList = () => {
       name: "폴더 생성",
       onClickHandler: () => {
         setPopoverAnchor(null);
-        onClickOpenModal(modalContents[0]);
+        onClickOpenModal(modalContents);
       },
     },
     {
-      name: "단어장 생성",
-      // *****************임시****************** createVoca 화면으로 가야됨 여기서 만드는 거 아님
+      name: "단어 세트 생성",
       onClickHandler: () => {
         setPopoverAnchor(null);
-        onClickOpenModal(modalContents[1]);
+        navigate("/SaveVoca", {
+          state: {
+            mode: "Create",
+            path: path,
+          },
+        });
       },
     },
   ];
@@ -106,6 +115,12 @@ const VocaList = () => {
   // 폴더 생성 전, 이름 중복 확인할 함수
   const onClickCreateDir = useCallback(
     (inputValue) => {
+      // 포함될 수 없는 문자가 있는 지 확인
+      if (/[.#$\[\]]/.test(inputValue)) {
+        alert(`이름에 '.', '#', '$', '[', ']' 기호는 들어갈 수 없습니다.`);
+        return;
+      }
+
       const entireList = [];
       for (const key in dirList) {
         entireList.push(dirList[key]);
@@ -127,47 +142,19 @@ const VocaList = () => {
   );
 
   // 내용
-  const modalContents = [
-    // inex 0 : 폴더 생성 클릭
-    {
-      title: "새로운 폴더 만들기",
-      textField: {
-        label: "폴더 이름",
-      },
-      btnName: "만들기",
-      btnClickHandler: onClickCreateDir,
+  const modalContents = {
+    title: "새로운 폴더 만들기",
+    textField: {
+      label: "폴더 이름",
     },
-    // index 1 : 단어장 생성 클릭
-    {
-      title: "새로운 단어장 만들기",
-      textField: {
-        label: "단어장 이름",
-      },
-      btnName: "만들기",
-      btnClickHandler: () => {},
-    },
-  ];
-
-  // theme
-  const theme = useTheme();
-
-  // navigate
-  const navigate = useNavigate();
+    btnName: "만들기",
+    btnClickHandler: onClickCreateDir,
+  };
 
   return (
     <>
       <Box sx={{ minWidth: "85vw", minHeight: "85vh" }}>
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-          mb={1}
-          sx={{
-            [theme.breakpoints.down("sm")]: {
-              width: "90vw",
-            },
-          }}
-        >
+        <RowSpaceBetween>
           {path !== "root" ? (
             <Stack direction="row" alignItems="center">
               <IconButton onClick={() => navigate(-1)}>
@@ -193,7 +180,7 @@ const VocaList = () => {
             setAnchor={setPopoverAnchor}
             buttons={popoverBtns}
           />
-        </Stack>
+        </RowSpaceBetween>
         {onLoading ? (
           <Loading />
         ) : (
@@ -201,21 +188,7 @@ const VocaList = () => {
             {isEmpty(dirList) && isEmpty(vocaList) ? (
               <NoFile />
             ) : (
-              <List
-                sx={{
-                  maxHeight: "72vh",
-                  overflow: "auto",
-                  "&::-webkit-scrollbar": {
-                    width: "10px",
-                  },
-                  "&::-webkit-scrollbar-thumb": {
-                    backgroundColor: "#535353",
-                  },
-                  "&::-webkit-scrollbar-track": {
-                    backgroundColor: "#dbdbdb",
-                  },
-                }}
-              >
+              <ScrollList>
                 {Object.entries(dirList).map(([key, value]) => (
                   <VocaListItem
                     key={key}
@@ -233,7 +206,7 @@ const VocaList = () => {
                     path={path}
                   />
                 ))}
-              </List>
+              </ScrollList>
             )}
           </>
         )}
