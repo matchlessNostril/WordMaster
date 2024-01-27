@@ -8,6 +8,7 @@ import Join from "../pages/Join";
 import Main from "../pages/Main";
 import VocaList from "../pages/Voca/VocaList";
 import SaveVoca from "../pages/Voca/SaveVoca";
+import Voca from "../pages/Voca/Voca";
 import TestList from "../pages/Test/TestList";
 
 const Router = () => {
@@ -21,6 +22,7 @@ const Router = () => {
         <Route path="/Main" element={<Main />} />
         <Route path="/VocaList" element={<VocaList />} />
         <Route path="/SaveVoca" element={<SaveVoca />} />
+        <Route path="/Voca" element={<Voca />} />
         <Route path="/TestList" element={<TestList />} />
       </Routes>
     </AnimatePresence>
