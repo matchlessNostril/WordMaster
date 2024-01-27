@@ -15,13 +15,12 @@ import WordCard from "../../components/Voca/SaveVoca/WordCard";
 // Layout
 import ScrollList from "../../layout/ScrollList";
 // API
+import { getList } from "../../service/database/getList";
 import {
   setData,
   pushData,
   removeData,
 } from "../../service/database/dataOperation";
-// utils
-import { getList } from "../../service/database/getList";
 
 const SaveVoca = () => {
   // location.state로 전달된 mode, path, title, key 값 불러오기
