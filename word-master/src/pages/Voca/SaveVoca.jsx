@@ -79,6 +79,11 @@ const SaveVoca = () => {
     }
     if (!isValid) return;
 
+    // 단어장 이름에 포함될 수 없는 문자가 있는 지 확인
+    if (/[.#$\[\]]/.test(vocaName)) {
+      alert(`이름에 '.', '#', '$', '[', ']' 기호는 들어갈 수 없습니다.`);
+      return;
+    }
     // Modify(수정) 모드인 경우 먼저 기존 데이터 삭제
     if (mode === "Modify") {
       // 기존 단어 리스트 삭제

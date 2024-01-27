@@ -74,6 +74,12 @@ const VocaListItem = ({ itemKey, title, path, isDir = false }) => {
   // 버튼 클릭 핸들러 함수
   // 1. 이름 바꾸기
   const onClickChangeBtn = async (inputValue) => {
+    // 포함될 수 없는 문자가 있는 지 확인
+    if (/[.#$\[\]]/.test(inputValue)) {
+      alert(`이름에 '.', '#', '$', '[', ']' 기호는 들어갈 수 없습니다.`);
+      return;
+    }
+
     // 버튼 클릭 시점의 현재 path의 dirList와 vocaList 배열 값 불러오기
     const dirList = await getList(`Voca/${path}/dirList`, "name");
     const vocaList = await getList(`Voca/${path}/vocaList`, "name");

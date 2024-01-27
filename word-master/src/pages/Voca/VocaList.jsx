@@ -115,6 +115,12 @@ const VocaList = () => {
   // 폴더 생성 전, 이름 중복 확인할 함수
   const onClickCreateDir = useCallback(
     (inputValue) => {
+      // 포함될 수 없는 문자가 있는 지 확인
+      if (/[.#$\[\]]/.test(inputValue)) {
+        alert(`이름에 '.', '#', '$', '[', ']' 기호는 들어갈 수 없습니다.`);
+        return;
+      }
+
       const entireList = [];
       for (const key in dirList) {
         entireList.push(dirList[key]);
