@@ -10,6 +10,7 @@ import VocaList from "../pages/Voca/VocaList";
 import SaveVoca from "../pages/Voca/SaveVoca";
 import Voca from "../pages/Voca/Voca";
 import TestList from "../pages/Test/TestList";
+import CreateTest from "../pages/Test/CreateTest";
 
 const Router = () => {
   const location = useLocation();
@@ -24,6 +25,7 @@ const Router = () => {
         <Route path="/SaveVoca" element={<SaveVoca />} />
         <Route path="/Voca" element={<Voca />} />
         <Route path="/TestList" element={<TestList />} />
+        <Route path="/CreateTest" element={<CreateTest />} />
       </Routes>
     </AnimatePresence>
   );
