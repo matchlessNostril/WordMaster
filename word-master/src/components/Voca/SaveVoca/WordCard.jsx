@@ -19,12 +19,12 @@ import DeleteIcon from "@mui/icons-material/Delete";
 // Utils
 import { isEqual } from "lodash";
 
-const WordCard = ({ index, word, wordListDispatch }) => {
+const WordCard = ({ index, word, wordListDispatch, focus }) => {
   // theme
   const theme = useTheme();
 
   // TextField 입력 핸들러 함수
-  const onInputHandler = useCallback((event, propName) => {
+  const onInputTextField = useCallback((event, propName) => {
     wordListDispatch({
       type: "UPDATE_PROP",
       index: index,
@@ -38,7 +38,7 @@ const WordCard = ({ index, word, wordListDispatch }) => {
     word.hasOwnProperty("pronunciation") ? true : false
   );
   // 체크박스 체크 핸들러 함수
-  const onCheckHandler = useCallback(() => {
+  const onClickCheckbox = useCallback(() => {
     setChecked((prev) => !prev);
     wordListDispatch({
       type: "CLICK_CHECKBOX",
@@ -78,10 +78,13 @@ const WordCard = ({ index, word, wordListDispatch }) => {
                 <Grid item xs={12} sm={6}>
                   <Box sx={{ display: "flex", justifyContent: "center" }}>
                     <TextField
-                      label={"단어"}
+                      label="단어"
                       variant="standard"
+                      multiline
+                      autoComplete="off"
+                      autoFocus={focus}
                       value={word.word}
-                      onChange={(event) => onInputHandler(event, "word")}
+                      onChange={(event) => onInputTextField(event, "word")}
                       sx={{ width: "95%" }}
                     />
                   </Box>
@@ -89,10 +92,12 @@ const WordCard = ({ index, word, wordListDispatch }) => {
                 <Grid item xs={12} sm={6}>
                   <Box sx={{ display: "flex", justifyContent: "center" }}>
                     <TextField
-                      label={"뜻"}
+                      label="뜻"
                       variant="standard"
+                      multiline
+                      autoComplete="off"
                       value={word.mean}
-                      onChange={(event) => onInputHandler(event, "mean")}
+                      onChange={(event) => onInputTextField(event, "mean")}
                       sx={{ width: "95%" }}
                     />
                   </Box>
@@ -100,7 +105,7 @@ const WordCard = ({ index, word, wordListDispatch }) => {
                 <Grid item xs={12} sm={6}>
                   <FormControlLabel
                     control={
-                      <Checkbox checked={checked} onChange={onCheckHandler} />
+                      <Checkbox checked={checked} onChange={onClickCheckbox} />
                     }
                     label="발음 추가"
                     sx={{ m: 0, mt: 1 }}
@@ -119,11 +124,13 @@ const WordCard = ({ index, word, wordListDispatch }) => {
                   >
                     <Box sx={{ display: "flex", justifyContent: "center" }}>
                       <TextField
-                        label={"발음"}
+                        label="발음"
                         variant="standard"
+                        multiline
+                        autoComplete="off"
                         value={word?.pronunciation}
                         onChange={(event) =>
-                          onInputHandler(event, "pronunciation")
+                          onInputTextField(event, "pronunciation")
                         }
                         sx={{ width: "95%" }}
                       />

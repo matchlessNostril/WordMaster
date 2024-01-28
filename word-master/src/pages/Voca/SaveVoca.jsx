@@ -57,7 +57,7 @@ const SaveVoca = () => {
   const navigate = useNavigate();
 
   // 만들기 버튼 핸들러 함수
-  const onCreateBtnHandler = useCallback(async () => {
+  const onClickCreateBtn = useCallback(async () => {
     // 제대로 입력되지 않은 단어가 있는지 먼저 확인
     let isValid = true;
     for (let i = 0; i < wordList.length; i++) {
@@ -133,9 +133,9 @@ const SaveVoca = () => {
         title={mode === "Modify" ? "단어장 수정" : "단어장 만들기"}
         disabled={vocaName ? false : true}
         btnName={mode === "Modify" ? "수정" : "만들기"}
-        onClickHandler={onCreateBtnHandler}
+        onClickHandler={onClickCreateBtn}
       />
-      <ScrollList>
+      <ScrollList maxHeight="75vh">
         <ListItem>
           <TextField
             label="단어장 이름"
@@ -155,6 +155,7 @@ const SaveVoca = () => {
                 index={index}
                 word={word}
                 wordListDispatch={wordListDispatch}
+                focus={index === wordList.length - 1}
               />
             ))}
 

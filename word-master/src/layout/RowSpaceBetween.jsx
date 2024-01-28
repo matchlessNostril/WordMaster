@@ -16,6 +16,9 @@ const RowSpaceBetween = ({ children }) => {
         [theme.breakpoints.down("sm")]: {
           width: "90vw",
         },
+        [theme.breakpoints.up("sm")]: {
+          width: "85vw",
+        },
       }}
     >
       {children}
