@@ -78,8 +78,11 @@ const WordCard = ({ index, word, wordListDispatch }) => {
                 <Grid item xs={12} sm={6}>
                   <Box sx={{ display: "flex", justifyContent: "center" }}>
                     <TextField
-                      label={"단어"}
+                      label="단어"
                       variant="standard"
+                      multiline
+                      autoComplete="off"
+                      autoFocus={focus}
                       value={word.word}
                       onChange={(event) => onInputTextField(event, "word")}
                       sx={{ width: "95%" }}
@@ -89,8 +92,10 @@ const WordCard = ({ index, word, wordListDispatch }) => {
                 <Grid item xs={12} sm={6}>
                   <Box sx={{ display: "flex", justifyContent: "center" }}>
                     <TextField
-                      label={"뜻"}
+                      label="뜻"
                       variant="standard"
+                      multiline
+                      autoComplete="off"
                       value={word.mean}
                       onChange={(event) => onInputTextField(event, "mean")}
                       sx={{ width: "95%" }}
@@ -119,8 +124,10 @@ const WordCard = ({ index, word, wordListDispatch }) => {
                   >
                     <Box sx={{ display: "flex", justifyContent: "center" }}>
                       <TextField
-                        label={"발음"}
+                        label="발음"
                         variant="standard"
+                        multiline
+                        autoComplete="off"
                         value={word?.pronunciation}
                         onChange={(event) =>
                           onInputTextField(event, "pronunciation")
