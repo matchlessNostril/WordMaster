@@ -155,6 +155,7 @@ const SaveVoca = () => {
                 index={index}
                 word={word}
                 wordListDispatch={wordListDispatch}
+                focus={index === wordList.length - 1}
               />
             ))}
 

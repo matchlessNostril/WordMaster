@@ -19,7 +19,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 // Utils
 import { isEqual } from "lodash";
 
-const WordCard = ({ index, word, wordListDispatch }) => {
+const WordCard = ({ index, word, wordListDispatch, focus }) => {
   // theme
   const theme = useTheme();
 
