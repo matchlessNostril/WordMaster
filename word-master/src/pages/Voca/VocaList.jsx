@@ -188,7 +188,7 @@ const VocaList = () => {
             {isEmpty(dirList) && isEmpty(vocaList) ? (
               <NoFile />
             ) : (
-              <ScrollList>
+              <ScrollList maxHeight="73vh">
                 {Object.entries(dirList).map(([key, value]) => (
                   <VocaListItemCard
                     key={key}
