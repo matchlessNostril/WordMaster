@@ -135,7 +135,7 @@ const SaveVoca = () => {
         btnName={mode === "Modify" ? "수정" : "만들기"}
         onClickHandler={onClickCreateBtn}
       />
-      <ScrollList>
+      <ScrollList maxHeight="75vh">
         <ListItem>
           <TextField
             label="단어장 이름"
