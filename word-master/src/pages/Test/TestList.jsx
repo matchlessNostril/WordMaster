@@ -13,6 +13,9 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 // Component
 import Transition from "../../components/Transition";
 import TestCard from "../../components/Test/TestList/TestCard";
+import Loading from "../../components/Loading";
+import NoFile from "../../components/NoFile";
+import ScrollList from "../../layout/ScrollList";
 // Layout
 import RowSpaceBetween from "../../layout/RowSpaceBetween";
 // API
@@ -20,6 +23,8 @@ import {
   autoFetchList,
   offAllDBEventListener,
 } from "../../service/database/autoFetchList";
+// Utils
+import { isEmpty } from "lodash";
 
 const TestList = () => {
   // 사용자 정보
@@ -59,9 +64,21 @@ const TestList = () => {
             <AddCircleIcon sx={{ fontSize: "40px" }} />
           </IconButton>
         </RowSpaceBetween>
-        {Object.entries(list).map(([key, value]) => (
-          <TestCard key={key} itemKey={key} title={value} />
-        ))}
+        {onLoading ? (
+          <Loading />
+        ) : (
+          <>
+            {isEmpty(list) ? (
+              <NoFile />
+            ) : (
+              <ScrollList maxHeight="73vh">
+                {Object.entries(list).map(([key, value]) => (
+                  <TestCard key={key} itemKey={key} title={value} />
+                ))}
+              </ScrollList>
+            )}
+          </>
+        )}
       </Box>
     </>
   );
