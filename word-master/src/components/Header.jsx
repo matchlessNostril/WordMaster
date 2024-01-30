@@ -17,7 +17,7 @@ import { logout } from "../service/auth";
 // 로고 이미지
 const Logo = styled.img`
   width: 40px;
-  height: 40px;
+  height: 22px;
 `;
 
 const Header = () => {
