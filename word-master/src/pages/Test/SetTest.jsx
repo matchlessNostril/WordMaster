@@ -48,16 +48,17 @@ const SetTest = () => {
   useEffect(() => {
     setOnLoading(true);
 
-    getData(`Test/${title}/info`).then((info) => {
-      console.log("info :", info);
-      setTestInfo(info);
-    });
-    getData(`Test/${title}/paths`).then((paths) => {
-      console.log("paths :", paths);
-      setVocaPaths(paths);
-    });
-
-    setOnLoading(false);
+    getData(`Test/${title}/info`)
+      .then((info) => {
+        setTestInfo(info);
+      })
+      .then(() => {
+        return getData(`Test/${title}/paths`);
+      })
+      .then((paths) => {
+        setVocaPaths(paths);
+        setOnLoading(false);
+      });
   }, []);
 
   return (
