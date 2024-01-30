@@ -17,12 +17,16 @@ import {
   Checkbox,
   TextField,
   InputAdornment,
+  Chip,
 } from "@mui/material";
 // Component
 import SubHeader from "../../components/SubHeader";
 import Loading from "../../components/Loading";
+import ProgressBar from "../../components/Test/SetTest/ProgressBar";
 // API
 import { getData } from "../../service/database/dataOperation";
+// Utils
+import { isEmpty } from "lodash";
 
 const SetTest = () => {
   // url 쿼리스트링에서 title 값 가져오기
@@ -60,6 +64,15 @@ const SetTest = () => {
         setOnLoading(false);
       });
   }, []);
+
+  useEffect(() => {
+    console.log("loading ", onLoading);
+  }, [onLoading]);
+
+  useEffect(() => {
+    console.log("testInfo :", testInfo);
+    console.log("vocaPaths :", vocaPaths);
+  }, [testInfo, vocaPaths]);
 
   return (
     <Box sx={{ minWidth: "85vw", minHeight: "85vh" }}>
@@ -133,9 +146,39 @@ const SetTest = () => {
               </Stack>
             </FormControl>
           </Box>
-        </Box>
+          <Divider sx={{ mt: 2, mb: 2 }} />
+          {!isEmpty(testInfo) && (
+            <Box sx={{ pl: 2 }}>
+              <Stack direction="row" alignItems="center" spacing={2}>
+                <Typography variant="subtitle1">
+                  <strong>현재 달성률</strong>
+                </Typography>
+                <Chip
+                  label={`단어 ${testInfo.wordRound}회독 중`}
+                  size="small"
+                />
+                <Chip label={`뜻 ${testInfo.meanRound}회독 중`} size="small" />
+              </Stack>
+              <Stack mt={1}>
+                <ProgressBar
+                  title={title}
+                  type="단어"
+                  // numOfPassed={testInfo.numOfPassedWord}
+                  listLength={testInfo.wordListLength}
+                />
+                <ProgressBar
+                  title={title}
+                  type="뜻"
+                  // numOfPassed={testInfo.numOfPassedMean}
+                  listLength={testInfo.wordListLength}
+                />
+              </Stack>
+            </Box>
+          )}
+          <Divider sx={{ mt: 2, mb: 2 }} />
+        </>
       )}
-    </>
+    </Box>
   );
 };
 
