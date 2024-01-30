@@ -285,12 +285,6 @@ const CreateTest = () => {
     navigate("/Main"); // <- SetTest 화면으로 이동해야 됨. 일단 Main으로.
   }, [testName, selectedVocaPaths]);
 
-  // ---------------------------확인용-------------------------------------
-  useEffect(() => {
-    console.log("사용자의 모든 Voca Path 리스트 :", allVocaPaths);
-    console.log("선택된 Voca Path 리스트 :", selectedVocaPaths);
-  }, [allVocaPaths, selectedVocaPaths]);
-
   return (
     <>
       {onLoading ? (
