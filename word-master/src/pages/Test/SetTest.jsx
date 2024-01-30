@@ -30,8 +30,7 @@ const SetTest = () => {
   const title = searchParams.get("title");
 
   // 테스트 정보 State
-  const [testIinfo, setTestInfo] = useState();
-
+  const [testInfo, setTestInfo] = useState();
   // 테스트에 포함된 단어장 Path State
   const [vocaPaths, setVocaPaths] = useState();
 
