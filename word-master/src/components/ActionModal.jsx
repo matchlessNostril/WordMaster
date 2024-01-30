@@ -36,8 +36,9 @@ const ActionModal = ({ open, setOpen, content }) => {
               variant="filled"
               value={value}
               onChange={(event) => setValue(event.target.value)}
+              autoComplete="off"
               helperText={
-                "이미 존재하는 이름은 불가능하며, '.', '#', '$', '[', ']' 기호는 들어갈 수 없습니다."
+                "이미 존재하는 이름은 불가능하며, 「 .  #  $  [  ] 」 기호는 들어갈 수 없습니다."
               }
               sx={{
                 width: "100%",

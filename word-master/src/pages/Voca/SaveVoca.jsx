@@ -142,6 +142,7 @@ const SaveVoca = () => {
             variant="outlined"
             value={vocaName}
             onChange={(event) => setVocaName(event.target.value)}
+            autoComplete="off"
             sx={{ width: "100%" }}
           />
         </ListItem>

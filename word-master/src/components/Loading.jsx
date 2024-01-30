@@ -1,12 +1,12 @@
 import { Container } from "@mui/material";
 
-const Loading = () => {
+const Loading = ({ onMarginTop = true }) => {
   return (
     <Container
       style={{
         display: "flex",
         justifyContent: "center",
-        marginTop: "30vh",
+        marginTop: onMarginTop ? "30vh" : "0",
       }}
     >
       <img
