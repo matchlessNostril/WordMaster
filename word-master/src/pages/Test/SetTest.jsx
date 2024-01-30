@@ -64,23 +64,22 @@ const SetTest = () => {
   }, []);
 
   return (
-    <>
+    <Box sx={{ minWidth: "85vw", minHeight: "85vh" }}>
+      <SubHeader
+        title={title}
+        disabled={
+          !timer.onTimer || (typeof timer.time === "number" && timer.time > 0)
+            ? false
+            : true
+        }
+        btnName="시작"
+        onClickHandler={() => navigate(`/Test?title=${title}`)}
+      />
+      <Divider sx={{ mt: 2, mb: 2 }} />
       {onLoading ? (
         <Loading />
       ) : (
-        <Box sx={{ minWidth: "85vw", minHeight: "85vh" }}>
-          <SubHeader
-            title={title}
-            disabled={
-              !timer.onTimer ||
-              (typeof timer.time === "number" && timer.time > 0)
-                ? false
-                : true
-            }
-            btnName="시작"
-            onClickHandler={() => navigate(`/Test?title=${title}`)}
-          />
-          <Divider sx={{ mt: 2, mb: 2 }} />
+        <>
           <Box sx={{ pl: 2 }}>
             <Typography variant="subtitle1">
               <strong>테스트 설정</strong>
