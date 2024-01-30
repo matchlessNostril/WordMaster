@@ -282,7 +282,7 @@ const CreateTest = () => {
 
     // DB 저장 완료 후, 로딩 Off하고 화면 이동
     setOnLoading(false);
-    navigate("/Main"); // <- SetTest 화면으로 이동해야 됨. 일단 Main으로.
+    navigate(`/SetTest?title=${testName}`); // <- SetTest 화면으로 이동해야 됨. 일단 Main으로.
   }, [testName, selectedVocaPaths]);
 
   return (
