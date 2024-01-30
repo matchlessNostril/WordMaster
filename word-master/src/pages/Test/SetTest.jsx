@@ -33,18 +33,16 @@ const SetTest = () => {
   const [testInfo, setTestInfo] = useState();
   // 테스트에 포함된 단어장 Path State
   const [vocaPaths, setVocaPaths] = useState();
+  // 테스트 유형 (단어 / 뜻) 선택 Radio State
+  const [radio, setRadio] = useState("word");
+  // 타이머 State
+  const [timer, setTimer] = useState({ onTimer: false, time: "" });
 
   // 로딩 State와 Setter
   const [onLoading, setOnLoading] = useLoading();
 
   // navigate
   const navigate = useNavigate();
-
-  // 테스트 유형 (단어 / 뜻) 선택 Radio State
-  const [radio, setRadio] = useState("word");
-
-  // 타이머 State
-  const [timer, setTimer] = useState({ onTimer: false, time: "" });
 
   // 마운트 시, 데이터 불러오기
   useEffect(() => {
