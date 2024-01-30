@@ -29,25 +29,9 @@ import {
 // Utils
 import { isEmpty } from "lodash";
 
-const VocaListItemCard = ({ itemKey, title, path, isDir = false }) => {
+const TestCard = ({ itemKey, title }) => {
   // navigate
   const navigate = useNavigate();
-
-  // 이 컴포넌트는 React.memo로 감싸고 있으며
-  // 이름 변경으로 인해 title이 바뀌는 경우 외에는 props 값이 잘 바뀌지 않기 때문에 useCallback 사용 X
-  const moveToNextPath = () => {
-    if (isDir) {
-      navigate(`/VocaList?path=${path + "/" + title}`);
-    } else {
-      navigate("/Voca", {
-        state: {
-          key: itemKey,
-          title: title,
-          path: path,
-        },
-      });
-    }
-  };
 
   // (펼치기) 버튼 PopOver
   const [popoverAnchor, setPopoverAnchor, onClickPopoverBtn] = usePopOver();
@@ -80,46 +64,35 @@ const VocaListItemCard = ({ itemKey, title, path, isDir = false }) => {
       return;
     }
 
-    // 버튼 클릭 시점의 현재 path의 dirList와 vocaList 배열 값 불러오기
-    const dirList = await getList(`Voca/${path}/dirList`, "name");
-    const vocaList = await getList(`Voca/${path}/vocaList`, "name");
-    const entireList = dirList.concat(vocaList);
+    // 버튼 클릭 시점의 testList 배열 값 불러오기
+    const testList = await getList("Test/testList", "name");
 
-    // 현재 디렉토리 내에서 중복된 이름으로 생성 불가능
-    if (entireList.includes(inputValue)) {
-      alert(`현재 폴더 내에 이미 존재하는 이름으로는 변경할 수 없습니다.`);
+    // 중복된 이름으로 생성 불가능
+    if (testList.includes(inputValue)) {
+      alert(`이미 존재하는 이름으로는 변경할 수 없습니다.`);
       return;
     }
 
     // 변경 가능한 이름이라면
     // 먼저 기존 데이터 일시 저장
-    const tempData = await getData(`Voca/${path}/${title}`);
+    const tempData = await getData(`Test/${title}`);
 
     // 빈 데이터가 아니라면, 데이터 이전하고 기존 경로 삭제
     if (!isEmpty(tempData)) {
-      setData(`Voca/${path}/${inputValue}`, tempData);
-      removeData(`Voca/${path}/${title}`);
+      setData(`Test/${inputValue}`, tempData);
+      removeData(`Test/${title}`);
     }
 
     // 리스트에서도 변경된 이름으로 업데이트
-    updateData(
-      isDir
-        ? `Voca/${path}/dirList/${itemKey}`
-        : `Voca/${path}/vocaList/${itemKey}`,
-      { name: inputValue }
-    );
+    updateData(`Test/testList/${itemKey}`, { name: inputValue });
 
     setOpenModal(false);
   };
 
   // 2. 삭제
   const onClickRemoveBtn = () => {
-    removeData(`Voca/${path}/${title}`);
-    removeData(
-      isDir
-        ? `Voca/${path}/dirList/${itemKey}`
-        : `Voca/${path}/vocaList/${itemKey}`
-    );
+    removeData(`Test/${title}`);
+    removeData(`Test/testList/${itemKey}`);
     setOpenModal(false);
   };
 
@@ -153,14 +126,10 @@ const VocaListItemCard = ({ itemKey, title, path, isDir = false }) => {
         }}
       >
         <Card variant="outlined" sx={{ display: "flex", width: "83vw" }}>
-          <CardActionArea onClick={moveToNextPath}>
+          <CardActionArea onClick={() => navigate(`/SetTest?title=${title}`)}>
             <CardContent sx={{ display: "flex" }}>
               <img
-                src={
-                  isDir
-                    ? require("../../../assets/icons/folder_closed.png")
-                    : require("../../../assets/icons/document.png")
-                }
+                src={require("../../../assets/icons/test.png")}
                 style={{
                   width: "25px",
                   height: "25px",
@@ -193,4 +162,4 @@ const VocaListItemCard = ({ itemKey, title, path, isDir = false }) => {
   );
 };
 
-export default React.memo(VocaListItemCard);
+export default React.memo(TestCard);

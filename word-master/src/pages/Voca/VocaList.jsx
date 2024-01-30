@@ -65,9 +65,6 @@ const VocaList = () => {
       setCurrentDirName(splitPathArr[splitPathArr.length - 1]);
     }
 
-    // 리스트를 불러오기 전까지 로딩 On
-    setOnLoading(true);
-
     // dirList, vocaList 불러오기
     autoFetchList(`Voca/${path}/dirList`, dirListDispatch, setOnLoading);
     autoFetchList(`Voca/${path}/vocaList`, vocaListDispatch, setOnLoading);
