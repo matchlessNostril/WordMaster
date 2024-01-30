@@ -14,7 +14,7 @@ import {
   Typography,
   IconButton,
 } from "@mui/material";
-import KeyboardArrowDownSharpIcon from "@mui/icons-material/KeyboardArrowDownSharp";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 // Component
 import BtnPopover from "../../BtnPopover";
 import ActionModal from "../../ActionModal";
@@ -174,7 +174,7 @@ const VocaListItemCard = ({ itemKey, title, path, isDir = false }) => {
           </CardActionArea>
           <CardActions>
             <IconButton onClick={onClickPopoverBtn}>
-              <KeyboardArrowDownSharpIcon />
+              <KeyboardArrowDownIcon />
             </IconButton>
             <BtnPopover
               anchor={popoverAnchor}
