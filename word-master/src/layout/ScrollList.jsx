@@ -1,12 +1,21 @@
 import React from "react";
+import { useTheme } from "@mui/material/styles";
 import { List } from "@mui/material";
 
 const ScrollList = ({ maxHeight, children }) => {
+  // theme
+  const theme = useTheme();
+
   return (
     <List
       sx={{
         maxHeight: { maxHeight },
-        maxWidth: "85vw",
+        [theme.breakpoints.down("sm")]: {
+          maxWidth: "90vw",
+        },
+        [theme.breakpoints.up("sm")]: {
+          maxWidth: "85vw",
+        },
         overflow: "auto",
         "&::-webkit-scrollbar": {
           width: "10px",
