@@ -29,7 +29,7 @@ const Main = () => {
       img: "testLogo.jpg",
       title: "Test",
       description: `테스트 치를 단어장을 선택하고, 원하는 설정대로 테스트를 치뤄 보세요.\n틀린 단어는 맞힐 때까지 계속!`,
-      to: "/CreateTest",
+      to: "/TestList",
     },
   ];
 
