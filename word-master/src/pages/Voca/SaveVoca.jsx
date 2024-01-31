@@ -9,6 +9,7 @@ import useWordListReducer from "../../hooks/useWordListReducer";
 import { Box, TextField, ListItem, IconButton } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 // Component
+import Transition from "../../components/Transition";
 import SubHeader from "../../components/SubHeader";
 import Loading from "../../components/Loading";
 import WordCard from "../../components/Voca/SaveVoca/WordCard";
@@ -174,4 +175,4 @@ const SaveVoca = () => {
   );
 };
 
-export default SaveVoca;
+export default Transition(SaveVoca);

@@ -15,6 +15,7 @@ import {
   Checkbox,
 } from "@mui/material";
 // Component
+import Transition from "../../components/Transition";
 import SubHeader from "../../components/SubHeader";
 import Loading from "../../components/Loading";
 import WordCard from "../../components/Voca/Voca/WordCard";
@@ -124,4 +125,4 @@ const Voca = () => {
   );
 };
 
-export default Voca;
+export default Transition(Voca);

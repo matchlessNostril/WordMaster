@@ -23,6 +23,7 @@ import {
 // Styled-components
 import styled from "styled-components";
 // Component
+import Transition from "../../components/Transition";
 import SubHeader from "../../components/SubHeader";
 import Loading from "../../components/Loading";
 import Nofile from "../../components/NoFile";
@@ -374,8 +375,8 @@ const CreateTest = () => {
   );
 };
 
-export default () => (
+export default Transition(() => (
   <VocaPathProvider>
     <CreateTest />
   </VocaPathProvider>
-);
+));

@@ -2,6 +2,8 @@
 import { useLocation } from "react-router-dom";
 // Hook
 import { useState, useEffect } from "react";
+// Component
+import Transition from "../../components/Transition";
 // API
 import { getData } from "../../service/database/dataOperation";
 
@@ -33,4 +35,4 @@ const Test = () => {
   return <>Test</>;
 };
 
-export default Test;
+export default Transition(Test);

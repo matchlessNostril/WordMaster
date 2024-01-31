@@ -20,6 +20,7 @@ import {
   Chip,
 } from "@mui/material";
 // Component
+import Transition from "../../components/Transition";
 import SubHeader from "../../components/SubHeader";
 import Loading from "../../components/Loading";
 import ProgressBar from "../../components/Test/SetTest/ProgressBar";
@@ -227,4 +228,4 @@ const SetTest = () => {
   );
 };
 
-export default SetTest;
+export default Transition(SetTest);
