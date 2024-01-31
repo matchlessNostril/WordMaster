@@ -262,7 +262,8 @@ const CreateTest = () => {
     // 선택된 Path 저장하면서, 해당하는 단어 리스트 불러오기
     let wordList = [];
     for (let i = 0; i < selectedVocaPaths.length; i++) {
-      await pushData(`Test/${testName}/paths`, selectedVocaPaths[i]);
+      // "Voca/root" 이후 문자열 저장
+      await pushData(`Test/${testName}/paths`, selectedVocaPaths[i].slice(10));
       wordList = wordList.concat(await getList(selectedVocaPaths[i]));
     }
 
