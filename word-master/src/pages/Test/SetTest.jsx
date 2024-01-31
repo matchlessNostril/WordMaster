@@ -111,7 +111,7 @@ const SetTest = () => {
                 radio === "word"
                   ? testInfo.numOfPassedWord
                   : testInfo.numOfPassedMean,
-              listLength: testInfo.listLength,
+              listLength: testInfo.wordListLength,
             },
           })
         }
