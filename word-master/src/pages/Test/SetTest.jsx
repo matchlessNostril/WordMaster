@@ -23,8 +23,12 @@ import {
 import SubHeader from "../../components/SubHeader";
 import Loading from "../../components/Loading";
 import ProgressBar from "../../components/Test/SetTest/ProgressBar";
+import VocaPathListItem from "../../components/Test/SetTest/VocaPathListItem";
+// Layout
+import ScrollList from "../../layout/ScrollList";
 // API
 import { getData } from "../../service/database/dataOperation";
+import { getList } from "../../service/database/getList";
 // Utils
 import { isEmpty } from "lodash";
 
@@ -34,9 +38,9 @@ const SetTest = () => {
   const title = searchParams.get("title");
 
   // 테스트 정보 State
-  const [testInfo, setTestInfo] = useState();
+  const [testInfo, setTestInfo] = useState({});
   // 테스트에 포함된 단어장 Path State
-  const [vocaPaths, setVocaPaths] = useState();
+  const [vocaPaths, setVocaPaths] = useState([]);
   // 테스트 유형 (단어 / 뜻) 선택 Radio State
   const [radio, setRadio] = useState("word");
   // 타이머 State
@@ -57,10 +61,32 @@ const SetTest = () => {
         setTestInfo(info);
       })
       .then(() => {
-        return getData(`Test/${title}/paths`);
+        return getList(`Test/${title}/paths`);
       })
       .then((paths) => {
-        setVocaPaths(paths);
+        // path가 같은 단어장끼리 분류
+        let newVocaPaths = [];
+        let isExistingPath, lastSlashIndex, dirPath, vocaName;
+        for (let i = 0; i < paths.length; i++) {
+          isExistingPath = false;
+          lastSlashIndex = paths[i].lastIndexOf("/");
+          dirPath = paths[i].slice(0, lastSlashIndex);
+          vocaName = paths[i].slice(lastSlashIndex + 1, paths[i].length);
+
+          for (let j = 0; j < newVocaPaths.length; j++) {
+            if (newVocaPaths[j].dirPath === dirPath) {
+              newVocaPaths[j].vocaList.push(vocaName);
+              isExistingPath = true;
+              break;
+            }
+          }
+
+          if (!isExistingPath) {
+            newVocaPaths.push({ dirPath, vocaList: [vocaName] });
+          }
+        }
+
+        setVocaPaths(newVocaPaths);
         setOnLoading(false);
       });
   }, []);
@@ -171,6 +197,21 @@ const SetTest = () => {
             </Box>
           )}
           <Divider sx={{ mt: 2, mb: 2 }} />
+          <Box sx={{ pl: 2 }}>
+            <Typography variant="subtitle1">
+              <strong>단어장 리스트</strong>
+            </Typography>
+            <ScrollList maxHeight="25vh">
+              {vocaPaths.length > 0 &&
+                vocaPaths.map((value, index) => (
+                  <VocaPathListItem
+                    key={index}
+                    dirPath={value.dirPath}
+                    vocaList={value.vocaList}
+                  />
+                ))}
+            </ScrollList>
+          </Box>
         </>
       )}
     </Box>
