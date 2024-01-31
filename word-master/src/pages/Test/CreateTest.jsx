@@ -30,7 +30,11 @@ import Nofile from "../../components/NoFile";
 import ScrollList from "../../layout/ScrollList";
 // API
 import { getList } from "../../service/database/getList";
-import { setData, pushData } from "../../service/database/dataOperation";
+import {
+  getData,
+  setData,
+  pushData,
+} from "../../service/database/dataOperation";
 // Utils
 import listObjToArr from "../../utils/listObjToArr";
 
@@ -276,11 +280,17 @@ const CreateTest = () => {
       meanRound: 1,
     });
 
-    // 단어 리스트 저장
+    // wordTest, meanTest에 단어 리스트 저장
     for (let i = 0; i < wordList.length; i++) {
       await pushData(`Test/${testName}/wordList/wordTest/waiting`, wordList[i]);
-      await pushData(`Test/${testName}/wordList/meanTest/waiting`, wordList[i]);
     }
+    const waitingWordList = await getData(
+      `Test/${testName}/wordList/wordTest/waiting`
+    );
+    await setData(
+      `Test/${testName}/wordList/meanTest/waiting`,
+      waitingWordList
+    );
 
     // DB 저장 완료 후, 로딩 Off하고 화면 이동
     setOnLoading(false);
