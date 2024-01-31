@@ -102,7 +102,17 @@ const SetTest = () => {
         }
         btnName="시작"
         onClickHandler={() =>
-          navigate(`/Test?title=${title}`, { state: { type: radio, timer } })
+          navigate(`/Test?title=${title}`, {
+            state: {
+              type: radio,
+              timer,
+              numOfPassed:
+                radio === "word"
+                  ? testInfo.numOfPassedWord
+                  : testInfo.numOfPassedMean,
+              listLength: testInfo.listLength,
+            },
+          })
         }
       />
       <Divider sx={{ mt: 2, mb: 2 }} />
