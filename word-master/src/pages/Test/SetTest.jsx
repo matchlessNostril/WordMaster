@@ -102,8 +102,9 @@ const SetTest = () => {
         }
         btnName="시작"
         onClickHandler={() =>
-          navigate(`/Test?title=${title}`, {
+          navigate("/Test", {
             state: {
+              title: title,
               type: radio,
               timer,
               numOfPassed:
