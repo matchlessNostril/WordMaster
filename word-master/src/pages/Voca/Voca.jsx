@@ -27,9 +27,7 @@ import { getList } from "../../service/database/getList";
 const Voca = () => {
   // location.state로 전달된 key, title, path 값 불러오기
   const location = useLocation();
-  const key = location.state.key;
-  const title = location.state.title;
-  const path = location.state.path;
+  const { key, title, path } = location.state;
 
   // 단어 리스트 State
   const [wordList, setWordList] = useState([{}]);
