@@ -181,13 +181,13 @@ const SetTest = () => {
               <Stack mt={1}>
                 <ProgressBar
                   title={title}
-                  type="단어"
+                  type="word"
                   // numOfPassed={testInfo.numOfPassedWord}
                   listLength={testInfo.wordListLength}
                 />
                 <ProgressBar
                   title={title}
-                  type="뜻"
+                  type="mean"
                   // numOfPassed={testInfo.numOfPassedMean}
                   listLength={testInfo.wordListLength}
                 />

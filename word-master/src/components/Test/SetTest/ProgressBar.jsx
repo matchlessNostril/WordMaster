@@ -26,11 +26,16 @@ const ProgressBar = ({ title, type, numOfPassed = 10, listLength }) => {
   // 리셋 함수
   const onClickResetBtn = async () => {
     // 통과된 단어 리스트 불러오기
-    const passedWordList = await getList(`Test/${title}/wordList/passed`);
+    const passedWordList = await getList(
+      `Test/${title}/wordList/${type}Test/passed`
+    );
 
     // 대기 리스트로 이동
     for (let i = 0; i < passedWordList.length; i++) {
-      await pushData(`Test/${title}/wordList/waiting`, passedWordList[i]);
+      await pushData(
+        `Test/${title}/wordList/${type}Test/waiting`,
+        passedWordList[i]
+      );
     }
 
     // 통과된 단어 수 수정
@@ -55,7 +60,7 @@ const ProgressBar = ({ title, type, numOfPassed = 10, listLength }) => {
     >
       <Box sx={{ mr: 2 }}>
         <Typography variant="body2" style={{ whiteSpace: "pre-line" }}>
-          {`${type}\n(${percentage}%)`}
+          {`${type === "word" ? "단어" : "뜻"}\n(${percentage}%)`}
         </Typography>
       </Box>
       <Box sx={{ flexGrow: 1 }}>

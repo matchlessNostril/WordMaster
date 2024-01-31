@@ -278,7 +278,8 @@ const CreateTest = () => {
 
     // 단어 리스트 저장
     for (let i = 0; i < wordList.length; i++) {
-      await pushData(`Test/${testName}/wordList/waiting`, wordList[i]);
+      await pushData(`Test/${testName}/wordList/wordTest/waiting`, wordList[i]);
+      await pushData(`Test/${testName}/wordList/meanTest/waiting`, wordList[i]);
     }
 
     // DB 저장 완료 후, 로딩 Off하고 화면 이동
