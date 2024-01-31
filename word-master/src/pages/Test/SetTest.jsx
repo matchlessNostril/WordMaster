@@ -91,10 +91,6 @@ const SetTest = () => {
       });
   }, []);
 
-  useEffect(() => {
-    console.log("vocaPaths :", vocaPaths);
-  }, [vocaPaths]);
-
   return (
     <Box sx={{ minWidth: "85vw", minHeight: "85vh" }}>
       <SubHeader
