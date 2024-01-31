@@ -101,7 +101,9 @@ const SetTest = () => {
             : true
         }
         btnName="시작"
-        onClickHandler={() => navigate(`/Test?title=${title}`)}
+        onClickHandler={() =>
+          navigate(`/Test?title=${title}`, { state: { type: radio, timer } })
+        }
       />
       <Divider sx={{ mt: 2, mb: 2 }} />
       {onLoading ? (
