@@ -66,13 +66,8 @@ const SetTest = () => {
   }, []);
 
   useEffect(() => {
-    console.log("loading ", onLoading);
-  }, [onLoading]);
-
-  useEffect(() => {
-    console.log("testInfo :", testInfo);
     console.log("vocaPaths :", vocaPaths);
-  }, [testInfo, vocaPaths]);
+  }, [vocaPaths]);
 
   return (
     <Box sx={{ minWidth: "85vw", minHeight: "85vh" }}>
