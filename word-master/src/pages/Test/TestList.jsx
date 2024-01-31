@@ -49,10 +49,6 @@ const TestList = () => {
     };
   }, []);
 
-  useEffect(() => {
-    console.log(list);
-  }, [list]);
-
   return (
     <>
       <Box sx={{ minWidth: "85vw", minHeight: "85vh" }}>

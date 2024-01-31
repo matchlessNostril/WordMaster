@@ -262,7 +262,8 @@ const CreateTest = () => {
     // 선택된 Path 저장하면서, 해당하는 단어 리스트 불러오기
     let wordList = [];
     for (let i = 0; i < selectedVocaPaths.length; i++) {
-      await pushData(`Test/${testName}/paths`, selectedVocaPaths[i]);
+      // "Voca/root" 이후 문자열 저장
+      await pushData(`Test/${testName}/paths`, selectedVocaPaths[i].slice(10));
       wordList = wordList.concat(await getList(selectedVocaPaths[i]));
     }
 
@@ -271,8 +272,8 @@ const CreateTest = () => {
       wordListLength: wordList.length,
       numOfPassedWord: 0,
       numOfPassedMean: 0,
-      wordRound: 0,
-      meanRound: 0,
+      wordRound: 1,
+      meanRound: 1,
     });
 
     // 단어 리스트 저장
@@ -282,14 +283,8 @@ const CreateTest = () => {
 
     // DB 저장 완료 후, 로딩 Off하고 화면 이동
     setOnLoading(false);
-    navigate("/Main"); // <- SetTest 화면으로 이동해야 됨. 일단 Main으로.
+    navigate(`/SetTest?title=${testName}`); // <- SetTest 화면으로 이동해야 됨. 일단 Main으로.
   }, [testName, selectedVocaPaths]);
-
-  // ---------------------------확인용-------------------------------------
-  useEffect(() => {
-    console.log("사용자의 모든 Voca Path 리스트 :", allVocaPaths);
-    console.log("선택된 Voca Path 리스트 :", selectedVocaPaths);
-  }, [allVocaPaths, selectedVocaPaths]);
 
   return (
     <>
