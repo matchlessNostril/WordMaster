@@ -63,7 +63,19 @@ const ProgressBar = ({ title, type, numOfPassed = 10, listLength }) => {
           value={percentage}
           marks={marks}
           disabled
-          sx={{ "&.Mui-disabled": { color: "#535353" } }}
+          sx={{
+            marginBottom: "-2.1vh",
+            "&.Mui-disabled": { color: "#535353" },
+            "& > .MuiSlider-thumb": {
+              width: "15px",
+              height: "15px",
+              backgroundColor: "white",
+              border: "2px solid #535353",
+            },
+            "& > .MuiSlider-markLabel": {
+              top: "-1.3vh",
+            },
+          }}
         />
       </Box>
       <IconButton
