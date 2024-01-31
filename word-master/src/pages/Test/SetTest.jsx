@@ -108,7 +108,7 @@ const SetTest = () => {
         <Loading />
       ) : (
         <>
-          <Box sx={{ pl: 2 }}>
+          <Box sx={{ pl: 1 }}>
             <Typography variant="subtitle1">
               <strong>테스트 설정</strong>
             </Typography>
@@ -165,7 +165,7 @@ const SetTest = () => {
           </Box>
           <Divider sx={{ mt: 2, mb: 2 }} />
           {!isEmpty(testInfo) && (
-            <Box sx={{ pl: 2 }}>
+            <Box sx={{ pl: 1 }}>
               <Stack direction="row" alignItems="center" spacing={2}>
                 <Typography variant="subtitle1">
                   <strong>현재 달성률</strong>
@@ -193,7 +193,7 @@ const SetTest = () => {
             </Box>
           )}
           <Divider sx={{ mt: 2, mb: 2 }} />
-          <Box sx={{ pl: 2 }}>
+          <Box sx={{ pl: 1, maxWidth: "85vw" }}>
             <Typography variant="subtitle1">
               <strong>단어장 리스트</strong>
             </Typography>
