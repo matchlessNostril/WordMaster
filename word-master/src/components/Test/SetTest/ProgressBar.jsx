@@ -71,7 +71,7 @@ const ProgressBar = ({ title, type, numOfPassed, listLength, setTestInfo }) => {
         height: "70px",
       }}
     >
-      <Box sx={{ mr: 2 }}>
+      <Box sx={{ mr: 2, width: "40px" }}>
         <Typography variant="body2" style={{ whiteSpace: "pre-line" }}>
           {`${type === "word" ? "단어" : "뜻"}\n(${percentage}%)`}
         </Typography>
