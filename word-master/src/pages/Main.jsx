@@ -22,33 +22,31 @@ const Main = () => {
   ];
 
   return (
-    <>
-      <Stack
-        direction={isPortrait ? "column" : "row"}
-        spacing={isPortrait ? 4 : 30}
-      >
-        {cardList.map((card) => (
-          <Card
-            key={card.title}
-            sx={{
-              maxWidth: 550,
-              width: isPortrait ? "80vw" : "30vw",
-              "&:hover": {
-                boxShadow: "0px 0px 5px 5px #d2d2d2",
-              },
-            }}
-          >
-            <CardActionArea onClick={() => navigate(card.to)}>
-              <CardMedia
-                component="img"
-                src={require(`../assets/images/${card.img}`)}
-                alt={card.title}
-              ></CardMedia>
-            </CardActionArea>
-          </Card>
-        ))}
-      </Stack>
-    </>
+    <Stack
+      direction={isPortrait ? "column" : "row"}
+      spacing={isPortrait ? 4 : 30}
+    >
+      {cardList.map((card, index) => (
+        <Card
+          key={index}
+          sx={{
+            maxWidth: 550,
+            width: isPortrait ? "80vw" : "30vw",
+            "&:hover": {
+              boxShadow: "0px 0px 5px 5px #d2d2d2",
+            },
+          }}
+        >
+          <CardActionArea onClick={() => navigate(card.to)}>
+            <CardMedia
+              component="img"
+              src={require(`../assets/images/${card.img}`)}
+              alt={card.title}
+            ></CardMedia>
+          </CardActionArea>
+        </Card>
+      ))}
+    </Stack>
   );
 };
 
