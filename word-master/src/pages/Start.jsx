@@ -1,7 +1,8 @@
+import { useIsPortrait } from "../hooks";
 import Transition from "../components/Transition";
 
 const Start = () => {
-  const isPortrait = useMediaQuery("(orientation: portrait)");
+  const isPortrait = useIsPortrait();
 
   return (
     <img

@@ -1,10 +1,11 @@
 import { useNavigate } from "react-router-dom";
+import { useIsPortrait } from "../hooks";
 import { Stack, Card, CardActionArea, CardMedia } from "@mui/material";
 import Transition from "../components/Transition";
 
 const Main = () => {
   const navigate = useNavigate();
-  const isPortrait = useMediaQuery("(orientation: portrait)");
+  const isPortrait = useIsPortrait();
 
   const cardList = [
     {
