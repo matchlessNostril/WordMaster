@@ -11,6 +11,14 @@ const TextCard = React.memo(
     // MediaQuery
     const isPortrait = useIsPortrait();
 
+    const [showAnswer, setShowAnswer] = useState(true);
+    useEffect(() => {
+      if (isFront) return;
+
+      setShowAnswer(false);
+      setTimeout(() => setShowAnswer(true), 600);
+    }, [children]);
+
     return (
       <Card
         sx={{
@@ -24,6 +32,7 @@ const TextCard = React.memo(
           sx={{ height: isPortrait ? "30vh" : "40vh" }}
         >
           <CardContent sx={{ p: 0, width: "100%", textAlign: "center" }}>
+            {showAnswer && (
               <strong
                 style={{
                   color: isFront ? "white" : "#535353",
@@ -34,6 +43,7 @@ const TextCard = React.memo(
               >
                 {children}
               </strong>
+            )}
             {isFront && (
               <TouchAppIcon
                 sx={{
