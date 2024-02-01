@@ -34,8 +34,9 @@ const ProgressBar = ({ title, type, numOfPassed, listLength, setTestInfo }) => {
 
   // 리셋 함수
   const onClickResetBtn = async () => {
-    // 통과된 단어 리스트 불러오기
     setOnLoading(true);
+
+    // 통과된 단어 리스트 불러오고 삭제
     const passedWordList = await getList(
       `Test/${title}/wordList/${type}Test/passed`
     );
