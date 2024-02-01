@@ -206,11 +206,8 @@ const SetTest = () => {
                 <Typography variant="subtitle1">
                   <strong>현재 달성률</strong>
                 </Typography>
-                <Chip
-                  label={`단어 ${testInfo.wordRound}회독 중`}
-                  size="small"
-                />
-                <Chip label={`뜻 ${testInfo.meanRound}회독 중`} size="small" />
+                <Chip label={`단어 ${testInfo.wordRound}회독`} size="small" />
+                <Chip label={`뜻 ${testInfo.meanRound}회독`} size="small" />
               </Stack>
               <Stack mt={1}>
                 <ProgressBar
