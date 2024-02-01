@@ -14,7 +14,16 @@ import printError from "../utils/printError";
 export const Register = async (nickname, email, password) => {
   try {
     // 이메일, 비밀번호로 회원 가입
-    await createUserWithEmailAndPassword(wordMasterAuth, email, password);
+    const registerRes = await createUserWithEmailAndPassword(
+      wordMasterAuth,
+      email,
+      password
+    );
+
+    // 자동 로그인 여부 로컬 스토리지에 저장
+    if (registerRes) {
+      localStorage.setItem("autoLogin", "on");
+    }
 
     // 닉네임도 등록
     await updateProfile(wordMasterAuth.currentUser, {
@@ -32,7 +41,15 @@ export const Register = async (nickname, email, password) => {
 export const Login = async (email, password) => {
   try {
     // 이메일, 비밀번호로 로그인
-    await signInWithEmailAndPassword(wordMasterAuth, email, password);
+    const loginRes = await signInWithEmailAndPassword(
+      wordMasterAuth,
+      email,
+      password
+    );
+
+    if (loginRes) {
+      localStorage.setItem("autoLogin", "on");
+    }
   } catch (error) {
     printError(error);
     if (error.code === "auth/invalid-credential") {
@@ -49,7 +66,11 @@ export const googleAuth = async () => {
   gProvider.addScope("email");
 
   try {
-    await signInWithPopup(wordMasterAuth, gProvider);
+    const googleAuthRes = await signInWithPopup(wordMasterAuth, gProvider);
+
+    if (googleAuthRes) {
+      localStorage.setItem("autoLogin", "on");
+    }
   } catch (error) {
     printError(error);
   }
@@ -59,6 +80,9 @@ export const googleAuth = async () => {
 export const logout = async () => {
   try {
     await signOut(wordMasterAuth);
+
+    // 세션 삭제
+    localStorage.removeItem("autoLogin");
   } catch (error) {
     printError(error);
   }
