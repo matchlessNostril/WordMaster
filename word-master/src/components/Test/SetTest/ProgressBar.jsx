@@ -13,7 +13,12 @@ import {
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 // API
 import { getList } from "../../../service/database/getList";
-import { pushData, updateData } from "../../../service/database/dataOperation";
+import {
+  pushData,
+  removeData,
+  updateData,
+} from "../../../service/database/dataOperation";
+
 const ProgressBar = ({ title, type, numOfPassed, listLength, setTestInfo }) => {
   const [onLoading, setOnLoading] = useLoading();
 
@@ -40,6 +45,7 @@ const ProgressBar = ({ title, type, numOfPassed, listLength, setTestInfo }) => {
     const passedWordList = await getList(
       `Test/${title}/wordList/${type}Test/passed`
     );
+    await removeData(`Test/${title}/wordList/${type}Test/passed`);
 
     // 대기 리스트로 이동
     for (let i = 0; i < passedWordList.length; i++) {
