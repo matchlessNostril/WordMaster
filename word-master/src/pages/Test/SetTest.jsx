@@ -113,6 +113,7 @@ const SetTest = () => {
                   ? testInfo.numOfPassedWord
                   : testInfo.numOfPassedMean,
               listLength: testInfo.wordListLength,
+              round: radio === "word" ? testInfo.wordRound : testInfo.meanRound,
             },
           })
         }
