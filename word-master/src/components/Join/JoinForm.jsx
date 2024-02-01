@@ -37,13 +37,16 @@ const GoogleIcon = styled.img`
 `;
 
 const JoinForm = ({ method }) => {
-  // theme
-  const theme = useTheme();
-
   // 가입 정보 state
   const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  // 제출 버튼 state
+  const [canClickBtn, setCanClickBtn] = useState(false);
+
+  // theme
+  const theme = useTheme();
 
   // method 바뀔 때마다 joinInfo 초기화
   useEffect(() => {
@@ -52,8 +55,6 @@ const JoinForm = ({ method }) => {
     setPassword("");
   }, [method]);
 
-  // 제출 버튼 state
-  const [canClickBtn, setCanClickBtn] = useState(false);
   useEffect(() => {
     // "회원 가입"인데 닉네임이 빈 값이거나 유효성 검사를 통과하지 못한 경우
     if (
