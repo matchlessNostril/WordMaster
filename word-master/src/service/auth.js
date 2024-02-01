@@ -22,6 +22,9 @@ export const Register = async (nickname, email, password) => {
     });
   } catch (error) {
     printError(error);
+    if (error.code === "auth/email-already-in-use") {
+      alert("이미 가입된 이메일입니다.");
+    }
   }
 };
 
@@ -32,6 +35,9 @@ export const Login = async (email, password) => {
     await signInWithEmailAndPassword(wordMasterAuth, email, password);
   } catch (error) {
     printError(error);
+    if (error.code === "auth/invalid-credential") {
+      alert("일치하는 사용자가 없습니다.");
+    }
   }
 };
 
