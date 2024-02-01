@@ -7,7 +7,7 @@ import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import { getList } from "../../../service/database/getList";
 import { pushData, updateData } from "../../../service/database/dataOperation";
 
-const ProgressBar = ({ title, type, numOfPassed = 10, listLength }) => {
+const ProgressBar = ({ title, type, numOfPassed, listLength }) => {
   // Slider 정보 State
   const [percentage, setPercentage] = useState(
     Math.floor((numOfPassed / listLength) * 100)

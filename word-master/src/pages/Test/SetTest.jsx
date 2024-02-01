@@ -194,13 +194,13 @@ const SetTest = () => {
                 <ProgressBar
                   title={title}
                   type="word"
-                  // numOfPassed={testInfo.numOfPassedWord}
+                  numOfPassed={testInfo.numOfPassedWord}
                   listLength={testInfo.wordListLength}
                 />
                 <ProgressBar
                   title={title}
                   type="mean"
-                  // numOfPassed={testInfo.numOfPassedMean}
+                  numOfPassed={testInfo.numOfPassedMean}
                   listLength={testInfo.wordListLength}
                 />
               </Stack>
