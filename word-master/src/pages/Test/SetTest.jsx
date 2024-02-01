@@ -1,7 +1,7 @@
 // Router
 import { useSearchParams, useNavigate } from "react-router-dom";
 // Hook
-import { useState, useEffect } from "react";
+import { useState, useCallback, useEffect } from "react";
 // Custom Hook
 import useLoading from "../../hooks/useLoading";
 // MUI
@@ -92,6 +92,41 @@ const SetTest = () => {
       });
   }, []);
 
+  const onClickStartBtn = useCallback(() => {
+    if (
+      radio === "word" &&
+      testInfo.numOfPassedWord === testInfo.wordListLength
+    ) {
+      alert(
+        "현재 단어 테스트 달성률이 100%입니다. 단어 테스트를 새로 진행하고 싶다면, 리셋 버튼을 눌러주세요."
+      );
+      return;
+    }
+    if (
+      radio === "mean" &&
+      testInfo.numOfPassedMean === testInfo.wordListLength
+    ) {
+      alert(
+        "현재 뜻 테스트 달성률이 100%입니다. 뜻 테스트를 새로 진행하고 싶다면, 리셋 버튼을 눌러주세요."
+      );
+      return;
+    }
+
+    navigate("/Test", {
+      state: {
+        title: title,
+        type: radio,
+        timer,
+        initialNumOfPassed:
+          radio === "word"
+            ? testInfo.numOfPassedWord
+            : testInfo.numOfPassedMean,
+        listLength: testInfo.wordListLength,
+        round: radio === "word" ? testInfo.wordRound : testInfo.meanRound,
+      },
+    });
+  }, [testInfo, radio, timer]);
+
   return (
     <Box sx={{ minWidth: "85vw", minHeight: "85vh" }}>
       <SubHeader
@@ -102,21 +137,7 @@ const SetTest = () => {
             : true
         }
         btnName="시작"
-        onClickHandler={() =>
-          navigate("/Test", {
-            state: {
-              title: title,
-              type: radio,
-              timer,
-              initialNumOfPassed:
-                radio === "word"
-                  ? testInfo.numOfPassedWord
-                  : testInfo.numOfPassedMean,
-              listLength: testInfo.wordListLength,
-              round: radio === "word" ? testInfo.wordRound : testInfo.meanRound,
-            },
-          })
-        }
+        onClickHandler={onClickStartBtn}
       />
       <Divider sx={{ mt: 2, mb: 2 }} />
       {onLoading ? (
