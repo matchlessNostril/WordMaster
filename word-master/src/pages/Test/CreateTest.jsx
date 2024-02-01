@@ -277,8 +277,8 @@ const CreateTest = () => {
       wordListLength: wordList.length,
       numOfPassedWord: 0,
       numOfPassedMean: 0,
-      wordRound: 1,
-      meanRound: 1,
+      wordRound: 0,
+      meanRound: 0,
     });
 
     // wordTest, meanTest에 단어 리스트 저장
