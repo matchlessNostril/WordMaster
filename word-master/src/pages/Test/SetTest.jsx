@@ -215,12 +215,14 @@ const SetTest = () => {
                   type="word"
                   numOfPassed={testInfo.numOfPassedWord}
                   listLength={testInfo.wordListLength}
+                  setTestInfo={setTestInfo}
                 />
                 <ProgressBar
                   title={title}
                   type="mean"
                   numOfPassed={testInfo.numOfPassedMean}
                   listLength={testInfo.wordListLength}
+                  setTestInfo={setTestInfo}
                 />
               </Stack>
             </Box>
