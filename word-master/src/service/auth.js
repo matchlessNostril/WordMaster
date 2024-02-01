@@ -13,7 +13,6 @@ import printError from "../utils/printError";
 // 1. 회원 가입
 export const Register = async (nickname, email, password) => {
   try {
-    console.log("nickname :", nickname);
     // 이메일, 비밀번호로 회원 가입
     await createUserWithEmailAndPassword(wordMasterAuth, email, password);
 
