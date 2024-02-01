@@ -108,7 +108,7 @@ const SetTest = () => {
               title: title,
               type: radio,
               timer,
-              numOfPassed:
+              initialNumOfPassed:
                 radio === "word"
                   ? testInfo.numOfPassedWord
                   : testInfo.numOfPassedMean,
