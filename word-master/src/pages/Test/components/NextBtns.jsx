@@ -3,6 +3,7 @@ import { Stack, IconButton } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
+import { isEqual } from "lodash";
 
 const NextBtns = ({ onClickPassBtn, onClickFailBtn, isTimeOut = false }) => {
   return (
@@ -25,7 +26,7 @@ const NextBtns = ({ onClickPassBtn, onClickFailBtn, isTimeOut = false }) => {
   );
 };
 
-export default React.memo(
-  NextBtns,
-  (prevProps, nextProps) => prevProps.isTimeOut === nextProps.isTimeOut
+// onClickPassBtn 함수와 isTimeOut을 검사해야 하기 때문에 isEqual 사용
+export default React.memo(NextBtns, (prevProps, nextProps) =>
+  isEqual(prevProps, nextProps)
 );
