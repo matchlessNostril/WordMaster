@@ -13,11 +13,39 @@ import {
   SetTest,
   Test,
 } from "../pages";
+import { useEffect } from "react";
+import { useMovePath } from "../hooks";
+
+const privateRoutes = [
+  { path: "/Main", page: <Main /> },
+  { path: "/VocaList", page: <VocaList /> },
+  { path: "/SaveVoca", page: <SaveVoca /> },
+  { path: "/Voca", page: <Voca /> },
+  { path: "/TestList", page: <TestList /> },
+  { path: "/CreateTest", page: <CreateTest /> },
+  { path: "/SetTest", page: <SetTest /> },
+  { path: "/Test", page: <Test /> },
+];
+
+// 인증 여부 확인 후, 화면 렌더링 또는 화면 이동
+const PrivatePage = ({ isLoginUser, page: Page }) => {
+  const navigate = useMovePath();
+
+  useEffect(() => {
+    if (!isLoginUser) {
+      alert("로그인 후 접속 가능합니다.");
+      navigate("/");
+    }
+  }, []);
+
+  return isLoginUser && Page;
+};
 
 const Router = () => {
   // 화면 이동 애니메이션을 적용하기 위해서는
   // 현재 화면이 바뀌었음을 증명할 key 값이 있어야 함
   const location = useLocation();
+  const isLoginUser = localStorage.getItem("isLoginUser");
 
   return (
     <AnimatePresence>
@@ -25,14 +53,13 @@ const Router = () => {
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Start />} />
         <Route path="/Join" element={<Join />} />
-        <Route path="/Main" element={<Main />} />
-        <Route path="/VocaList" element={<VocaList />} />
-        <Route path="/SaveVoca" element={<SaveVoca />} />
-        <Route path="/Voca" element={<Voca />} />
-        <Route path="/TestList" element={<TestList />} />
-        <Route path="/CreateTest" element={<CreateTest />} />
-        <Route path="/SetTest" element={<SetTest />} />
-        <Route path="/Test" element={<Test />} />
+        {privateRoutes.map(({ path, page }) => (
+          <Route
+            key={path}
+            path={path}
+            element={<PrivatePage {...{ isLoginUser, page }} />}
+          />
+        ))}
       </Routes>
     </AnimatePresence>
   );
