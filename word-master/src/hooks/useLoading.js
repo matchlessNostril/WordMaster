@@ -1,4 +1,3 @@
-// Hook
 import { useState } from "react";
 
 const useLoading = () => {

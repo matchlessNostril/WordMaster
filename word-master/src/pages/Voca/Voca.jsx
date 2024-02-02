@@ -15,6 +15,7 @@ import {
   Checkbox,
 } from "@mui/material";
 // Component
+import Transition from "../../components/Transition";
 import SubHeader from "../../components/SubHeader";
 import Loading from "../../components/Loading";
 import WordCard from "../../components/Voca/Voca/WordCard";
@@ -27,9 +28,7 @@ import { getList } from "../../service/database/getList";
 const Voca = () => {
   // location.state로 전달된 key, title, path 값 불러오기
   const location = useLocation();
-  const key = location.state.key;
-  const title = location.state.title;
-  const path = location.state.path;
+  const { key, title, path } = location.state;
 
   // 단어 리스트 State
   const [wordList, setWordList] = useState([{}]);
@@ -126,4 +125,4 @@ const Voca = () => {
   );
 };
 
-export default Voca;
+export default Transition(Voca);

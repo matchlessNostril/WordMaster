@@ -1,7 +1,7 @@
 // Router
 import { useSearchParams, useNavigate } from "react-router-dom";
 // Hook
-import { useState, useEffect } from "react";
+import { useState, useCallback, useEffect } from "react";
 // Custom Hook
 import useLoading from "../../hooks/useLoading";
 // MUI
@@ -20,6 +20,7 @@ import {
   Chip,
 } from "@mui/material";
 // Component
+import Transition from "../../components/Transition";
 import SubHeader from "../../components/SubHeader";
 import Loading from "../../components/Loading";
 import ProgressBar from "../../components/Test/SetTest/ProgressBar";
@@ -91,6 +92,41 @@ const SetTest = () => {
       });
   }, []);
 
+  const onClickStartBtn = useCallback(() => {
+    if (
+      radio === "word" &&
+      testInfo.numOfPassedWord === testInfo.wordListLength
+    ) {
+      alert(
+        "현재 단어 테스트 달성률이 100%입니다. 단어 테스트를 새로 진행하고 싶다면, 리셋 버튼을 눌러주세요."
+      );
+      return;
+    }
+    if (
+      radio === "mean" &&
+      testInfo.numOfPassedMean === testInfo.wordListLength
+    ) {
+      alert(
+        "현재 뜻 테스트 달성률이 100%입니다. 뜻 테스트를 새로 진행하고 싶다면, 리셋 버튼을 눌러주세요."
+      );
+      return;
+    }
+
+    navigate("/Test", {
+      state: {
+        title: title,
+        type: radio,
+        timer,
+        initialNumOfPassed:
+          radio === "word"
+            ? testInfo.numOfPassedWord
+            : testInfo.numOfPassedMean,
+        listLength: testInfo.wordListLength,
+        round: radio === "word" ? testInfo.wordRound : testInfo.meanRound,
+      },
+    });
+  }, [testInfo, radio, timer]);
+
   return (
     <Box sx={{ minWidth: "85vw", minHeight: "85vh" }}>
       <SubHeader
@@ -101,9 +137,7 @@ const SetTest = () => {
             : true
         }
         btnName="시작"
-        onClickHandler={() =>
-          navigate(`/Test?title=${title}`, { state: { type: radio, timer } })
-        }
+        onClickHandler={onClickStartBtn}
       />
       <Divider sx={{ mt: 2, mb: 2 }} />
       {onLoading ? (
@@ -172,24 +206,23 @@ const SetTest = () => {
                 <Typography variant="subtitle1">
                   <strong>현재 달성률</strong>
                 </Typography>
-                <Chip
-                  label={`단어 ${testInfo.wordRound}회독 중`}
-                  size="small"
-                />
-                <Chip label={`뜻 ${testInfo.meanRound}회독 중`} size="small" />
+                <Chip label={`단어 ${testInfo.wordRound}회독`} size="small" />
+                <Chip label={`뜻 ${testInfo.meanRound}회독`} size="small" />
               </Stack>
               <Stack mt={1}>
                 <ProgressBar
                   title={title}
-                  type="단어"
-                  // numOfPassed={testInfo.numOfPassedWord}
+                  type="word"
+                  numOfPassed={testInfo.numOfPassedWord}
                   listLength={testInfo.wordListLength}
+                  setTestInfo={setTestInfo}
                 />
                 <ProgressBar
                   title={title}
-                  type="뜻"
-                  // numOfPassed={testInfo.numOfPassedMean}
+                  type="mean"
+                  numOfPassed={testInfo.numOfPassedMean}
                   listLength={testInfo.wordListLength}
+                  setTestInfo={setTestInfo}
                 />
               </Stack>
             </Box>
@@ -216,4 +249,4 @@ const SetTest = () => {
   );
 };
 
-export default SetTest;
+export default Transition(SetTest);

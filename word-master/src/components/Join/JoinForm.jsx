@@ -1,10 +1,11 @@
 // Hook
 import { useState, useEffect } from "react";
+import { useLoading } from "../../hooks";
 // Styled-components
 import styled from "styled-components";
 // MUI
 import { styled as muiStyled, useTheme } from "@mui/material/styles";
-import { Stack, Button, Divider } from "@mui/material";
+import { Stack, Button, Divider, CircularProgress } from "@mui/material";
 // Component
 import JoinTextField from "./JoinTextField";
 import JoinTextFieldSecret from "./JoinTextFieldSecret";
@@ -37,13 +38,19 @@ const GoogleIcon = styled.img`
 `;
 
 const JoinForm = ({ method }) => {
-  // theme
-  const theme = useTheme();
-
   // 가입 정보 state
   const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  // 제출 버튼 state
+  const [canClickBtn, setCanClickBtn] = useState(false);
+
+  // 로딩 state
+  const [onLoading, setOnLoading] = useLoading();
+
+  // theme
+  const theme = useTheme();
 
   // method 바뀔 때마다 joinInfo 초기화
   useEffect(() => {
@@ -52,8 +59,6 @@ const JoinForm = ({ method }) => {
     setPassword("");
   }, [method]);
 
-  // 제출 버튼 state
-  const [canClickBtn, setCanClickBtn] = useState(false);
   useEffect(() => {
     // "회원 가입"인데 닉네임이 빈 값이거나 유효성 검사를 통과하지 못한 경우
     if (
@@ -78,6 +83,16 @@ const JoinForm = ({ method }) => {
     // 모든 조건 통과시 버튼 클릭 가능
     setCanClickBtn(true);
   }, [method, nickname, email, password]);
+
+  const onClickAuth = async (method) => {
+    setOnLoading(true);
+    if (method === "login") {
+      await Login(email, password);
+    } else if (method === "register") {
+      await Register(nickname, email, password);
+    }
+    setOnLoading(false);
+  };
 
   return (
     <>
@@ -116,11 +131,15 @@ const JoinForm = ({ method }) => {
           disabled={!canClickBtn}
           onClick={
             method === "로그인"
-              ? () => Login(email, password)
-              : () => Register(nickname, email, password)
+              ? () => onClickAuth("login")
+              : () => onClickAuth("register")
           }
         >
-          {method}
+          {onLoading ? (
+            <CircularProgress size={20} sx={{ color: "white" }} />
+          ) : (
+            `${method}`
+          )}
         </StyledButton>
       </Stack>
     </>
