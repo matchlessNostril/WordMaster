@@ -1,6 +1,5 @@
 import { useIsPortrait } from "../hooks";
-import Transition from "../components/Transition";
-import { Loading } from "../components";
+import { Transition, Loading } from "../components";
 
 const Start = () => {
   const isWaitingAutoLogin = localStorage.getItem("autoLogin");
