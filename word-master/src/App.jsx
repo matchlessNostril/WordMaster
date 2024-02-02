@@ -1,6 +1,6 @@
+import Router from "./router/Router";
 import { Box } from "@mui/material";
 import Header from "./components/Header";
-import Router from "./router/Router";
 
 function App() {
   return (
