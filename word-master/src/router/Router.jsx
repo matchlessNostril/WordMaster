@@ -2,17 +2,18 @@
 import { AnimatePresence } from "framer-motion";
 // Router
 import { Routes, Route, useLocation } from "react-router-dom";
-// Pages
-import Start from "../pages/Start";
-import Join from "../pages/Join";
-import Main from "../pages/Main";
-import VocaList from "../pages/Voca/VocaList";
-import SaveVoca from "../pages/Voca/SaveVoca";
-import Voca from "../pages/Voca/Voca";
-import TestList from "../pages/Test/TestList";
-import CreateTest from "../pages/Test/CreateTest";
-import SetTest from "../pages/Test/SetTest";
-import Test from "../pages/Test/Test";
+import {
+  Start,
+  Join,
+  Main,
+  VocaList,
+  SaveVoca,
+  Voca,
+  TestList,
+  CreateTest,
+  SetTest,
+  Test,
+} from "../pages";
 
 const Router = () => {
   const location = useLocation();
