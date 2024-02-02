@@ -2,7 +2,7 @@ import { useIsPortrait } from "../hooks";
 import { Transition, Loading } from "../components";
 
 const Start = () => {
-  const isWaitingAutoLogin = localStorage.getItem("autoLogin");
+  const isLoginUser = localStorage.getItem("isLoginUser");
   const isPortrait = useIsPortrait();
 
   return (
@@ -11,7 +11,7 @@ const Start = () => {
         src={require("../assets/images/slogan.png")}
         style={{ width: isPortrait ? "70vw" : "30vw" }}
       />
-      {isWaitingAutoLogin === "on" && <Loading onMarginTop={false} />}
+      {isLoginUser === "yes" && <Loading onMarginTop={false} />}
     </>
   );
 };

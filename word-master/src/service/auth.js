@@ -22,7 +22,7 @@ export const Register = async (nickname, email, password) => {
 
     // 자동 로그인 여부 로컬 스토리지에 저장
     if (registerRes) {
-      localStorage.setItem("autoLogin", "on");
+      localStorage.setItem("isLoginUser", "yes");
     }
 
     // 닉네임도 등록
@@ -48,7 +48,7 @@ export const Login = async (email, password) => {
     );
 
     if (loginRes) {
-      localStorage.setItem("autoLogin", "on");
+      localStorage.setItem("isLoginUser", "yes");
     }
   } catch (error) {
     printError(error);
@@ -69,7 +69,7 @@ export const googleAuth = async () => {
     const googleAuthRes = await signInWithPopup(wordMasterAuth, gProvider);
 
     if (googleAuthRes) {
-      localStorage.setItem("autoLogin", "on");
+      localStorage.setItem("isLoginUser", "yes");
     }
   } catch (error) {
     printError(error);
@@ -81,7 +81,7 @@ export const logout = async () => {
   try {
     await signOut(wordMasterAuth);
 
-    localStorage.removeItem("autoLogin");
+    localStorage.removeItem("isLoginUser");
   } catch (error) {
     printError(error);
   }
