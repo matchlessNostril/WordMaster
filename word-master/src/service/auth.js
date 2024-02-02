@@ -81,7 +81,6 @@ export const logout = async () => {
   try {
     await signOut(wordMasterAuth);
 
-    // 세션 삭제
     localStorage.removeItem("autoLogin");
   } catch (error) {
     printError(error);
