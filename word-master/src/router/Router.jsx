@@ -1,6 +1,5 @@
 // 페이지 전환 애니메이션 라이브러리
 import { AnimatePresence } from "framer-motion";
-// Router
 import { Routes, Route, useLocation } from "react-router-dom";
 import {
   Start,
