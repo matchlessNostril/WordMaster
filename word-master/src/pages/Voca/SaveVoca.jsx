@@ -124,6 +124,7 @@ const SaveVoca = () => {
         key: key,
         title: vocaName,
         path: path,
+        isAfterModify: true,
       },
     });
   }, [vocaName, wordList]);
