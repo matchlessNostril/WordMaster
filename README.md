@@ -26,6 +26,8 @@ Word Master를 통해 여러분 만의 단어장을 구성하고,
 
 ## ✔️ 사용 가능 디바이스
 
+<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/1f59a143-3a7d-49d5-9844-f12a058c3f24" width="700"/>
+
 - `Desktop`
 - `Laptop`
 - `Pad`
