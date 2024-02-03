@@ -74,6 +74,12 @@ const VocaListItemCard = ({ itemKey, title, path, isDir = false }) => {
   // 버튼 클릭 핸들러 함수
   // 1. 이름 바꾸기
   const onClickChangeBtn = async (inputValue) => {
+    // 기존 이름일 경우 early return
+    if (inputValue === title) {
+      setOpenModal(false);
+      return;
+    }
+
     // 포함될 수 없는 문자가 있는 지 확인
     if (/[.#$\[\]]/.test(inputValue)) {
       alert(`이름에 '.', '#', '$', '[', ']' 기호는 들어갈 수 없습니다.`);
