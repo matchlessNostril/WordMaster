@@ -67,7 +67,7 @@ Word Master를 통해 여러분 만의 단어장을 구성하고,
 
 ### 3️⃣ Vocabulary 
 
-<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/4bbf8b52-35f9-4b7a-99fa-3367b9494202" width="800" />
+<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/2c232ee3-4dfe-454e-bc40-ce8d852720bf" width="800" />
 
 - 원하는 방식으로 단어장을 분류해서 폴더 별로 생성해보세요.
 
