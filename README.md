@@ -1,4 +1,4 @@
-![header](https://capsule-render.vercel.app/api?type=soft&color=ffecb8&height=150&section=header&text=Word%20Master&fontSize=50&fontColor=FFFFFF&animation=fadeIn)
+![header](https://capsule-render.vercel.app/api?type=soft&color=ffe785&height=150&section=header&text=Word%20Master&fontSize=50&fontColor=FFFFFF&animation=fadeIn)
 
 ## 💻 소개
 
