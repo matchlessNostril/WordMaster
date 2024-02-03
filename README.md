@@ -44,8 +44,7 @@ Word Master를 통해 여러분 만의 단어장을 구성하고,
 - 나만의 단어장, 나만의 테스트가 가능한 Word Master! 🤗
 - 오른쪽 상단의 아이콘을 눌러, 로그인 화면으로 Run
 
-<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/ce3041f6-a81e-4225-bd0d-171255c274cb" width="800" />
-<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/c7d9f1b4-8ef3-4964-87bf-5201e8fa5c8b" width="800" />
+<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/1c970232-06f3-4f9c-9380-3416812b2392" width="800" />
 
 - 로그인 / 회원가입 토글 선택
 - Google 간편 로그인 / 회원가입 가능
