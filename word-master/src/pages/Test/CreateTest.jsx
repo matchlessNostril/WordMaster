@@ -315,6 +315,7 @@ const CreateTest = () => {
               <TextField
                 label="테스트 이름"
                 variant="outlined"
+                autoComplete="off"
                 onChange={(event) => setTestName(event.target.value)}
                 sx={{ width: "100%" }}
               />
