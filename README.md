@@ -37,10 +37,22 @@ Word Master를 통해 여러분 만의 단어장을 구성하고,
 
 - [Link To WebSite](https://wordmaster-6c8d8.web.app)
 
-### 1️⃣ 
+### 1️⃣ WELCOME, 로그인 / 회원가입
 
-<img src="" width="600" />
+<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/4c126070-6f1b-4dcc-b849-fbe4c8163aa4" width="800" />
 
+- 나만의 단어장, 나만의 테스트가 가능한 Word Master! 🤗
+- 오른쪽 상단의 아이콘을 눌러, 로그인 화면으로 Run
+
+<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/ce3041f6-a81e-4225-bd0d-171255c274cb" width="800" />
+<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/c7d9f1b4-8ef3-4964-87bf-5201e8fa5c8b" width="800" />
+
+- 로그인 / 회원가입 토글 선택
+- Google 간편 로그인 / 회원가입 가능
+- 유효하지 않은 형식으로 입력하면 에러 메세지 발생!
+- 비밀번호 입력란 오른쪽의 👁️ 버튼을 누르면, 입력한 비밀번호를 확인할 수 있어요.
+- 올바른 입력이면 버튼이 활성화되며 로그인 / 회원가입이 가능합니다.
+- 로그인 / 회원가입이 완료되면, 홈 화면으로 이동
 
 ### 2️⃣ 
 
