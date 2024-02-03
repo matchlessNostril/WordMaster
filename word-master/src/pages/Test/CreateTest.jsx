@@ -220,10 +220,8 @@ const ChildSetCheckbox = React.memo(
 );
 
 const CreateTest = () => {
-  // VocaPathContext에서 사용자의 Voca JSON Tree,
-  // 모든 단어장 Path 배열, 선택된 단어장 Path 배열 State 불러오기
-  const { vocaTree, allVocaPaths, selectedVocaPaths } =
-    useContext(VocaPathContext);
+  // VocaPathContext에서 사용자의 Voca JSON Tree, 선택된 단어장 Path 배열 State 불러오기
+  const { vocaTree, selectedVocaPaths } = useContext(VocaPathContext);
 
   // 테스트 이름 State
   const [testName, setTestName] = useState();
