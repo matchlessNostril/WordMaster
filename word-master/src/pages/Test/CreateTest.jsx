@@ -325,45 +325,41 @@ const CreateTest = () => {
               <Loading />
             ) : (
               <>
+                <Box sx={{ pl: 2, mb: 2 }}>
+                  <Typography variant="subtitle1">
+                    <strong>단어장 선택</strong>
+                  </Typography>
+                  <StyledUl>
+                    <li>테스트 생성 시점 기준 단어 세트로 생성됩니다.</li>
+                    <li>이후 단어 세트가 업데이트 되어도 반영되지 않습니다.</li>
+                  </StyledUl>
+                </Box>
+                <Divider sx={{ mt: 2, mb: 2 }} />
                 {vocaTree === "NoFile" ? (
                   <Nofile text="단어장이 비어있습니다." />
                 ) : (
-                  <>
-                    <Box sx={{ pl: 2, mb: 2 }}>
-                      <Typography variant="subtitle1">
-                        <strong>단어장 선택</strong>
-                      </Typography>
-                      <StyledUl>
-                        <li>테스트 생성 시점 기준 단어 세트로 생성됩니다.</li>
-                        <li>
-                          이후 단어 세트가 업데이트 되어도 반영되지 않습니다.
-                        </li>
-                      </StyledUl>
-                    </Box>
-                    <Divider sx={{ mt: 2, mb: 2 }} />
-                    <ScrollList maxHeight="48vh">
-                      {dirList &&
-                        dirList.map((value, key) => (
-                          <SetCheckbox
-                            key={key}
-                            index={0}
-                            isDir
-                            name={value}
-                            path={`Voca/root`}
-                            currentTree={vocaTree[value]}
-                          />
-                        ))}
-                      {vocaList &&
-                        vocaList.map((value, key) => (
-                          <SetCheckbox
-                            key={key}
-                            index={0}
-                            name={value}
-                            path={`Voca/root`}
-                          />
-                        ))}
-                    </ScrollList>
-                  </>
+                  <ScrollList maxHeight="48vh">
+                    {dirList &&
+                      dirList.map((value, key) => (
+                        <SetCheckbox
+                          key={key}
+                          index={0}
+                          isDir
+                          name={value}
+                          path={`Voca/root`}
+                          currentTree={vocaTree[value]}
+                        />
+                      ))}
+                    {vocaList &&
+                      vocaList.map((value, key) => (
+                        <SetCheckbox
+                          key={key}
+                          index={0}
+                          name={value}
+                          path={`Voca/root`}
+                        />
+                      ))}
+                  </ScrollList>
                 )}
               </>
             )}
