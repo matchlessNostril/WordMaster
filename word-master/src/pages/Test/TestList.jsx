@@ -61,7 +61,7 @@ const TestList = () => {
           </IconButton>
         </RowSpaceBetween>
         {onLoading ? (
-          <Loading />
+          <Loading text="아직 생성된 테스트가 없습니다." />
         ) : (
           <>
             {isEmpty(list) ? (

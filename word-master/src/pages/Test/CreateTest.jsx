@@ -327,7 +327,7 @@ const CreateTest = () => {
             ) : (
               <>
                 {vocaTree === "NoFile" ? (
-                  <Nofile />
+                  <Nofile text="단어장이 비어있습니다." />
                 ) : (
                   <>
                     <Box sx={{ pl: 2, mb: 2 }}>
