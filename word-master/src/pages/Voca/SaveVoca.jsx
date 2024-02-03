@@ -83,7 +83,7 @@ const SaveVoca = () => {
     if (mode === "Create" || vocaName !== title) {
       // 단어장 이름에 포함될 수 없는 문자가 있는 지 확인
       if (/[.#$\[\]]/.test(vocaName)) {
-        alert(`이름에 '.', '#', '$', '[', ']' 기호는 들어갈 수 없습니다.`);
+        alert(`이름에 「 .  #  $  [  ] 」 기호는 들어갈 수 없습니다.`);
         return;
       }
 
