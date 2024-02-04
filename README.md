@@ -125,7 +125,7 @@ Word Master를 통해 여러분 만의 단어장을 구성하고,
 
 - 매일 매일 복습이 생명인 단어 암기, 테스트를 생성해서 무한 반복!
 - ➕ 버튼을 누르면, 테스트 생성 화면으로 이동
-- 생성된 테스트를 누르면, 테스트 설정 화면으로 이
+- 생성된 테스트를 누르면, 테스트 설정 화면으로 이동
 
 ### 7️⃣ 테스트 생성
 
@@ -144,7 +144,7 @@ Word Master를 통해 여러분 만의 단어장을 구성하고,
 
 - 단어 세트가 너무 깊은 곳에 있다고요? 괜찮아요. 스크롤이 있어요!
 
-<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/0546d0db-55ad-4340-bb0d-03d459eb0ce1" width="700" />
+<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/0546d0db-55ad-4340-bb0d-03d459eb0ce1" width="300" />
 
 - 화면이 너무 조그맣다고요? 괜찮아요. 가로 스크롤도 있어요!
 
