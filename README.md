@@ -150,7 +150,7 @@ Word Master를 통해 여러분 만의 단어장을 구성하고,
 
 ### 8️⃣ 테스트 설정
 
-<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/4ca2bc4b-6c7f-4f7d-8a47-dae409c4c785" width="900" />
+<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/0c51ed05-3360-46d1-9675-16cb16ceafb8" width="900" />
 
 - 본격적으로 테스트를 치르기 전 테스트 설정을 합시다.
 - 단어 테스트를 치를 것인지, 뜻 테스트를 치를 것인지
@@ -162,6 +162,19 @@ Word Master를 통해 여러분 만의 단어장을 구성하고,
 - 가장 하단에는 어떤 단어 세트가 선택되어 있는 지 리스트가 나타납니다.
 - 모든 준비가 완료됐다면, 시작 버튼을 눌러 테스트를 진행해 주세요!
 
-### 9️⃣ 
+### 9️⃣ 테스트
+
+<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/af7f6b18-7d78-42fd-9bc8-879055727541" width="900" />
+
+- 테스트 화면에서는 상단에 테스트 정보와 진행 상태가 나타납니다.
+- 타이머를 설정했다면, 왼쪽 하단에 남은 시간이 나타날 것이고 0이 되면 틀린 것으로 처리됩니다.
+- 그 전에 정답을 맞혔다면, 오른쪽 하단의 ✔️ 버튼을!
+- 틀렸다면, ✖️ 버튼을..
+- 정답은 가운데 단어 카드를 클릭해서 뒷면을 확인해 주세요!
+- 타임 아웃이 되면, 버튼은 ▶ 로 바뀌며 다음 문제로 넘어갈 수 있어요.
+
+<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/992571bf-c2ad-4a6f-93f0-465da0996147" width="100" />
+
+- 테스트는 오른쪽 상단의 ✖️ 버튼을 눌러 언제든지 중단하고 다시 시작할 수 있어요!
 
 
