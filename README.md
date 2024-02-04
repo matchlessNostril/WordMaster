@@ -40,7 +40,7 @@ Word Master를 통해 여러분 만의 단어장을 구성하고,
 
 ### 1️⃣ WELCOME, 로그인 / 회원가입
 
-<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/640827e1-8902-4c3f-b1ca-bcaac1bf21e7" width="800" />
+<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/640827e1-8902-4c3f-b1ca-bcaac1bf21e7" width="900" />
 
 - 나만의 단어장, 나만의 테스트가 가능한 Word Master! 🤗
 - 오른쪽 상단의 아이콘을 눌러, 로그인 화면으로 Run
@@ -54,7 +54,7 @@ Word Master를 통해 여러분 만의 단어장을 구성하고,
 - 올바른 입력이면 버튼이 활성화되며 로그인 / 회원가입이 가능합니다.
 - 로그인 / 회원가입이 완료되면, 홈 화면으로 이동
 
-### 2️⃣ Vocabulary, Test 모드 선택
+### 2️⃣ Vocabulary, Test 모드 선택 (홈)
 
 <img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/d3d00583-1a92-4952-b3f4-2ea4a5d6307c" width="800" />
 
