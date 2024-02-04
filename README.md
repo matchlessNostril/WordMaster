@@ -27,7 +27,7 @@ Word Master를 통해 여러분 만의 단어장을 구성하고,
 
 ## ✔️ 사용 가능 디바이스
 
-<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/6794b9f7-efba-419a-a403-451abb8acb11" width="800"/>
+<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/6794b9f7-efba-419a-a403-451abb8acb11" width="900"/>
 
 - `Desktop`
 - `Laptop`
@@ -45,7 +45,7 @@ Word Master를 통해 여러분 만의 단어장을 구성하고,
 - 나만의 단어장, 나만의 테스트가 가능한 Word Master! 🤗
 - 오른쪽 상단의 아이콘을 눌러, 로그인 화면으로 Run
 
-<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/1c970232-06f3-4f9c-9380-3416812b2392" width="800" />
+<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/1c970232-06f3-4f9c-9380-3416812b2392" width="700" />
 
 - 로그인 / 회원가입 토글 선택
 - Google 간편 로그인 / 회원가입 가능
@@ -56,7 +56,7 @@ Word Master를 통해 여러분 만의 단어장을 구성하고,
 
 ### 2️⃣ Vocabulary, Test 모드 선택 (홈)
 
-<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/d3d00583-1a92-4952-b3f4-2ea4a5d6307c" width="800" />
+<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/d3d00583-1a92-4952-b3f4-2ea4a5d6307c" width="900" />
 
 - Vocabulary
   - 원하는 위치에 폴더를 생성하여 그 안에 단어 세트를 만들 수 있어요.
@@ -67,23 +67,23 @@ Word Master를 통해 여러분 만의 단어장을 구성하고,
 
 ### 3️⃣ Vocabulary
 
-<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/47063832-42db-402e-9456-85c2ad8aff9a" width="800" />
+<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/47063832-42db-402e-9456-85c2ad8aff9a" width="900" />
 
 - 원하는 방식으로 단어 세트를 분류해서 폴더 별로 생성해보세요.
 
-<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/568c70a0-f6a1-403c-8210-79b309d56f8e" width="600" />
+<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/568c70a0-f6a1-403c-8210-79b309d56f8e" width="700" />
 
 - ➕ 버튼을 눌러 해당 위치에 폴더 또는 단어 세트 생성이 가능합니다.
 - 단어 세트 생성을 누르면, 단어 세트 생성 화면으로 이동
 
-<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/a6c1edfc-86f8-409f-b609-2a2d3a2da758" width="600" />
+<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/a6c1edfc-86f8-409f-b609-2a2d3a2da758" width="700" />
 
 - 또한, 🔽 버튼을 눌러 이름 변경 또는 삭제도 가능!
 
 
 ### 4️⃣ 단어 세트 생성
 
-<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/d8871489-0584-44fd-a23f-7a40b6aa695f" width="800" />
+<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/d8871489-0584-44fd-a23f-7a40b6aa695f" width="900" />
 
 - 원하는 방식으로 분류한 단어 세트의 단어들을 입력해주세요!
 - 단어, 뜻 그리고 발음 추가 체크 박스까지 누르면 발음까지 입력 가능합니다.
