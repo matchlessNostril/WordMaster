@@ -1,10 +1,10 @@
 export { default as Start } from "./Start";
-export { default as Join } from "./Join";
+export { default as Join } from "./Join/Join";
 export { default as Main } from "./Main";
-export { default as VocaList } from "./Voca/VocaList";
-export { default as SaveVoca } from "./Voca/SaveVoca";
+export { default as VocaList } from "./VocaList/VocaList";
+export { default as SaveVoca } from "./SaveVoca/SaveVoca";
 export { default as Voca } from "./Voca/Voca";
-export { default as TestList } from "./Test/TestList";
-export { default as CreateTest } from "./Test/CreateTest";
-export { default as SetTest } from "./Test/SetTest";
+export { default as TestList } from "./TestList/TestList";
+export { default as CreateTest } from "./CreateTest/CreateTest";
+export { default as SetTest } from "./SetTest/SetTest";
 export { default as Test } from "./Test/Test";

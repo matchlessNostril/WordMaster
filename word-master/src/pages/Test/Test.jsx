@@ -5,7 +5,7 @@ import { useState, useRef, useCallback, useEffect } from "react";
 // Custom Hook
 import { useIsPortrait, useLoading } from "../../hooks";
 // Reducer
-import useQuestionReducer from "./useQuestionReducer";
+import useQuestionReducer from "./hooks/useQuestionReducer";
 // MUI
 import { Stack } from "@mui/material";
 // Component (Common)
