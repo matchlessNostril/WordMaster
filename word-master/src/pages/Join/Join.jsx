@@ -4,8 +4,9 @@ import { useState, useCallback } from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import { ToggleButtonGroup, ToggleButton } from "@mui/material";
 // Component
-import Transition from "../components/Transition";
-import JoinForm from "../components/Join/JoinForm";
+import Transition from "../../components/Transition";
+import JoinForm from "../../components/Join/JoinForm";
+import Form from "./components/Form";
 
 const StyledToggleButton = styled(ToggleButton)({
   fontSize: "1rem",
@@ -53,6 +54,7 @@ const Join = () => {
         </StyledToggleButton>
       </ToggleButtonGroup>
       <JoinForm method={method} />
+      <Form method={method} />
     </>
   );
 };
