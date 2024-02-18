@@ -1,6 +1,6 @@
 import { Container } from "@mui/material";
 
-const NoFile = ({ text }) => {
+const NoFile = () => {
   return (
     <Container
       style={{
@@ -19,7 +19,7 @@ const NoFile = ({ text }) => {
           marginBottom: "20px",
         }}
       />
-      {text}
+      아직 생성된 파일이 없습니다.
     </Container>
   );
 };

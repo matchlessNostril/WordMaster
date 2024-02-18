@@ -57,7 +57,7 @@ const SaveVoca = () => {
   // navigate
   const navigate = useNavigate();
 
-  // 만들기, 수정 버튼 핸들러 함수
+  // 만들기 버튼 핸들러 함수
   const onClickCreateBtn = useCallback(async () => {
     // 제대로 입력되지 않은 단어가 있는지 먼저 확인
     let isValid = true;
@@ -79,28 +79,25 @@ const SaveVoca = () => {
     }
     if (!isValid) return;
 
-    // Create(생성) 모드 또는 Modify(수정) 모드에서 기존 단어장 이름이 아닐 경우 유효성 검사
-    if (mode === "Create" || vocaName !== title) {
-      // 단어장 이름에 포함될 수 없는 문자가 있는 지 확인
-      if (/[.#$\[\]]/.test(vocaName)) {
-        alert(`이름에 「 .  #  $  [  ] 」 기호는 들어갈 수 없습니다.`);
-        return;
-      }
+    // 단어장 이름에 포함될 수 없는 문자가 있는 지 확인
+    if (/[.#$\[\]]/.test(vocaName)) {
+      alert(`이름에 '.', '#', '$', '[', ']' 기호는 들어갈 수 없습니다.`);
+      return;
+    }
 
-      // 버튼 클릭 시점의 현재 path의 dirList와 vocaList 배열 값 불러오기
-      const dirList = await getList(`Voca/${path}/dirList`, "name");
-      const vocaList = await getList(`Voca/${path}/vocaList`, "name");
-      const entireList = dirList.concat(vocaList);
+    // 버튼 클릭 시점의 현재 path의 dirList와 vocaList 배열 값 불러오기
+    const dirList = await getList(`Voca/${path}/dirList`, "name");
+    const vocaList = await getList(`Voca/${path}/vocaList`, "name");
+    const entireList = dirList.concat(vocaList);
 
-      // 현재 디렉토리 내에서 중복된 이름으로 생성 불가능
-      if (entireList.includes(vocaName)) {
-        alert(
-          `현재 폴더 내에 이미 존재하는 이름으로는 ${
-            mode === "Modify" ? "수정" : "생성"
-          }할 수 없습니다.`
-        );
-        return;
-      }
+    // 현재 디렉토리 내에서 중복된 이름으로 생성 불가능
+    if (entireList.includes(vocaName)) {
+      alert(
+        `현재 폴더 내에 이미 존재하는 이름으로는 ${
+          mode === "Modify" ? "수정" : "생성"
+        }할 수 없습니다.`
+      );
+      return;
     }
 
     // Modify(수정) 모드인 경우 먼저 기존 데이터 삭제
@@ -127,7 +124,6 @@ const SaveVoca = () => {
         key: key,
         title: vocaName,
         path: path,
-        isAfterModify: true,
       },
     });
   }, [vocaName, wordList]);

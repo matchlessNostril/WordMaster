@@ -29,20 +29,13 @@ const btnInfoList = {
 
 const Header = () => {
   const location = useLocation();
+  const currentPath = location.pathname;
   const navigate = useMovePath();
 
   const [btnInfo, setBtnInfo] = useState({ title: "", to: "", icon: null });
   useEffect(() => {
-    // SaveVoca (수정) 에서 Voca로 넘어온 경우
-    // 뒤로 가기 버튼을 눌렀을 때 다시 SaveVoca로 넘어가기 때문에
-    // to를 -3으로 바꿔 VocaList로 넘어갈 수 있도록
-    console.log(location)
-    if(location.pathname === "/Voca" && location.state.isAfterModify) {
-      setBtnInfo({...btnInfoList[location.pathname], to: -3 })
-      return;
-    };
-    setBtnInfo(btnInfoList[location.pathname]);
-  }, [location]);
+    setBtnInfo(btnInfoList[currentPath]);
+  }, [currentPath]);
 
   return (
       <Box component="header">
@@ -65,7 +58,7 @@ const Header = () => {
             </Box>
             <Tooltip title={btnInfo.title}>
               <IconButton
-                onClick={location.pathname === "/Main" ? () => btnInfo.to() : () => navigate(btnInfo.to)}
+                onClick={currentPath === "/Main" ? () => btnInfo.to() : () => navigate(btnInfo.to)}
                 aria-label={btnInfo?.title} // aria-label : 대체 텍스트
                 disableTouchRipple // disableTouchRipple : 눌림 효과 비활성화
                 sx={{

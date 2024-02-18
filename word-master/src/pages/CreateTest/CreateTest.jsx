@@ -220,8 +220,10 @@ const ChildSetCheckbox = React.memo(
 );
 
 const CreateTest = () => {
-  // VocaPathContext에서 사용자의 Voca JSON Tree, 선택된 단어장 Path 배열 State 불러오기
-  const { vocaTree, selectedVocaPaths } = useContext(VocaPathContext);
+  // VocaPathContext에서 사용자의 Voca JSON Tree,
+  // 모든 단어장 Path 배열, 선택된 단어장 Path 배열 State 불러오기
+  const { vocaTree, allVocaPaths, selectedVocaPaths } =
+    useContext(VocaPathContext);
 
   // 테스트 이름 State
   const [testName, setTestName] = useState();
@@ -243,7 +245,7 @@ const CreateTest = () => {
   const onClickCreateBtn = useCallback(async () => {
     // 테스트 이름에 포함될 수 없는 문자가 있는 지 확인
     if (/[.#$\[\]]/.test(testName)) {
-      alert(`이름에 「 .  #  $  [  ] 」 기호는 들어갈 수 없습니다.`);
+      alert(`이름에 '.', '#', '$', '[', ']' 기호는 들어갈 수 없습니다.`);
       return;
     }
 
@@ -315,7 +317,6 @@ const CreateTest = () => {
               <TextField
                 label="테스트 이름"
                 variant="outlined"
-                autoComplete="off"
                 onChange={(event) => setTestName(event.target.value)}
                 sx={{ width: "100%" }}
               />
@@ -325,41 +326,45 @@ const CreateTest = () => {
               <Loading />
             ) : (
               <>
-                <Box sx={{ pl: 2, mb: 2 }}>
-                  <Typography variant="subtitle1">
-                    <strong>단어장 선택</strong>
-                  </Typography>
-                  <StyledUl>
-                    <li>테스트 생성 시점 기준 단어 세트로 생성됩니다.</li>
-                    <li>이후 단어 세트가 업데이트 되어도 반영되지 않습니다.</li>
-                  </StyledUl>
-                </Box>
-                <Divider sx={{ mt: 2, mb: 2 }} />
                 {vocaTree === "NoFile" ? (
-                  <Nofile text="단어장이 비어있습니다." />
+                  <Nofile />
                 ) : (
-                  <ScrollList maxHeight="48vh">
-                    {dirList &&
-                      dirList.map((value, key) => (
-                        <SetCheckbox
-                          key={key}
-                          index={0}
-                          isDir
-                          name={value}
-                          path={`Voca/root`}
-                          currentTree={vocaTree[value]}
-                        />
-                      ))}
-                    {vocaList &&
-                      vocaList.map((value, key) => (
-                        <SetCheckbox
-                          key={key}
-                          index={0}
-                          name={value}
-                          path={`Voca/root`}
-                        />
-                      ))}
-                  </ScrollList>
+                  <>
+                    <Box sx={{ pl: 2, mb: 2 }}>
+                      <Typography variant="subtitle1">
+                        <strong>단어장 선택</strong>
+                      </Typography>
+                      <StyledUl>
+                        <li>테스트 생성 시점 기준 단어 세트로 생성됩니다.</li>
+                        <li>
+                          이후 단어 세트가 업데이트 되어도 반영되지 않습니다.
+                        </li>
+                      </StyledUl>
+                    </Box>
+                    <Divider sx={{ mt: 2, mb: 2 }} />
+                    <ScrollList maxHeight="48vh">
+                      {dirList &&
+                        dirList.map((value, key) => (
+                          <SetCheckbox
+                            key={key}
+                            index={0}
+                            isDir
+                            name={value}
+                            path={`Voca/root`}
+                            currentTree={vocaTree[value]}
+                          />
+                        ))}
+                      {vocaList &&
+                        vocaList.map((value, key) => (
+                          <SetCheckbox
+                            key={key}
+                            index={0}
+                            name={value}
+                            path={`Voca/root`}
+                          />
+                        ))}
+                    </ScrollList>
+                  </>
                 )}
               </>
             )}

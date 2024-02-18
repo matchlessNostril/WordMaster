@@ -183,7 +183,7 @@ const VocaList = () => {
         ) : (
           <>
             {isEmpty(dirList) && isEmpty(vocaList) ? (
-              <NoFile text="비어있는 폴더입니다." />
+              <NoFile />
             ) : (
               <ScrollList maxHeight="73vh">
                 {Object.entries(dirList).map(([key, value]) => (

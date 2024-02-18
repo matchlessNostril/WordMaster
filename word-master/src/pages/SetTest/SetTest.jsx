@@ -182,7 +182,6 @@ const SetTest = () => {
                 {timer.onTimer && (
                   <TextField
                     variant="standard"
-                    autoComplete="off"
                     onChange={(event) =>
                       setTimer((prev) => ({
                         ...prev,
