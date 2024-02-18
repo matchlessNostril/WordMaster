@@ -1,7 +1,10 @@
 import React from "react";
+import { useTheme } from "@mui/material/styles";
 import StyledButton from "./StyledButton";
 
 const GoogleBtn = ({ method, onClickGoogleAuth }) => {
+  const theme = useTheme();
+
   return (
     <StyledButton variant="outlined" theme={theme} onClick={onClickGoogleAuth}>
       <img
