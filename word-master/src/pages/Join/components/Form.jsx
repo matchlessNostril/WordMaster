@@ -21,8 +21,17 @@ const initialJoinInfo = {
   email: "",
   password: "",
 };
+// joinInfo의 valid state : joinInfoValid
+// joinInfoValid의 초기값
+const initialJoinInfoValid = {
+  nickname: null,
+  email: null,
+  password: null,
+};
+
 const Form = ({ method }) => {
   const [joinInfo, setJoinInfo] = useState(initialJoinInfo);
+  const [joinInfoValid, setJoinInfoValid] = useState(initialJoinInfoValid);
 
   return (
     <Stack direction="column" spacing={3}>
