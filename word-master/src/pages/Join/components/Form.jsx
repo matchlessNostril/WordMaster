@@ -82,8 +82,8 @@ const Form = ({ method }) => {
         value={joinInfo.password}
         setValue={setJoinInfo}
         validCheck={isValidPassword}
-        showValue={showValue}
-        onClickShowBtn={() => setShowValue((prev) => !prev)}
+        showValue={showPassword}
+        onClickShowBtn={() => setShowPassword((prev) => !prev)}
       <SubmitBtn
         method={method}
         disabled={disabled}
