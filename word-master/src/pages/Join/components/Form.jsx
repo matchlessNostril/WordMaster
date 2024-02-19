@@ -14,13 +14,15 @@ import {
   isValidPassword,
 } from "../../../utils/isValid";
 
+// 로그인, 회원가입 정보 state : joinInfo
+// joinInfo의 초기값
+const initialJoinInfo = {
+  nickname: "",
+  email: "",
+  password: "",
+};
 const Form = ({ method }) => {
-  const [joinInfo, setJoinInfo] = useState({
-    nickname: "",
-    email: "",
-    password: "",
-  });
-  const [showValue, setShowValue] = useState(false);
+  const [joinInfo, setJoinInfo] = useState(initialJoinInfo);
 
   return (
     <Stack direction="column" spacing={3}>
