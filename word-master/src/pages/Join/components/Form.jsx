@@ -1,7 +1,8 @@
 // Hook
-// Component
 import { useState, useEffect, useMemo } from "react";
+// MUI
 import { Stack } from "@mui/material";
+// Component
 import GoogleBtn from "./GoogleBtn";
 import TextDivider from "./TextDivider";
 import InputField from "./InputField";
