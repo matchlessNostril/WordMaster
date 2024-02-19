@@ -34,7 +34,7 @@ const Join = () => {
         value={method}
         exclusive
         onChange={handleClickToggle}
-        aria-label="로그인 혹은 회원가입"
+        aria-label="로그인 혹은 회원가입 선택"
         sx={{
           mb: 7,
           [theme.breakpoints.down("sm")]: {
