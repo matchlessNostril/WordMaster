@@ -68,6 +68,8 @@ const Form = ({ method }) => {
           value={joinInfo.nickname}
           setValue={setJoinInfo}
           validCheck={isValidNickname}
+          valid={joinInfoValid.nickname}
+          setValid={setJoinInfoValid}
         />
       )}
       <InputField
@@ -75,6 +77,8 @@ const Form = ({ method }) => {
         value={joinInfo.email}
         setValue={setJoinInfo}
         validCheck={isValidEmail}
+        valid={joinInfoValid.email}
+        setValid={setJoinInfoValid}
       />
       <InputField
         fieldName="비밀번호"
@@ -82,8 +86,11 @@ const Form = ({ method }) => {
         value={joinInfo.password}
         setValue={setJoinInfo}
         validCheck={isValidPassword}
+        valid={joinInfoValid.password}
+        setValid={setJoinInfoValid}
         showValue={showPassword}
         onClickShowBtn={() => setShowPassword((prev) => !prev)}
+      />
       <SubmitBtn
         method={method}
         disabled={disabled}
