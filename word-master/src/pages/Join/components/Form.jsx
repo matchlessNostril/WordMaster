@@ -35,6 +35,8 @@ const Form = ({ method }) => {
   const [joinInfo, setJoinInfo] = useState(initialJoinInfo);
   const [joinInfoValid, setJoinInfoValid] = useState(initialJoinInfoValid);
 
+  // 비밀번호 입력 값 공개 여부 state
+  const [showPassword, setShowPassword] = useState(false);
   // joinInfoValid 값 바뀔 때만, 제출 버튼 활성화 여부 재계산
   const disabled = useMemo(() => {
     // 회원 가입 + nickname 유효성 통과되지 않은 경우 -> disabled를 true로
