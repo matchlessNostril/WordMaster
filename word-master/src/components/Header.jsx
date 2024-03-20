@@ -66,7 +66,7 @@ const Header = () => {
             <Tooltip title={btnInfo.title}>
               <IconButton
                 onClick={location.pathname === "/Main" ? () => btnInfo.to() : () => navigate(btnInfo.to)}
-                aria-label={btnInfo?.title} // aria-label : 대체 텍스트
+                aria-label={btnInfo.title} // aria-label : 대체 텍스트
                 disableTouchRipple // disableTouchRipple : 눌림 효과 비활성화
                 sx={{
                   p: 1,

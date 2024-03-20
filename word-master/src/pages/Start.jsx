@@ -11,6 +11,7 @@ const Start = () => {
       <img
         src={require("../assets/images/slogan.png")}
         style={{ width: isPortrait ? "70vw" : "30vw" }}
+        alt="Word Master 로고 이미지"
       />
       {/* 자동 로그인 사용자의 경우, '로그인 중' 로딩 출력 */}
       {isLoginUser === "yes" && <Loading onMarginTop={false} />}
