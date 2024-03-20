@@ -1,12 +1,14 @@
 // Hook
-import { useState, useEffect } from "react";
-// Component
+import { useState, useEffect, useMemo } from "react";
+// MUI
 import { Stack } from "@mui/material";
+// Component
 import GoogleBtn from "./GoogleBtn";
 import TextDivider from "./TextDivider";
 import InputField from "./InputField";
+import SubmitBtn from "./SubmitBtn";
 // API
-import { googleAuth } from "../../../service/auth";
+import { googleAuth, Login, Register } from "../../../service/auth";
 // utils
 import {
   isValidNickname,
@@ -14,13 +16,47 @@ import {
   isValidPassword,
 } from "../../../utils/isValid";
 
+// 로그인, 회원가입 정보 state : joinInfo
+// joinInfo의 초기값
+const initialJoinInfo = {
+  nickname: "",
+  email: "",
+  password: "",
+};
+// joinInfo의 valid state : joinInfoValid
+// joinInfoValid의 초기값
+const initialJoinInfoValid = {
+  nickname: null,
+  email: null,
+  password: null,
+};
+
 const Form = ({ method }) => {
-  const [joinInfo, setJoinInfo] = useState({
-    nickname: "",
-    email: "",
-    password: "",
-  });
-  const [showValue, setShowValue] = useState(false);
+  const [joinInfo, setJoinInfo] = useState(initialJoinInfo);
+  const [joinInfoValid, setJoinInfoValid] = useState(initialJoinInfoValid);
+
+  // 비밀번호 입력 값 공개 여부 state
+  const [showPassword, setShowPassword] = useState(false);
+
+  // method 바뀔 때마다 모든 state 초기화
+  useEffect(() => {
+    setJoinInfo(initialJoinInfo);
+    setJoinInfoValid(initialJoinInfoValid);
+    setShowPassword(false);
+  }, [method]);
+
+  // joinInfoValid 값 바뀔 때만, 제출 버튼 활성화 여부 재계산
+  const disabled = useMemo(() => {
+    // 회원 가입 + nickname 유효성 통과되지 않은 경우 -> disabled를 true로
+    if (method === "회원 가입" && !joinInfoValid.nickname) return true;
+
+    // nickname은 유효성 통과된 상태이고,
+    // email, password까지 유효성 통과된 경우 -> disabled를 false로
+    if (joinInfoValid.email && joinInfoValid.password) return false;
+
+    // 하나라도 유효성이 통과되지 못한 경우 -> disabled를 true로
+    return true;
+  }, [joinInfoValid]);
 
   return (
     <Stack direction="column" spacing={3}>
@@ -32,6 +68,8 @@ const Form = ({ method }) => {
           value={joinInfo.nickname}
           setValue={setJoinInfo}
           validCheck={isValidNickname}
+          valid={joinInfoValid.nickname}
+          setValid={setJoinInfoValid}
         />
       )}
       <InputField
@@ -39,6 +77,8 @@ const Form = ({ method }) => {
         value={joinInfo.email}
         setValue={setJoinInfo}
         validCheck={isValidEmail}
+        valid={joinInfoValid.email}
+        setValid={setJoinInfoValid}
       />
       <InputField
         fieldName="비밀번호"
@@ -46,8 +86,20 @@ const Form = ({ method }) => {
         value={joinInfo.password}
         setValue={setJoinInfo}
         validCheck={isValidPassword}
-        showValue={showValue}
-        onClickShowBtn={() => setShowValue((prev) => !prev)}
+        valid={joinInfoValid.password}
+        setValid={setJoinInfoValid}
+        showValue={showPassword}
+        onClickShowBtn={() => setShowPassword((prev) => !prev)}
+      />
+      <SubmitBtn
+        method={method}
+        disabled={disabled}
+        onClickSubmitBtn={
+          method === "로그인"
+            ? () => Login(joinInfo.email, joinInfo.password)
+            : () =>
+                Register(joinInfo.nickname, joinInfo.email, joinInfo.password)
+        }
       />
     </Stack>
   );
