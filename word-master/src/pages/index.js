@@ -1,5 +1,5 @@
 export { default as Start } from "./Start";
-export { default as Join } from "./Join/Join";
+export { default as Join } from "./Join";
 export { default as Main } from "./Main";
 export { default as VocaList } from "./VocaList/VocaList";
 export { default as SaveVoca } from "./SaveVoca/SaveVoca";

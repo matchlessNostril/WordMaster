@@ -3,10 +3,7 @@ import { useState, useEffect, useMemo } from "react";
 // MUI
 import { Stack } from "@mui/material";
 // Component
-import GoogleBtn from "./GoogleBtn";
-import TextDivider from "./TextDivider";
-import InputField from "./InputField";
-import SubmitBtn from "./SubmitBtn";
+import { GoogleBtn, TextDivider, InputField, SubmitBtn } from "./Form/index";
 // API
 import { googleAuth, Login, Register } from "../../../service/auth";
 // utils
@@ -16,15 +13,12 @@ import {
   isValidPassword,
 } from "../../../utils/isValid";
 
-// 로그인, 회원가입 정보 state : joinInfo
-// joinInfo의 초기값
 const initialJoinInfo = {
   nickname: "",
   email: "",
   password: "",
 };
-// joinInfo의 valid state : joinInfoValid
-// joinInfoValid의 초기값
+
 const initialJoinInfoValid = {
   nickname: null,
   email: null,
@@ -34,15 +28,13 @@ const initialJoinInfoValid = {
 const Form = ({ method }) => {
   const [joinInfo, setJoinInfo] = useState(initialJoinInfo);
   const [joinInfoValid, setJoinInfoValid] = useState(initialJoinInfoValid);
-
-  // 비밀번호 입력 값 공개 여부 state
-  const [showPassword, setShowPassword] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   // method 바뀔 때마다 모든 state 초기화
   useEffect(() => {
     setJoinInfo(initialJoinInfo);
     setJoinInfoValid(initialJoinInfoValid);
-    setShowPassword(false);
+    setIsPasswordVisible(false);
   }, [method]);
 
   // joinInfoValid 값 바뀔 때만, 제출 버튼 활성화 여부 재계산
@@ -60,7 +52,7 @@ const Form = ({ method }) => {
 
   return (
     <Stack direction="column" spacing={3}>
-      <GoogleBtn method={method} onClickGoogleAuth={googleAuth} />
+      <GoogleBtn method={method} handleClick={googleAuth} />
       <TextDivider method={method} />
       {method === "회원 가입" && (
         <InputField
@@ -88,13 +80,13 @@ const Form = ({ method }) => {
         validCheck={isValidPassword}
         valid={joinInfoValid.password}
         setValid={setJoinInfoValid}
-        showValue={showPassword}
-        onClickShowBtn={() => setShowPassword((prev) => !prev)}
+        isPasswordVisible={isPasswordVisible}
+        handleClickShowBtn={() => setIsPasswordVisible((prev) => !prev)}
       />
       <SubmitBtn
         method={method}
         disabled={disabled}
-        onClickSubmitBtn={
+        handleSubmit={
           method === "로그인"
             ? () => Login(joinInfo.email, joinInfo.password)
             : () =>

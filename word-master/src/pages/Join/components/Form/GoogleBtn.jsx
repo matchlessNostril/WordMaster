@@ -1,14 +1,11 @@
 import React from "react";
-import { useTheme } from "@mui/material/styles";
 import StyledButton from "./StyledButton";
 
-const GoogleBtn = ({ method, onClickGoogleAuth }) => {
-  const theme = useTheme();
-
+const GoogleBtn = ({ method, handleClick }) => {
   return (
-    <StyledButton variant="outlined" theme={theme} onClick={onClickGoogleAuth}>
+    <StyledButton variant="outlined" onClick={handleClick}>
       <img
-        src={require("../../../assets/icons/google.png")}
+        src={require("../../../../assets/icons/google.png")}
         alt="구글로 간편 시작"
         style={{
           width: "30px",

@@ -15,10 +15,9 @@ const InputField = ({
   validCheck,
   valid,
   setValid,
-  showValue = true,
-  onClickShowBtn = () => {},
+  isPasswordVisible = true,
+  handleClickShowBtn = () => {},
 }) => {
-  // 유효성 검사에 따른 도움 메세지 state
   const [validHelperText, setValidHelperText] = useState("");
 
   // 입력값이 바뀔 때마다 setValue에서 key값으로 접근해 바꿔야 하는데
@@ -36,7 +35,7 @@ const InputField = ({
   }, []);
 
   // TextField 입력할 때마다 value 업데이트 + 유효성 검사
-  const onInput = useCallback(
+  const handleChange = useCallback(
     (event) => {
       // value 업데이트
       setValue((prev) => ({ ...prev, [fieldNameinEn]: event.target.value }));
@@ -60,9 +59,10 @@ const InputField = ({
         label={fieldName}
         id={fieldName}
         value={value}
-        onChange={onInput}
-        // 비밀번호란은 버튼을 통해 입력값 확인 가능
-        type={fieldType === "password" && !showValue ? "password" : "text"}
+        onChange={handleChange}
+        type={
+          fieldType === "password" && !isPasswordVisible ? "password" : "text"
+        }
         InputProps={
           fieldType === "password"
             ? {
@@ -70,9 +70,8 @@ const InputField = ({
                   <InputAdornment position="end">
                     <IconButton
                       aria-label="입력값 공개"
-                      onClick={onClickShowBtn}
-                    >
-                      {showValue ? <Visibility /> : <VisibilityOff />}
+                      onClick={handleClickShowBtn}>
+                      {isPasswordVisible ? <Visibility /> : <VisibilityOff />}
                     </IconButton>
                   </InputAdornment>
                 ),
@@ -93,5 +92,5 @@ export default React.memo(
   (prevProps, nextProps) =>
     prevProps.value === nextProps.value &&
     prevProps.valid === nextProps.valid &&
-    prevProps.showValue === nextProps.showValue
+    prevProps.isPasswordVisible === nextProps.isPasswordVisible
 );
