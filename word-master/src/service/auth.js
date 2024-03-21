@@ -1,4 +1,3 @@
-// firebase Auth
 import { wordMasterAuth, gProvider } from "../firebase";
 import {
   createUserWithEmailAndPassword,
@@ -7,13 +6,10 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
-// utils
 import printError from "../utils/printError";
 
-// 1. 회원 가입
 export const Register = async (nickname, email, password) => {
   try {
-    // 이메일, 비밀번호로 회원 가입
     const registerRes = await createUserWithEmailAndPassword(
       wordMasterAuth,
       email,
@@ -25,7 +21,6 @@ export const Register = async (nickname, email, password) => {
       localStorage.setItem("isLoginUser", "yes");
     }
 
-    // 닉네임도 등록
     await updateProfile(wordMasterAuth.currentUser, {
       displayName: nickname,
     });
@@ -37,10 +32,8 @@ export const Register = async (nickname, email, password) => {
   }
 };
 
-// 2. 로그인
 export const Login = async (email, password) => {
   try {
-    // 이메일, 비밀번호로 로그인
     const loginRes = await signInWithEmailAndPassword(
       wordMasterAuth,
       email,
@@ -58,10 +51,8 @@ export const Login = async (email, password) => {
   }
 };
 
-// 3. 구글
 export const googleAuth = async () => {
-  // 정보 제공 범위 설정
-  // profile, email 정보 요청
+  // 정보 제공 범위 설정: profile, email 정보 요청
   gProvider.addScope("profile");
   gProvider.addScope("email");
 
@@ -76,11 +67,11 @@ export const googleAuth = async () => {
   }
 };
 
-// 4. 로그아웃
 export const logout = async () => {
   try {
     await signOut(wordMasterAuth);
 
+    // 자동 로그인 여부 로컬 스토리지에서 삭제
     localStorage.removeItem("isLoginUser");
   } catch (error) {
     printError(error);

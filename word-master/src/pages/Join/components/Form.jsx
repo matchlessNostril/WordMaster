@@ -1,12 +1,7 @@
-// Hook
 import { useState, useEffect, useMemo } from "react";
-// MUI
 import { Stack } from "@mui/material";
-// Component
 import { GoogleBtn, TextDivider, InputField, SubmitBtn } from "./Form/index";
-// API
 import { googleAuth, Login, Register } from "../../../service/auth";
-// utils
 import {
   isValidNickname,
   isValidEmail,
@@ -30,7 +25,6 @@ const Form = ({ method }) => {
   const [joinInfoValid, setJoinInfoValid] = useState(initialJoinInfoValid);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
-  // method 바뀔 때마다 모든 state 초기화
   useEffect(() => {
     setJoinInfo(initialJoinInfo);
     setJoinInfoValid(initialJoinInfoValid);
