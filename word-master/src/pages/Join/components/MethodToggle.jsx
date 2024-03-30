@@ -31,7 +31,8 @@ const MethodToggle = ({ method, setMethod }) => {
           [theme.breakpoints.up("sm")]: {
             width: "400px",
           },
-        }}>
+        }}
+      >
         {/* 하위 컴포넌트에 모두 fullWidth를 넣음으로써 토글 요소 너비 일치 */}
         <StyledToggleButton value="로그인" fullWidth>
           로그인
