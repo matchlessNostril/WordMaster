@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
-import { useSaveListReducer } from "../../hooks";
+import { usePathListReducer } from "../../hooks";
 import { AuthContext } from "../../contexts/AuthContext";
 import { Box, Typography, IconButton } from "@mui/material";
 import {
@@ -26,14 +26,15 @@ const TestList = () => {
   const navigate = useNavigate();
 
   // 테스트 리스트 State와 Dispatch
-  const { list, listDispatch } = useSaveListReducer();
+  const { pathList: testList, pathListDispatch: testListDispatch } =
+    usePathListReducer();
 
   // 로딩 State와 Setter
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     // testList 불러오기
-    autoFetchList("Test/testList", listDispatch, setIsLoading);
+    autoFetchList("Test/testList", testListDispatch, setIsLoading);
 
     // clean-up 함수로 DB 이벤트 리스너 제거
     return () => {
@@ -56,11 +57,11 @@ const TestList = () => {
           <Loading />
         ) : (
           <>
-            {isEmpty(list) ? (
+            {isEmpty(testList) ? (
               <NoFile text="아직 생성된 테스트가 없습니다." />
             ) : (
               <ScrollList maxHeight="73vh">
-                {Object.entries(list).map(([key, value]) => (
+                {Object.entries(testList).map(([key, value]) => (
                   <TestCard key={key} itemKey={key} title={value} />
                 ))}
               </ScrollList>

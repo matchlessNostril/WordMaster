@@ -22,9 +22,7 @@ const ActionModal = ({ open, setOpen, content }) => {
             p: 4,
           }}
         >
-          <Typography variant="h6" mb={3} sx={{ fontWeight: 500 }}>
-            {content?.title}
-          </Typography>
+          <Header title={content?.title} />
           {content?.textField && (
             <TextField
               label={`${content?.textField.label}`}
@@ -47,8 +45,8 @@ const ActionModal = ({ open, setOpen, content }) => {
               disabled={content?.textField && !value}
               onClick={() =>
                 content?.textField
-                  ? content.btnClickHandler(value)
-                  : content.btnClickHandler()
+                  ? content.handleClickBtn(value)
+                  : content.handleClickBtn()
               }
               sx={{ position: "absolute", right: 0 }}
             >
@@ -62,3 +60,11 @@ const ActionModal = ({ open, setOpen, content }) => {
 };
 
 export default React.memo(ActionModal);
+
+const Header = React.memo(({ title }) => {
+  return (
+    <Typography variant="h6" mb={3} sx={{ fontWeight: 500 }}>
+      {title}
+    </Typography>
+  );
+});

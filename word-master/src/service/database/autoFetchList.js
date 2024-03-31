@@ -27,7 +27,7 @@ export const autoFetchList = async (path, listDispatch, setOnLoading) => {
     // (3) onChildRemoved: 리스트에 데이터가 삭제됐을 때 호출
 
     // 이벤트 핸들러 함수
-    const onChlidEventHandler = async (actionType, data) => {
+    const handleChildEvent = async (actionType, data) => {
       setOnLoading(true);
 
       if (actionType === "REMOVE") {
@@ -44,11 +44,11 @@ export const autoFetchList = async (path, listDispatch, setOnLoading) => {
     };
 
     // 초기 리스트 데이터 불러오기, 이후 새로운 데이터 추가 시 호출
-    onChildAdded(pathRef, (data) => onChlidEventHandler("ADD", data));
+    onChildAdded(pathRef, (data) => handleChildEvent("ADD", data));
     // 데이터 이름(name 속성 값) 변경 시 호출
-    onChildChanged(pathRef, (data) => onChlidEventHandler("CHANGE", data));
+    onChildChanged(pathRef, (data) => handleChildEvent("CHANGE", data));
     // 데이터 삭제 시 호출
-    onChildRemoved(pathRef, (data) => onChlidEventHandler("REMOVE", data));
+    onChildRemoved(pathRef, (data) => handleChildEvent("REMOVE", data));
 
     // 만약 참조된 위치에 데이터가 하나도 없을 경우에는,
     // onChildAdded에 등록된 이벤트 리스너 함수가 실행되지 않기 때문에 로딩이 off 되지 않음.

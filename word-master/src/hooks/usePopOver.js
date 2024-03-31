@@ -2,11 +2,11 @@ import { useState, useCallback } from "react";
 
 const usePopOver = () => {
   const [popoverAnchor, setPopoverAnchor] = useState(null);
-  const onClickPopoverBtn = useCallback((event) => {
+  const handleClickPopoverBtn = useCallback((event) => {
     setPopoverAnchor((prevAnchor) => (prevAnchor ? null : event.currentTarget));
   }, []);
 
-  return [popoverAnchor, setPopoverAnchor, onClickPopoverBtn];
+  return [popoverAnchor, setPopoverAnchor, handleClickPopoverBtn];
 };
 
 export default usePopOver;

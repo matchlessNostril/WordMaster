@@ -19,10 +19,10 @@ const reducer = (state, action) => {
   }
 };
 
-const useSaveListReducer = () => {
-  const [list, listDispatch] = useReducer(reducer, {});
+const usePathListReducer = () => {
+  const [pathList, pathListDispatch] = useReducer(reducer, {});
 
-  return { list, listDispatch };
+  return { pathList, pathListDispatch };
 };
 
-export default useSaveListReducer;
+export default usePathListReducer;

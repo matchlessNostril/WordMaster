@@ -1,10 +1,6 @@
-import React from "react";
-// Router
+import React, { useMemo, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-// Custom Hook
-import usePopOver from "../../../hooks/usePopOver";
-import useModal from "../../../hooks/useModal";
-// MUI
+import { usePopOver, useModal } from "../../../hooks";
 import {
   ListItem,
   Card,
@@ -14,28 +10,20 @@ import {
   Typography,
   IconButton,
 } from "@mui/material";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-// Component
-import BtnPopover from "../../BtnPopover";
-import ActionModal from "../../ActionModal";
-// API
+import { ActionModal, BtnPopover } from "../../../components";
 import { getList } from "../../../service/database/getList";
-import {
-  getData,
-  setData,
-  updateData,
-  removeData,
-} from "../../../service/database/dataOperation";
-// Utils
+import operateData from "../../../service/database/operateData";
 import { isEmpty } from "lodash";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
-const VocaListItemCard = ({ itemKey, title, path, isDir = false }) => {
-  // navigate
+const ListItemCard = ({ itemKey, title, path, isDir = false }) => {
   const navigate = useNavigate();
 
-  // 이 컴포넌트는 React.memo로 감싸고 있으며
-  // 이름 변경으로 인해 title이 바뀌는 경우 외에는 props 값이 잘 바뀌지 않기 때문에 useCallback 사용 X
-  const moveToNextPath = () => {
+  const [popoverAnchor, setPopoverAnchor, handleClickPopoverBtn] = usePopOver();
+  const [openModal, setOpenModal, modalContent, handleClickOpenModal] =
+    useModal();
+
+  const moveToNextPath = useCallback(() => {
     if (isDir) {
       navigate(`/VocaList?path=${path + "/" + title}`);
     } else {
@@ -47,33 +35,10 @@ const VocaListItemCard = ({ itemKey, title, path, isDir = false }) => {
         },
       });
     }
-  };
+  }, []);
 
-  // (펼치기) 버튼 PopOver
-  const [popoverAnchor, setPopoverAnchor, onClickPopoverBtn] = usePopOver();
-  const popoverBtns = [
-    {
-      name: "이름 바꾸기",
-      onClickHandler: () => {
-        setPopoverAnchor(null);
-        onClickOpenModal(modalContents[0]);
-      },
-    },
-    {
-      name: "삭제",
-      onClickHandler: () => {
-        setPopoverAnchor(null);
-        onClickOpenModal(modalContents[1]);
-      },
-    },
-  ];
-
-  // Modal
-  const [openModal, setOpenModal, modalContent, onClickOpenModal] = useModal();
-
-  // 버튼 클릭 핸들러 함수
   // 1. 이름 바꾸기
-  const onClickChangeBtn = async (inputValue) => {
+  const handleClickChangeBtn = useCallback(async (inputValue) => {
     // 기존 이름일 경우 early return
     if (inputValue === title) {
       setOpenModal(false);
@@ -99,16 +64,17 @@ const VocaListItemCard = ({ itemKey, title, path, isDir = false }) => {
 
     // 변경 가능한 이름이라면
     // 먼저 기존 데이터 일시 저장
-    const tempData = await getData(`Voca/${path}/${title}`);
+    const tempData = await operateData("GET", `Voca/${path}/${title}`);
 
     // 빈 데이터가 아니라면, 데이터 이전하고 기존 경로 삭제
     if (!isEmpty(tempData)) {
-      setData(`Voca/${path}/${inputValue}`, tempData);
-      removeData(`Voca/${path}/${title}`);
+      operateData("SET", `Voca/${path}/${inputValue}`, tempData);
+      operateData("REMOVE", `Voca/${path}/${title}`);
     }
 
     // 리스트에서도 변경된 이름으로 업데이트
-    updateData(
+    operateData(
+      "UPDATE",
       isDir
         ? `Voca/${path}/dirList/${itemKey}`
         : `Voca/${path}/vocaList/${itemKey}`,
@@ -116,37 +82,58 @@ const VocaListItemCard = ({ itemKey, title, path, isDir = false }) => {
     );
 
     setOpenModal(false);
-  };
+  }, []);
 
   // 2. 삭제
-  const onClickRemoveBtn = () => {
-    removeData(`Voca/${path}/${title}`);
-    removeData(
+  const handleClickRemoveBtn = useCallback(() => {
+    operateData("REMOVE", `Voca/${path}/${title}`);
+    operateData(
+      "REMOVE",
       isDir
         ? `Voca/${path}/dirList/${itemKey}`
         : `Voca/${path}/vocaList/${itemKey}`
     );
     setOpenModal(false);
-  };
+  }, []);
 
-  // 내용
-  const modalContents = [
-    // inex 0 : 이름 바꾸기 클릭
-    {
-      title: "이름 바꾸기",
-      textField: {
-        label: "변경할 이름",
+  const modalContents = useMemo(
+    () => [
+      {
+        title: "이름 바꾸기",
+        textField: {
+          label: "변경할 이름",
+        },
+        btnName: "확인",
+        handleClickBtn: handleClickChangeBtn,
       },
-      btnName: "확인",
-      btnClickHandler: onClickChangeBtn,
-    },
-    // index 1 : 삭제 클릭
-    {
-      title: "정말 삭제하시겠습니까?",
-      btnName: "삭제",
-      btnClickHandler: onClickRemoveBtn,
-    },
-  ];
+      {
+        title: "정말 삭제하시겠습니까?",
+        btnName: "삭제",
+        handleClickBtn: handleClickRemoveBtn,
+      },
+    ],
+    []
+  );
+
+  const popoverBtns = useMemo(
+    () => [
+      {
+        name: "이름 바꾸기",
+        handleClick: () => {
+          setPopoverAnchor(null);
+          handleClickOpenModal(modalContents[0]);
+        },
+      },
+      {
+        name: "삭제",
+        handleClick: () => {
+          setPopoverAnchor(null);
+          handleClickOpenModal(modalContents[1]);
+        },
+      },
+    ],
+    []
+  );
 
   return (
     <>
@@ -179,7 +166,7 @@ const VocaListItemCard = ({ itemKey, title, path, isDir = false }) => {
             </CardContent>
           </CardActionArea>
           <CardActions>
-            <IconButton onClick={onClickPopoverBtn}>
+            <IconButton onClick={handleClickPopoverBtn}>
               <KeyboardArrowDownIcon />
             </IconButton>
             <BtnPopover
@@ -199,4 +186,4 @@ const VocaListItemCard = ({ itemKey, title, path, isDir = false }) => {
   );
 };
 
-export default React.memo(VocaListItemCard);
+export default React.memo(ListItemCard);

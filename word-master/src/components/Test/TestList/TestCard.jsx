@@ -21,26 +21,27 @@ const TestCard = ({ itemKey, title }) => {
   const navigate = useNavigate();
 
   // (펼치기) 버튼 PopOver
-  const [popoverAnchor, setPopoverAnchor, onClickPopoverBtn] = usePopOver();
+  const [popoverAnchor, setPopoverAnchor, handleClickPopoverBtn] = usePopOver();
   const popoverBtns = [
     {
       name: "이름 바꾸기",
-      onClickHandler: () => {
+      handleClick: () => {
         setPopoverAnchor(null);
-        onClickOpenModal(modalContents[0]);
+        handleClickOpenModal(modalContents[0]);
       },
     },
     {
       name: "삭제",
-      onClickHandler: () => {
+      handleClick: () => {
         setPopoverAnchor(null);
-        onClickOpenModal(modalContents[1]);
+        handleClickOpenModal(modalContents[1]);
       },
     },
   ];
 
   // Modal
-  const [openModal, setOpenModal, modalContent, onClickOpenModal] = useModal();
+  const [openModal, setOpenModal, modalContent, handleClickOpenModal] =
+    useModal();
 
   // 버튼 클릭 핸들러 함수
   // 1. 이름 바꾸기
@@ -98,13 +99,13 @@ const TestCard = ({ itemKey, title }) => {
         label: "변경할 이름",
       },
       btnName: "확인",
-      btnClickHandler: onClickChangeBtn,
+      handleClickBtn: onClickChangeBtn,
     },
     // index 1 : 삭제 클릭
     {
       title: "정말 삭제하시겠습니까?",
       btnName: "삭제",
-      btnClickHandler: onClickRemoveBtn,
+      handleClickBtn: onClickRemoveBtn,
     },
   ];
 
@@ -135,7 +136,7 @@ const TestCard = ({ itemKey, title }) => {
             </CardContent>
           </CardActionArea>
           <CardActions>
-            <IconButton onClick={onClickPopoverBtn}>
+            <IconButton onClick={handleClickPopoverBtn}>
               <KeyboardArrowDownIcon />
             </IconButton>
             <BtnPopover

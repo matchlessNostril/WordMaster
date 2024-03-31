@@ -1,59 +1,39 @@
-// Router
-import { useSearchParams, useNavigate } from "react-router-dom";
-// Context
-import { AuthContext } from "../../contexts/AuthContext";
-// Hook
-import { useContext, useState, useEffect, useCallback } from "react";
-// Custom Hook
-import useSaveListReducer from "../../hooks/useSaveListReducer";
-import useLoading from "../../hooks/useLoading";
-import usePopOver from "../../hooks/usePopOver";
-import useModal from "../../hooks/useModal";
-// MUI
-import { Box, Stack, Typography, IconButton } from "@mui/material";
-import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-// Component
-import Transition from "../../components/Transition";
-import BtnPopover from "../../components/BtnPopover";
-import ActionModal from "../../components/ActionModal";
-import Loading from "../../components/Loading";
-import NoFile from "../../components/NoFile";
-import VocaListItemCard from "../../components/Voca/VocaList/VocaListItemCard";
-// Layout
-import RowSpaceBetween from "../../layout/RowSpaceBetween";
-import ScrollList from "../../layout/ScrollList";
-// API
+import { useState, useEffect, useCallback } from "react";
+import { useSearchParams } from "react-router-dom";
+import { usePathListReducer, useModal } from "../../hooks";
+import { Box } from "@mui/material";
+import {
+  Transition,
+  ActionModal,
+  Loading,
+  NoFile,
+  ScrollList,
+} from "../../components";
+import { Header, ListItemCard } from "./components";
 import {
   autoFetchList,
   offAllDBEventListener,
 } from "../../service/database/autoFetchList";
-import { pushData } from "../../service/database/dataOperation";
-// Utils
+import operateData from "../../service/database/operateData";
 import { isEmpty } from "lodash";
 
 const VocaList = () => {
-  // 사용자 정보
-  const { displayName } = useContext(AuthContext);
-
   // url 쿼리스트링에서 path 값 가져오기
   const [searchParams, _] = useSearchParams();
   const path = searchParams.get("path");
 
-  // 현재 디렉토리 이름 State
   const [currentDirName, setCurrentDirName] = useState("");
 
-  // 현재 path의 하위 디렉토리 리스트 State와 Dispatch
-  const { list: dirList, listDispatch: dirListDispatch } = useSaveListReducer();
-  // 현재 path의 하위 단어장 리스트 State와 Dispatch
-  const { list: vocaList, listDispatch: vocaListDispatch } =
-    useSaveListReducer();
+  // 하위 디렉토리/단어장 리스트 State와 Dispatch
+  const { pathList: dirList, pathListDispatch: dirListDispatch } =
+    usePathListReducer();
+  const { pathList: vocaList, pathListDispatch: vocaListDispatch } =
+    usePathListReducer();
 
-  // 로딩 State와 Setter
-  const [onLoading, setOnLoading] = useLoading();
+  const [isLoading, setIsLoading] = useState(false);
 
   // 현재 path 디렉토리 트리 불러오기 + 리스트 데이터 이벤트 리스너 등록
-  // 하위 디렉토리로 이동할 때마다 VocaListItem 컴포넌트 내에서 useNavigate로 경로 이동을 할 테지만
+  // 하위 디렉토리로 이동할 때마다 ListItem 컴포넌트 내에서 useNavigate로 경로 이동을 할 테지만
   // Route는 그대로이고, URL 파라미터 값만 바뀜.
   // 이러한 경우에는 다시 컴포넌트가 마운트 되지 않음!!
   // 따라서 path 값이 바뀔 때마다 currentDirName 값을 바꾸고
@@ -66,8 +46,8 @@ const VocaList = () => {
     }
 
     // dirList, vocaList 불러오기
-    autoFetchList(`Voca/${path}/dirList`, dirListDispatch, setOnLoading);
-    autoFetchList(`Voca/${path}/vocaList`, vocaListDispatch, setOnLoading);
+    autoFetchList(`Voca/${path}/dirList`, dirListDispatch, setIsLoading);
+    autoFetchList(`Voca/${path}/vocaList`, vocaListDispatch, setIsLoading);
 
     // 종속성 배열(deps)에 값이 있을 때 반환 함수는,
     // 종속성 배열 값이 변경되어 useEffect 콜백 함수가 새로 실행되기 전에 실행되는 clean-up 함수
@@ -78,39 +58,11 @@ const VocaList = () => {
     };
   }, [path]);
 
-  // navigate
-  const navigate = useNavigate();
+  const [openModal, setOpenModal, modalContent, handleClickOpenModal] =
+    useModal();
 
-  // PopOver, Modal 연결되어 있음
-  // (+) 버튼 PopOver
-  const [popoverAnchor, setPopoverAnchor, onClickPopoverBtn] = usePopOver();
-  const popoverBtns = [
-    {
-      name: "폴더 생성",
-      onClickHandler: () => {
-        setPopoverAnchor(null);
-        onClickOpenModal(modalContents);
-      },
-    },
-    {
-      name: "단어 세트 생성",
-      onClickHandler: () => {
-        setPopoverAnchor(null);
-        navigate("/SaveVoca", {
-          state: {
-            mode: "Create",
-            path: path,
-          },
-        });
-      },
-    },
-  ];
-
-  // Modal
-  const [openModal, setOpenModal, modalContent, onClickOpenModal] = useModal();
-
-  // 폴더 생성 전, 이름 중복 확인할 함수
-  const onClickCreateDir = useCallback(
+  // 폴더 생성 전, 이름 중복 확인
+  const handleClickCreateDir = useCallback(
     (inputValue) => {
       // 포함될 수 없는 문자가 있는 지 확인
       if (/[.#$\[\]]/.test(inputValue)) {
@@ -132,53 +84,24 @@ const VocaList = () => {
         return;
       }
 
-      pushData(`Voca/${path}/dirList`, { name: inputValue });
+      operateData("PUSH", `Voca/${path}/dirList`, { name: inputValue });
       setOpenModal(false);
     },
     [dirList, vocaList, path]
   );
 
-  // 내용
-  const modalContents = {
-    title: "새로운 폴더 만들기",
-    textField: {
-      label: "폴더 이름",
-    },
-    btnName: "만들기",
-    btnClickHandler: onClickCreateDir,
-  };
-
   return (
     <>
       <Box sx={{ minWidth: "85vw", minHeight: "85vh" }}>
-        <RowSpaceBetween>
-          {path !== "root" ? (
-            <Stack direction="row" alignItems="center">
-              <IconButton onClick={() => navigate(-1)}>
-                <NavigateBeforeIcon
-                  sx={{
-                    fontSize: "40px",
-                    "& > button": { padding: 0, paddingRight: "2px" },
-                  }}
-                />
-              </IconButton>
-              <Typography variant="h5">{currentDirName}</Typography>
-            </Stack>
-          ) : (
-            <Typography variant="h5" ml={2}>
-              <strong>{displayName}</strong>님의 단어장
-            </Typography>
-          )}
-          <IconButton onClick={onClickPopoverBtn}>
-            <AddCircleIcon sx={{ fontSize: "40px" }} />
-          </IconButton>
-          <BtnPopover
-            anchor={popoverAnchor}
-            setAnchor={setPopoverAnchor}
-            buttons={popoverBtns}
-          />
-        </RowSpaceBetween>
-        {onLoading ? (
+        <Header
+          {...{
+            path,
+            currentDirName,
+            handleClickCreateDir,
+            handleClickOpenModal,
+          }}
+        />
+        {isLoading ? (
           <Loading />
         ) : (
           <>
@@ -187,7 +110,7 @@ const VocaList = () => {
             ) : (
               <ScrollList maxHeight="73vh">
                 {Object.entries(dirList).map(([key, value]) => (
-                  <VocaListItemCard
+                  <ListItemCard
                     key={key}
                     itemKey={key}
                     title={value}
@@ -196,7 +119,7 @@ const VocaList = () => {
                   />
                 ))}
                 {Object.entries(vocaList).map(([key, value]) => (
-                  <VocaListItemCard
+                  <ListItemCard
                     key={key}
                     itemKey={key}
                     title={value}

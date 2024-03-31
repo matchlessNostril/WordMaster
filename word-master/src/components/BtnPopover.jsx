@@ -21,7 +21,7 @@ const BtnPopover = ({ anchor, setAnchor, buttons }) => {
       >
         <ButtonGroup orientation="vertical" variant="text">
           {buttons.map((button, index) => (
-            <Button key={index} onClick={button.onClickHandler}>
+            <Button key={index} onClick={button.handleClick}>
               {button.name}
             </Button>
           ))}

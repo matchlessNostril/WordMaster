@@ -1,4 +1,3 @@
-import React from "react";
 import { useTheme } from "@mui/material/styles";
 import { List } from "@mui/material";
 
@@ -33,4 +32,4 @@ const ScrollList = ({ maxHeight, children }) => {
   );
 };
 
-export default React.memo(ScrollList);
+export default ScrollList;
