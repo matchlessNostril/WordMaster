@@ -2,11 +2,7 @@ import { useState, useEffect, useMemo } from "react";
 import { Stack } from "@mui/material";
 import { GoogleBtn, TextDivider, InputField, SubmitBtn } from "./Form/index";
 import { googleAuth, Login, Register } from "../../../service/auth";
-import {
-  isValidNickname,
-  isValidEmail,
-  isValidPassword,
-} from "../../../utils/isValid";
+import { isValidNickname, isValidEmail, isValidPassword } from "./isValid";
 
 const initialJoinInfo = {
   nickname: "",

@@ -1,8 +1,7 @@
-import React from "react";
 import { Typography, Button } from "@mui/material";
 import RowSpaceBetween from "./RowSpaceBetween";
 
-const SubHeader = ({ title, disabled, btnName, onClickHandler }) => {
+const SubHeader = ({ title, disabled, btnName, handleClickBtn }) => {
   return (
     <RowSpaceBetween>
       <Typography variant="h5" ml={2}>
@@ -11,7 +10,7 @@ const SubHeader = ({ title, disabled, btnName, onClickHandler }) => {
       <Button
         variant="contained"
         disabled={disabled}
-        onClick={onClickHandler}
+        onClick={handleClickBtn}
         sx={{ marginRight: "10px" }}
       >
         {btnName}
@@ -20,4 +19,4 @@ const SubHeader = ({ title, disabled, btnName, onClickHandler }) => {
   );
 };
 
-export default React.memo(SubHeader);
+export default SubHeader;

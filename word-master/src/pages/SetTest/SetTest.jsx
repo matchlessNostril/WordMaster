@@ -125,7 +125,7 @@ const SetTest = () => {
             : true
         }
         btnName="시작"
-        onClickHandler={onClickStartBtn}
+        handleClickBtn={onClickStartBtn}
       />
       <Divider sx={{ mt: 2, mb: 2 }} />
       {isLoading ? (

@@ -67,7 +67,7 @@ const Voca = () => {
           title={title}
           disabled={false}
           btnName="수정"
-          onClickHandler={onClickModifyBtn}
+          handleClickBtn={onClickModifyBtn}
         />
         <Divider sx={{ mt: 3, mb: 3 }} />
         {isLoading ? (

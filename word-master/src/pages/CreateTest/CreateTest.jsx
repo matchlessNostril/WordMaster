@@ -311,7 +311,7 @@ const CreateTest = () => {
                 !testName || selectedVocaPaths.length === 0 ? true : false
               }
               btnName="만들기"
-              onClickHandler={onClickCreateBtn}
+              handleClickBtn={onClickCreateBtn}
             />
             <Box mt={1} p={1}>
               <TextField
