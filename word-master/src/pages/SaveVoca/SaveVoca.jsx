@@ -1,27 +1,12 @@
-// Router
 import { useLocation, useNavigate } from "react-router-dom";
-// Hook
 import { useState, useCallback, useEffect } from "react";
-// Custom Hook
-import useLoading from "../../hooks/useLoading";
-import useWordListReducer from "../../hooks/useWordListReducer";
-// MUI
+import { useWordListReducer } from "../../hooks";
 import { Box, TextField, ListItem, IconButton } from "@mui/material";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-// Component
-import Transition from "../../components/Transition";
-import SubHeader from "../../components/SubHeader";
-import Loading from "../../components/Loading";
+import { Transition, SubHeader, Loading, ScrollList } from "../../components";
 import WordCard from "../../components/Voca/SaveVoca/WordCard";
-// Layout
-import ScrollList from "../../layout/ScrollList";
-// API
 import { getList } from "../../service/database/getList";
-import {
-  setData,
-  pushData,
-  removeData,
-} from "../../service/database/dataOperation";
+import operateData from "../../service/database/operateData";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 const SaveVoca = () => {
   // location.state로 전달된 mode, path, title, key 값 불러오기
@@ -40,17 +25,17 @@ const SaveVoca = () => {
   const { wordList, wordListDispatch } = useWordListReducer();
 
   // 로딩 State와 Setter
-  const [onLoading, setOnLoading] = useLoading();
+  const [isLoading, setIsLoading] = useState(false);
 
   // Modify(수정) 모드인 경우, 마운트 시 데이터 불러오기
   useEffect(() => {
     if (mode !== "Modify") return;
 
-    setOnLoading(true);
+    setIsLoading(true);
     // useEffect에서 콜백 함수에 async, await를 사용하는 것은 불가능하지만, then은 가능
     getList(`Voca/${path}/${title}`).then((originalWordList) => {
       wordListDispatch({ type: "FETCH_WORD_LIST", wordList: originalWordList });
-      setOnLoading(false);
+      setIsLoading(false);
     });
   }, []);
 
@@ -106,16 +91,18 @@ const SaveVoca = () => {
     // Modify(수정) 모드인 경우 먼저 기존 데이터 삭제
     if (mode === "Modify") {
       // 기존 단어 리스트 삭제
-      removeData(`Voca/${path}/${title}`);
+      operateData("REMOVE", `Voca/${path}/${title}`);
       // 기존 단어장 이름 수정, key 바뀌지 않게
-      setData(`Voca/${path}/vocaList/${key}`, { name: vocaName });
+      operateData("SET", `Voca/${path}/vocaList/${key}`, { name: vocaName });
     }
 
     // 데이터 저장
-    wordList.forEach((word) => pushData(`Voca/${path}/${vocaName}`, word));
+    wordList.forEach((word) =>
+      operateData("PUSH", `Voca/${path}/${vocaName}`, word)
+    );
     // Create(생성) 모드인 경우 vocaList에도 저장하고 화면 이동
     if (mode === "Create") {
-      pushData(`Voca/${path}/vocaList`, { name: vocaName });
+      operateData("PUSH", `Voca/${path}/vocaList`, { name: vocaName });
       // 전달 State 바뀌지 않음
       navigate(-1);
       return;
@@ -151,7 +138,7 @@ const SaveVoca = () => {
             sx={{ width: "100%" }}
           />
         </ListItem>
-        {onLoading ? (
+        {isLoading ? (
           <Loading />
         ) : (
           <>

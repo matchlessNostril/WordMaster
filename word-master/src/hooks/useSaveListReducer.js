@@ -16,8 +16,6 @@ const reducer = (state, action) => {
       return rest;
     case "RESET":
       return {};
-    default:
-      return state;
   }
 };
 

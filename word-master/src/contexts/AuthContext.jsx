@@ -1,11 +1,7 @@
-import React from "react";
-// firebase Auth
-import { onAuthStateChanged } from "firebase/auth";
 import { wordMasterAuth } from "../firebase";
-// Router
+import { onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-// Hook
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 export const AuthContext = React.createContext(null);
 

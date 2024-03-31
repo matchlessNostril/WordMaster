@@ -1,10 +1,6 @@
-import React from "react";
-// Router
 import { useNavigate } from "react-router-dom";
-// Custom Hook
-import usePopOver from "../../../hooks/usePopOver";
-import useModal from "../../../hooks/useModal";
-// MUI
+import React from "react";
+import { usePopOver, useModal } from "../../../hooks";
 import {
   ListItem,
   Card,
@@ -14,20 +10,11 @@ import {
   Typography,
   IconButton,
 } from "@mui/material";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-// Component
-import BtnPopover from "../../BtnPopover";
-import ActionModal from "../../ActionModal";
-// API
+import { BtnPopover, ActionModal } from "../../../components";
 import { getList } from "../../../service/database/getList";
-import {
-  getData,
-  setData,
-  updateData,
-  removeData,
-} from "../../../service/database/dataOperation";
-// Utils
+import operateData from "../../../service/database/operateData";
 import { isEmpty } from "lodash";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 const TestCard = ({ itemKey, title }) => {
   // navigate
@@ -81,24 +68,24 @@ const TestCard = ({ itemKey, title }) => {
 
     // 변경 가능한 이름이라면
     // 먼저 기존 데이터 일시 저장
-    const tempData = await getData(`Test/${title}`);
+    const tempData = await operateData("GET", `Test/${title}`);
 
     // 빈 데이터가 아니라면, 데이터 이전하고 기존 경로 삭제
     if (!isEmpty(tempData)) {
-      setData(`Test/${inputValue}`, tempData);
-      removeData(`Test/${title}`);
+      operateData("SET", `Test/${inputValue}`, tempData);
+      operateData("REMOVE", `Test/${title}`);
     }
 
     // 리스트에서도 변경된 이름으로 업데이트
-    updateData(`Test/testList/${itemKey}`, { name: inputValue });
+    operateData("UPDATE", `Test/testList/${itemKey}`, { name: inputValue });
 
     setOpenModal(false);
   };
 
   // 2. 삭제
   const onClickRemoveBtn = () => {
-    removeData(`Test/${title}`);
-    removeData(`Test/testList/${itemKey}`);
+    operateData("REMOVE", `Test/${title}`);
+    operateData("REMOVE", `Test/testList/${itemKey}`);
     setOpenModal(false);
   };
 

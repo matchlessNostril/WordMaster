@@ -1,7 +1,11 @@
 import ReactCardFlip from "react-card-flip";
 import React, { useState, useEffect } from "react";
-import { useIsPortrait } from "../../../hooks";
-import { Card, CardActionArea, CardContent } from "@mui/material";
+import {
+  useMediaQuery,
+  Card,
+  CardActionArea,
+  CardContent,
+} from "@mui/material";
 import TouchAppIcon from "@mui/icons-material/TouchApp";
 
 // QuestionCard의 question prop의 값이 바뀌어 TextCard의 children prop의 값이 바뀌지 않는 이상,
@@ -9,7 +13,7 @@ import TouchAppIcon from "@mui/icons-material/TouchApp";
 const TextCard = React.memo(
   ({ setIsFlipped, isFront = false, children }) => {
     // MediaQuery
-    const isPortrait = useIsPortrait();
+    const isPortrait = useMediaQuery("(orientation: portrait)");
 
     const [showAnswer, setShowAnswer] = useState(true);
     useEffect(() => {

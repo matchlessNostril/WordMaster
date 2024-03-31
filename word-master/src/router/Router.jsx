@@ -1,6 +1,6 @@
 // 페이지 전환 애니메이션 라이브러리
 import { AnimatePresence } from "framer-motion";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import {
   Start,
   Join,
@@ -14,7 +14,6 @@ import {
   Test,
 } from "../pages";
 import { useEffect } from "react";
-import { useMovePath } from "../hooks";
 
 const privateRoutes = [
   { path: "/Main", page: <Main /> },
@@ -29,7 +28,7 @@ const privateRoutes = [
 
 // 인증 여부 확인 후, 화면 렌더링 또는 화면 이동
 const PrivatePage = ({ isLoginUser, page: Page }) => {
-  const navigate = useMovePath();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!isLoginUser) {

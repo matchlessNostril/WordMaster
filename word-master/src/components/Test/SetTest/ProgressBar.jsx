@@ -1,7 +1,4 @@
-// Hook
 import { useState } from "react";
-import { useLoading } from "../../../hooks";
-// MUI
 import {
   Stack,
   Box,
@@ -10,17 +7,12 @@ import {
   IconButton,
   CircularProgress,
 } from "@mui/material";
-import RestartAltIcon from "@mui/icons-material/RestartAlt";
-// API
 import { getList } from "../../../service/database/getList";
-import {
-  pushData,
-  removeData,
-  updateData,
-} from "../../../service/database/dataOperation";
+import operateData from "../../../service/database/operateData";
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
 
 const ProgressBar = ({ title, type, numOfPassed, listLength, setTestInfo }) => {
-  const [onLoading, setOnLoading] = useLoading();
+  const [isLoading, setIsLoading] = useState(false);
 
   // Slider 정보 State
   const [percentage, setPercentage] = useState(
@@ -39,17 +31,18 @@ const ProgressBar = ({ title, type, numOfPassed, listLength, setTestInfo }) => {
 
   // 리셋 함수
   const onClickResetBtn = async () => {
-    setOnLoading(true);
+    setIsLoading(true);
 
     // 통과된 단어 리스트 불러오고 삭제
     const passedWordList = await getList(
       `Test/${title}/wordList/${type}Test/passed`
     );
-    await removeData(`Test/${title}/wordList/${type}Test/passed`);
+    await operateData("REMOVE", `Test/${title}/wordList/${type}Test/passed`);
 
     // 대기 리스트로 이동
     for (let i = 0; i < passedWordList.length; i++) {
-      await pushData(
+      await operateData(
+        "PUSH",
         `Test/${title}/wordList/${type}Test/waiting`,
         passedWordList[i]
       );
@@ -57,14 +50,14 @@ const ProgressBar = ({ title, type, numOfPassed, listLength, setTestInfo }) => {
 
     // 통과된 단어 수 수정
     if (type === "word") {
-      await updateData(`Test/${title}/info`, { numOfPassedWord: 0 });
+      await operateData("UPDATE", `Test/${title}/info`, { numOfPassedWord: 0 });
       setTestInfo((prev) => ({ ...prev, numOfPassedWord: 0 }));
     } else {
-      await updateData(`Test/${title}/info`, { numOfPassedMean: 0 });
+      await operateData("UPDATE", `Test/${title}/info`, { numOfPassedMean: 0 });
       setTestInfo((prev) => ({ ...prev, numOfPassedMean: 0 }));
     }
 
-    setOnLoading(false);
+    setIsLoading(false);
     setPercentage(0);
     setMarks((prev) => [{ value: 0, label: "0" }, prev[1]]);
   };
@@ -112,7 +105,7 @@ const ProgressBar = ({ title, type, numOfPassed, listLength, setTestInfo }) => {
           justifyContent: "center",
         }}
       >
-        {onLoading ? (
+        {isLoading ? (
           <CircularProgress size={20} />
         ) : (
           <IconButton onClick={onClickResetBtn} disabled={!numOfPassed}>

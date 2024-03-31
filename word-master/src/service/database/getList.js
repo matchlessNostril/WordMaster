@@ -1,8 +1,5 @@
-// firebase
 import { wordMasterAuth, wordMasterDB } from "../../firebase";
-// firebase DB
 import { ref, get } from "firebase/database";
-// utils
 import printError from "../../utils/printError";
 
 export const getList = async (path, propName = "") => {

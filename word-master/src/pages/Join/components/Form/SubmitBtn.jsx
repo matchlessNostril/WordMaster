@@ -1,21 +1,21 @@
-import React from "react";
-import { useLoading } from "../../../../hooks";
+import React, { useState } from "react";
 import { CircularProgress } from "@mui/material";
 import StyledButton from "./StyledButton";
 
 const SubmitBtn = ({ method, disabled, handleSubmit }) => {
-  const [onLoading, setOnLoading] = useLoading();
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <StyledButton
       variant="contained"
       disabled={disabled}
       onClick={async () => {
-        setOnLoading(true);
+        setIsLoading(true);
         await handleSubmit();
-        setOnLoading(false);
-      }}>
-      {onLoading ? (
+        setIsLoading(false);
+      }}
+    >
+      {isLoading ? (
         <CircularProgress size={20} sx={{ color: "white" }} />
       ) : (
         `${method}`

@@ -3,7 +3,6 @@ import { useTheme } from "@mui/material/styles";
 import { List } from "@mui/material";
 
 const ScrollList = ({ maxHeight, children }) => {
-  // theme
   const theme = useTheme();
 
   return (

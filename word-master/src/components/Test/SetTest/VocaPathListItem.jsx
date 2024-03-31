@@ -1,4 +1,3 @@
-// MUI
 import { Stack, ListItem, Typography } from "@mui/material";
 
 const VocaPathListItem = ({ dirPath, vocaList }) => {

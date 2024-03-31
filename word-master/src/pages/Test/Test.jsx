@@ -1,25 +1,10 @@
-// Router
 import { useLocation, useNavigate } from "react-router-dom";
-// Hook
 import { useState, useRef, useCallback, useEffect } from "react";
-// Custom Hook
-import { useIsPortrait, useLoading } from "../../hooks";
-// Reducer
 import useQuestionReducer from "./hooks/useQuestionReducer";
-// MUI
-import { Stack } from "@mui/material";
-// Component (Common)
+import { useMediaQuery, Stack } from "@mui/material";
 import { Transition, Loading } from "../../components";
-// Component (for Test Page)
 import { Progress, QuestionCard, Timer, NextBtns } from "./components";
-// API
-import {
-  getData,
-  setData,
-  removeData,
-  updateData,
-} from "../../service/database/dataOperation";
-// Utils
+import operateData from "../../service/database/operateData";
 import { shuffle } from "lodash";
 
 const Test = () => {
@@ -37,13 +22,13 @@ const Test = () => {
   // State
   const { question, questionDispatch } = useQuestionReducer();
   const [questionTimer, setQuestionTimer] = useState(time);
-  const [onLoading, setOnLoading] = useLoading();
+  const [isLoading, setIsLoading] = useState(false);
 
   // Ref
   const timerId = useRef(null);
 
   // MediaQuery
-  const isPortrait = useIsPortrait();
+  const isPortrait = useMediaQuery("(orientation: portrait)");
   // Navigate
   const navigate = useNavigate();
 
@@ -58,9 +43,9 @@ const Test = () => {
 
   // 마운트 시, wordList 불러와 question State 초기화
   useEffect(() => {
-    setOnLoading(true);
+    setIsLoading(true);
 
-    getData(`Test/${title}/wordList/${type}Test/waiting`)
+    operateData("GET", `Test/${title}/wordList/${type}Test/waiting`)
       .then((wordList) => {
         // 객체 → 배열화 + 셔플
         const shuffledWordList = shuffle(Object.entries(wordList));
@@ -74,7 +59,7 @@ const Test = () => {
           },
         });
       })
-      .then(() => setOnLoading(false))
+      .then(() => setIsLoading(false))
       .then(() => {
         // 타이머 설정되어 있으면, 시작
         if (!onTimer) return;
@@ -96,16 +81,19 @@ const Test = () => {
     if (onTimer) clearInterval(timerId.current);
 
     // DB 상에서 waitng에 있는 해당 word를 passed로 이동
-    await removeData(
+    await operateData(
+      "REMOVE",
       `Test/${title}/wordList/${type}Test/waiting/${question.currentQuestion[0]}`
     );
-    await setData(
+    await operateData(
+      "SET",
       `Test/${title}/wordList/${type}Test/passed/${question.currentQuestion[0]}`,
       question.currentQuestion[1]
     );
 
     // 통과된 수 1 증가
-    await updateData(
+    await operateData(
+      "UPDATE",
       `Test/${title}/info`,
       type === "word"
         ? { numOfPassedWord: question.numOfPassed + 1 }
@@ -114,7 +102,8 @@ const Test = () => {
 
     // 마지막 문제 통과 였다면, 라운드 1 증가 + 화면 이동
     if (question.numOfPassed + 1 === listLength) {
-      await updateData(
+      await operateData(
+        "UPDATE",
         `Test/${title}/info`,
         type === "word" ? { wordRound: round + 1 } : { meanRound: round + 1 }
       );
@@ -147,7 +136,7 @@ const Test = () => {
 
   return (
     <>
-      {onLoading ? (
+      {isLoading ? (
         <Loading onMarginTop={false} />
       ) : (
         <Stack spacing={2} sx={{ width: isPortrait ? "80vw" : "50vw" }}>

@@ -1,9 +1,7 @@
-import React from "react";
 import { useTheme } from "@mui/material/styles";
 import { Stack } from "@mui/material";
 
 const RowSpaceBetween = ({ children }) => {
-  // theme
   const theme = useTheme();
 
   return (
@@ -26,4 +24,4 @@ const RowSpaceBetween = ({ children }) => {
   );
 };
 
-export default React.memo(RowSpaceBetween);
+export default RowSpaceBetween;

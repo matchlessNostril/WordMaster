@@ -1,13 +1,8 @@
-import React from "react";
-// Hook
-import { useState, useEffect } from "react";
-// MUI
+import React, { useState, useEffect } from "react";
 import { Modal, Box, Typography, TextField, Button } from "@mui/material";
 
 const ActionModal = ({ open, setOpen, content }) => {
-  // TextField 입력 State
   const [value, setValue] = useState("");
-
   useEffect(() => setValue(""), [open]);
 
   return (

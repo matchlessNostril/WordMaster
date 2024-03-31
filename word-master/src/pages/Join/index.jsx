@@ -1,7 +1,6 @@
 import { useState } from "react";
-import Transition from "../../components/Transition";
-import MethodToggle from "./components/MethodToggle";
-import Form from "./components/Form";
+import { Transition } from "../../components";
+import { MethodToggle, Form } from "./components";
 
 const Join = () => {
   const [method, setMethod] = useState("로그인");

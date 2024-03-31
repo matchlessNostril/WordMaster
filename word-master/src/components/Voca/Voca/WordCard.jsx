@@ -1,6 +1,4 @@
-// Hook
 import { useState } from "react";
-// MUI
 import { useTheme } from "@mui/material/styles";
 import {
   ListItem,

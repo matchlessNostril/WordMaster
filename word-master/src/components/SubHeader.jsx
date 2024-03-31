@@ -1,8 +1,6 @@
 import React from "react";
-// MUI
 import { Typography, Button } from "@mui/material";
-// Component
-import RowSpaceBetween from "../layout/RowSpaceBetween";
+import RowSpaceBetween from "./RowSpaceBetween";
 
 const SubHeader = ({ title, disabled, btnName, onClickHandler }) => {
   return (

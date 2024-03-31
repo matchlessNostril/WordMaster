@@ -1,10 +1,5 @@
-// Router
 import { useLocation, useNavigate } from "react-router-dom";
-// Hook
 import { useEffect, useState, useCallback } from "react";
-// Custom Hook
-import useLoading from "../../hooks/useLoading";
-// MUI
 import {
   Box,
   Divider,
@@ -14,15 +9,14 @@ import {
   Radio,
   Checkbox,
 } from "@mui/material";
-// Component
-import Transition from "../../components/Transition";
-import SubHeader from "../../components/SubHeader";
-import Loading from "../../components/Loading";
+import {
+  Transition,
+  SubHeader,
+  Loading,
+  RowSpaceBetween,
+  ScrollList,
+} from "../../components";
 import WordCard from "../../components/Voca/Voca/WordCard";
-// Layout
-import RowSpaceBetween from "../../layout/RowSpaceBetween";
-import ScrollList from "../../layout/ScrollList";
-// API
 import { getList } from "../../service/database/getList";
 
 const Voca = () => {
@@ -34,14 +28,14 @@ const Voca = () => {
   const [wordList, setWordList] = useState([{}]);
 
   // 로딩 State와 Setter
-  const [onLoading, setOnLoading] = useLoading();
+  const [isLoading, setIsLoading] = useState(false);
 
   // 마운트 시, 단어 리스트 데이터 불러오기
   useEffect(() => {
-    setOnLoading(true);
+    setIsLoading(true);
     getList(`Voca/${path}/${title}`).then((list) => {
       setWordList(list);
-      setOnLoading(false);
+      setIsLoading(false);
     });
   }, []);
 
@@ -76,7 +70,7 @@ const Voca = () => {
           onClickHandler={onClickModifyBtn}
         />
         <Divider sx={{ mt: 3, mb: 3 }} />
-        {onLoading ? (
+        {isLoading ? (
           <Loading />
         ) : (
           <>

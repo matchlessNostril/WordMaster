@@ -1,5 +1,4 @@
 import React from "react";
-// MUI
 import { Popover, ButtonGroup, Button } from "@mui/material";
 
 const BtnPopover = ({ anchor, setAnchor, buttons }) => {

@@ -1,6 +1,5 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useMovePath } from "../hooks";
 import { Box, AppBar, Toolbar, Tooltip, IconButton } from "@mui/material";
 import { logout } from "../service/auth";
 
@@ -29,7 +28,7 @@ const btnInfoList = {
 
 const Header = () => {
   const location = useLocation();
-  const navigate = useMovePath();
+  const navigate = useNavigate();
 
   const [btnInfo, setBtnInfo] = useState({ title: "", to: "", icon: null });
   useEffect(() => {

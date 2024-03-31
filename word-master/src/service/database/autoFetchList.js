@@ -1,6 +1,4 @@
-// firebase
 import { wordMasterAuth, wordMasterDB } from "../../firebase";
-// firebase DB
 import {
   ref,
   get,
@@ -9,13 +7,11 @@ import {
   onChildRemoved,
   off,
 } from "firebase/database";
-// utils
 import printError from "../../utils/printError";
 
 // 1. DB 특정 위치의 데이터 리스트 불러오기 + 이벤트 리스너 등록
 export const autoFetchList = async (path, listDispatch, setOnLoading) => {
   try {
-    // 로딩 On
     setOnLoading(true);
 
     // 같은 route에서 쿼리스트링만 바뀐 경우 : 다시 마운트 되지 않기 때문에 리스트 초기화 필요
@@ -26,19 +22,14 @@ export const autoFetchList = async (path, listDispatch, setOnLoading) => {
     const pathRef = ref(wordMasterDB, `${uid}/${path}`);
 
     // 참조된 위치에 리스트(목록) 데이터 이벤트 리스너 등록
-    // (1) onChildAdded: 초기 리스트 데이터 로딩 및 리스트에 새로운 데이터가 추가됐을 때 콜백 함수 호출
+    // (1) onChildAdded: 초기 리스트 데이터 불러오기 및 리스트에 새로운 데이터가 추가됐을 때 콜백 함수 호출
     // (2) onChildChanged: 리스트에 데이터가 수정됐을 때 호출
     // (3) onChildRemoved: 리스트에 데이터가 삭제됐을 때 호출
 
     // 이벤트 핸들러 함수
     const onChlidEventHandler = async (actionType, data) => {
-      // console.log("Action Type :", actionType);
-      // console.log("data.val() :", data.val());
-
-      // 로딩 On
       setOnLoading(true);
 
-      // type에 따라 다르게 dispatch 함수 실행
       if (actionType === "REMOVE") {
         await listDispatch({ type: actionType, key: data.key });
       } else {
@@ -49,11 +40,10 @@ export const autoFetchList = async (path, listDispatch, setOnLoading) => {
         });
       }
 
-      // state 값 바꾼 후 로딩 Off
       setOnLoading(false);
     };
 
-    // 초기 리스트 데이터 로딩, 이후 새로운 데이터 추가 시 호출
+    // 초기 리스트 데이터 불러오기, 이후 새로운 데이터 추가 시 호출
     onChildAdded(pathRef, (data) => onChlidEventHandler("ADD", data));
     // 데이터 이름(name 속성 값) 변경 시 호출
     onChildChanged(pathRef, (data) => onChlidEventHandler("CHANGE", data));

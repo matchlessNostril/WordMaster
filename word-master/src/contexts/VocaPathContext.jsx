@@ -1,9 +1,5 @@
-import React from "react";
-// Hook
-import { useState, useCallback, useEffect } from "react";
-// API
-import { getData } from "../service/database/dataOperation";
-// Utils
+import React, { useState, useCallback, useEffect } from "react";
+import operateData from "../service/database/operateData";
 import listObjToArr from "../utils/listObjToArr";
 import { isEmpty } from "lodash";
 
@@ -32,7 +28,7 @@ export const VocaPathProvider = ({ children }) => {
   // 마운트 시, 사용자의 Voca Json Tree를 불러와
   // findAllVocaPaths 재귀함수로 모든 단어장 Path 리스트 추출해 allVocaPaths State에 저장
   useEffect(() => {
-    getData("Voca/root").then((rootVocaTree) => {
+    operateData("GET", "Voca/root").then((rootVocaTree) => {
       if (rootVocaTree === null || isEmpty(rootVocaTree)) {
         setVocaTree("NoFile");
         return;

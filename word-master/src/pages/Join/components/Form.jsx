@@ -78,8 +78,7 @@ const Form = ({ method }) => {
         handleClickShowBtn={() => setIsPasswordVisible((prev) => !prev)}
       />
       <SubmitBtn
-        method={method}
-        disabled={disabled}
+        {...{ method, disabled }}
         handleSubmit={
           method === "로그인"
             ? () => Login(joinInfo.email, joinInfo.password)

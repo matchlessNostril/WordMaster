@@ -1,30 +1,22 @@
-// Router
 import { useNavigate } from "react-router-dom";
-// Context
+import { useContext, useState, useEffect } from "react";
+import { useSaveListReducer } from "../../hooks";
 import { AuthContext } from "../../contexts/AuthContext";
-// Hook
-import { useContext, useEffect } from "react";
-// Custom Hook
-import useSaveListReducer from "../../hooks/useSaveListReducer";
-import useLoading from "../../hooks/useLoading";
-// MUI
 import { Box, Typography, IconButton } from "@mui/material";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-// Component
-import Transition from "../../components/Transition";
+import {
+  Transition,
+  Loading,
+  NoFile,
+  ScrollList,
+  RowSpaceBetween,
+} from "../../components";
 import TestCard from "../../components/Test/TestList/TestCard";
-import Loading from "../../components/Loading";
-import NoFile from "../../components/NoFile";
-import ScrollList from "../../layout/ScrollList";
-// Layout
-import RowSpaceBetween from "../../layout/RowSpaceBetween";
-// API
 import {
   autoFetchList,
   offAllDBEventListener,
 } from "../../service/database/autoFetchList";
-// Utils
 import { isEmpty } from "lodash";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 const TestList = () => {
   // 사용자 정보
@@ -37,11 +29,11 @@ const TestList = () => {
   const { list, listDispatch } = useSaveListReducer();
 
   // 로딩 State와 Setter
-  const [onLoading, setOnLoading] = useLoading();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     // testList 불러오기
-    autoFetchList("Test/testList", listDispatch, setOnLoading);
+    autoFetchList("Test/testList", listDispatch, setIsLoading);
 
     // clean-up 함수로 DB 이벤트 리스너 제거
     return () => {
@@ -60,7 +52,7 @@ const TestList = () => {
             <AddCircleIcon sx={{ fontSize: "40px" }} />
           </IconButton>
         </RowSpaceBetween>
-        {onLoading ? (
+        {isLoading ? (
           <Loading />
         ) : (
           <>

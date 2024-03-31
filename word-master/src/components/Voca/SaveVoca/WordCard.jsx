@@ -1,7 +1,4 @@
-import React from "react";
-// Hook
-import { useState, useCallback } from "react";
-// MUI
+import React, { useState, useCallback } from "react";
 import { useTheme } from "@mui/material/styles";
 import {
   ListItem,
@@ -16,7 +13,6 @@ import {
   Checkbox,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-// Utils
 import { isEqual } from "lodash";
 
 const WordCard = ({ index, word, wordListDispatch, focus }) => {

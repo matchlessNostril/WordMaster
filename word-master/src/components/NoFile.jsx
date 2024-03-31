@@ -1,3 +1,4 @@
+import React from "react";
 import { Container } from "@mui/material";
 
 const NoFile = ({ text }) => {
@@ -24,4 +25,4 @@ const NoFile = ({ text }) => {
   );
 };
 
-export default NoFile;
+export default React.memo(NoFile);

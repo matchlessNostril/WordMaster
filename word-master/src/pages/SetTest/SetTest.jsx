@@ -1,10 +1,5 @@
-// Router
 import { useSearchParams, useNavigate } from "react-router-dom";
-// Hook
 import { useState, useCallback, useEffect } from "react";
-// Custom Hook
-import useLoading from "../../hooks/useLoading";
-// MUI
 import {
   Box,
   Divider,
@@ -19,18 +14,11 @@ import {
   InputAdornment,
   Chip,
 } from "@mui/material";
-// Component
-import Transition from "../../components/Transition";
-import SubHeader from "../../components/SubHeader";
-import Loading from "../../components/Loading";
+import { Transition, SubHeader, Loading, ScrollList } from "../../components";
 import ProgressBar from "../../components/Test/SetTest/ProgressBar";
 import VocaPathListItem from "../../components/Test/SetTest/VocaPathListItem";
-// Layout
-import ScrollList from "../../layout/ScrollList";
-// API
-import { getData } from "../../service/database/dataOperation";
+import operateData from "../../service/database/operateData";
 import { getList } from "../../service/database/getList";
-// Utils
 import { isEmpty } from "lodash";
 
 const SetTest = () => {
@@ -48,16 +36,16 @@ const SetTest = () => {
   const [timer, setTimer] = useState({ onTimer: false, time: "" });
 
   // 로딩 State와 Setter
-  const [onLoading, setOnLoading] = useLoading();
+  const [isLoading, setIsLoading] = useState(false);
 
   // navigate
   const navigate = useNavigate();
 
   // 마운트 시, 데이터 불러오기
   useEffect(() => {
-    setOnLoading(true);
+    setIsLoading(true);
 
-    getData(`Test/${title}/info`)
+    operateData("GET", `Test/${title}/info`)
       .then((info) => {
         setTestInfo(info);
       })
@@ -88,7 +76,7 @@ const SetTest = () => {
         }
 
         setVocaPaths(newVocaPaths);
-        setOnLoading(false);
+        setIsLoading(false);
       });
   }, []);
 
@@ -140,7 +128,7 @@ const SetTest = () => {
         onClickHandler={onClickStartBtn}
       />
       <Divider sx={{ mt: 2, mb: 2 }} />
-      {onLoading ? (
+      {isLoading ? (
         <Loading />
       ) : (
         <>

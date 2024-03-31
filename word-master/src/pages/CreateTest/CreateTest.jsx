@@ -1,16 +1,15 @@
-import React from "react";
-// Router
 import { useNavigate } from "react-router-dom";
-// Context
+import React, {
+  useState,
+  useMemo,
+  useEffect,
+  useContext,
+  useCallback,
+} from "react";
 import {
   VocaPathContext,
   VocaPathProvider,
 } from "../../contexts/VocaPathContext";
-// Hook
-import { useState, useMemo, useEffect, useContext, useCallback } from "react";
-// Custom Hook
-import useLoading from "../../hooks/useLoading";
-// MUI
 import {
   Stack,
   Checkbox,
@@ -20,23 +19,16 @@ import {
   Divider,
   Typography,
 } from "@mui/material";
-// Styled-components
 import styled from "styled-components";
-// Component
-import Transition from "../../components/Transition";
-import SubHeader from "../../components/SubHeader";
-import Loading from "../../components/Loading";
-import Nofile from "../../components/NoFile";
-// Layout
-import ScrollList from "../../layout/ScrollList";
-// API
-import { getList } from "../../service/database/getList";
 import {
-  getData,
-  setData,
-  pushData,
-} from "../../service/database/dataOperation";
-// Utils
+  Transition,
+  SubHeader,
+  Loading,
+  NoFile,
+  ScrollList,
+} from "../../components";
+import { getList } from "../../service/database/getList";
+import operateData from "../../service/database/operateData";
 import listObjToArr from "../../utils/listObjToArr";
 
 // ul, 스타일드 컴포넌트
@@ -234,7 +226,7 @@ const CreateTest = () => {
   );
 
   // 로딩 State와 Setter
-  const [onLoading, setOnLoading] = useLoading();
+  const [isLoading, setIsLoading] = useState(false);
 
   // navigate
   const navigate = useNavigate();
@@ -257,21 +249,25 @@ const CreateTest = () => {
     }
 
     // DB 저장 시작 시, 로딩 On
-    setOnLoading(true);
+    setIsLoading(true);
 
     // TestList에 저장
-    await pushData("Test/testList", { name: testName });
+    await operateData("PUSH", "Test/testList", { name: testName });
 
     // 선택된 Path 저장하면서, 해당하는 단어 리스트 불러오기
     let wordList = [];
     for (let i = 0; i < selectedVocaPaths.length; i++) {
       // "Voca/root" 이후 문자열 저장
-      await pushData(`Test/${testName}/paths`, selectedVocaPaths[i].slice(10));
+      await operateData(
+        "PUSH",
+        `Test/${testName}/paths`,
+        selectedVocaPaths[i].slice(10)
+      );
       wordList = wordList.concat(await getList(selectedVocaPaths[i]));
     }
 
     // 기본 정보 저장
-    await setData(`Test/${testName}/info`, {
+    await operateData("SET", `Test/${testName}/info`, {
       wordListLength: wordList.length,
       numOfPassedWord: 0,
       numOfPassedMean: 0,
@@ -281,24 +277,30 @@ const CreateTest = () => {
 
     // wordTest, meanTest에 단어 리스트 저장
     for (let i = 0; i < wordList.length; i++) {
-      await pushData(`Test/${testName}/wordList/wordTest/waiting`, wordList[i]);
+      await operateData(
+        "PUSH",
+        `Test/${testName}/wordList/wordTest/waiting`,
+        wordList[i]
+      );
     }
-    const waitingWordList = await getData(
+    const waitingWordList = await operateData(
+      "GET",
       `Test/${testName}/wordList/wordTest/waiting`
     );
-    await setData(
+    await operateData(
+      "SET",
       `Test/${testName}/wordList/meanTest/waiting`,
       waitingWordList
     );
 
     // DB 저장 완료 후, 로딩 Off하고 화면 이동
-    setOnLoading(false);
+    setIsLoading(false);
     navigate(`/SetTest?title=${testName}`); // <- SetTest 화면으로 이동해야 됨. 일단 Main으로.
   }, [testName, selectedVocaPaths]);
 
   return (
     <>
-      {onLoading ? (
+      {isLoading ? (
         <Loading onMarginTop={false} />
       ) : (
         <>
@@ -336,7 +338,7 @@ const CreateTest = () => {
                 </Box>
                 <Divider sx={{ mt: 2, mb: 2 }} />
                 {vocaTree === "NoFile" ? (
-                  <Nofile text="단어장이 비어있습니다." />
+                  <NoFile text="단어장이 비어있습니다." />
                 ) : (
                   <ScrollList maxHeight="48vh">
                     {dirList &&
