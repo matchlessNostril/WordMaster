@@ -23,14 +23,12 @@ const VocaList = () => {
   const path = searchParams.get("path");
 
   const [currentDirName, setCurrentDirName] = useState("");
-
+  const [isLoading, setIsLoading] = useState(false);
   // 하위 디렉토리/단어장 리스트 State와 Dispatch
   const { pathList: dirList, pathListDispatch: dirListDispatch } =
     usePathListReducer();
   const { pathList: vocaList, pathListDispatch: vocaListDispatch } =
     usePathListReducer();
-
-  const [isLoading, setIsLoading] = useState(false);
 
   // 현재 path 디렉토리 트리 불러오기 + 리스트 데이터 이벤트 리스너 등록
   // 하위 디렉토리로 이동할 때마다 ListItem 컴포넌트 내에서 useNavigate로 경로 이동을 할 테지만

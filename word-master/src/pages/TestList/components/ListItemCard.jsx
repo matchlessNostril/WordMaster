@@ -16,26 +16,12 @@ import operateData from "../../../service/database/operateData";
 import { isEmpty } from "lodash";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
-const ListItemCard = ({ itemKey, title, path, isDir = false }) => {
+const ListItemCard = ({ itemKey, title }) => {
   const navigate = useNavigate();
 
   const [popoverAnchor, setPopoverAnchor, handleClickPopoverBtn] = usePopOver();
   const [openModal, setOpenModal, modalContent, handleClickOpenModal] =
     useModal();
-
-  const moveToNextPath = useCallback(() => {
-    if (isDir) {
-      navigate(`/VocaList?path=${path + "/" + title}`);
-    } else {
-      navigate("/Voca", {
-        state: {
-          key: itemKey,
-          title: title,
-          path: path,
-        },
-      });
-    }
-  }, []);
 
   // 1. 이름 바꾸기
   const handleClickChangeBtn = useCallback(async (inputValue) => {
@@ -51,48 +37,35 @@ const ListItemCard = ({ itemKey, title, path, isDir = false }) => {
       return;
     }
 
-    // 버튼 클릭 시점의 현재 path의 dirList와 vocaList 배열 값 불러오기
-    const dirList = await getList(`Voca/${path}/dirList`, "name");
-    const vocaList = await getList(`Voca/${path}/vocaList`, "name");
-    const entireList = dirList.concat(vocaList);
+    // 버튼 클릭 시점의 testList 배열 값 불러오기
+    const testList = await getList("Test/testList", "name");
 
-    // 현재 디렉토리 내에서 중복된 이름으로 생성 불가능
-    if (entireList.includes(inputValue)) {
-      alert(`현재 폴더 내에 이미 존재하는 이름으로는 변경할 수 없습니다.`);
+    // 중복된 이름으로 생성 불가능
+    if (testList.includes(inputValue)) {
+      alert(`이미 존재하는 이름으로는 변경할 수 없습니다.`);
       return;
     }
 
     // 변경 가능한 이름이라면
     // 먼저 기존 데이터 일시 저장
-    const tempData = await operateData("GET", `Voca/${path}/${title}`);
+    const tempData = await operateData("GET", `Test/${title}`);
 
     // 빈 데이터가 아니라면, 데이터 이전하고 기존 경로 삭제
     if (!isEmpty(tempData)) {
-      operateData("SET", `Voca/${path}/${inputValue}`, tempData);
-      operateData("REMOVE", `Voca/${path}/${title}`);
+      operateData("SET", `Test/${inputValue}`, tempData);
+      operateData("REMOVE", `Test/${title}`);
     }
 
     // 리스트에서도 변경된 이름으로 업데이트
-    operateData(
-      "UPDATE",
-      isDir
-        ? `Voca/${path}/dirList/${itemKey}`
-        : `Voca/${path}/vocaList/${itemKey}`,
-      { name: inputValue }
-    );
+    operateData("UPDATE", `Test/testList/${itemKey}`, { name: inputValue });
 
     setOpenModal(false);
   }, []);
 
   // 2. 삭제
   const handleClickRemoveBtn = useCallback(() => {
-    operateData("REMOVE", `Voca/${path}/${title}`);
-    operateData(
-      "REMOVE",
-      isDir
-        ? `Voca/${path}/dirList/${itemKey}`
-        : `Voca/${path}/vocaList/${itemKey}`
-    );
+    operateData("REMOVE", `Test/${title}`);
+    operateData("REMOVE", `Test/testList/${itemKey}`);
     setOpenModal(false);
   }, []);
 
@@ -145,15 +118,11 @@ const ListItemCard = ({ itemKey, title, path, isDir = false }) => {
           paddingRight: 0,
         }}>
         <Card variant="outlined" sx={{ display: "flex", width: "83vw" }}>
-          <CardActionArea onClick={moveToNextPath}>
+          <CardActionArea onClick={() => navigate(`/SetTest?title=${title}`)}>
             <CardContent sx={{ display: "flex" }}>
               <img
-                src={
-                  isDir
-                    ? require("../../../assets/icons/folder_closed.png")
-                    : require("../../../assets/icons/document.png")
-                }
-                alt="폴더 혹은 단어장 아이콘"
+                src={require("../../../assets/icons/test.png")}
+                alt="테스트 아이콘"
                 style={{
                   width: "25px",
                   height: "25px",
