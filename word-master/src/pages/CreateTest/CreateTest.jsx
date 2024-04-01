@@ -16,7 +16,6 @@ import {
   Button,
   Box,
   TextField,
-  Divider,
   Typography,
 } from "@mui/material";
 import styled from "styled-components";
@@ -25,6 +24,7 @@ import {
   SubHeader,
   Loading,
   NoFile,
+  Divider,
   ScrollList,
 } from "../../components";
 import { getList } from "../../service/database/getList";
@@ -163,8 +163,7 @@ const SetCheckbox = React.memo(
               />
             }
             // minWidth를 unset로 해야 startIcon과 내부 Text를 모두 감쌀 수 있음
-            sx={{ whiteSpace: "nowrap", minWidth: "unset" }}
-          >
+            sx={{ whiteSpace: "nowrap", minWidth: "unset" }}>
             {name}
           </Button>
         </Stack>
@@ -322,7 +321,7 @@ const CreateTest = () => {
                 sx={{ width: "100%" }}
               />
             </Box>
-            <Divider sx={{ mt: 2, mb: 2 }} />
+            <Divider margin={2} />
             {vocaTree === "Waiting" ? (
               <Loading />
             ) : (
@@ -336,7 +335,7 @@ const CreateTest = () => {
                     <li>이후 단어 세트가 업데이트 되어도 반영되지 않습니다.</li>
                   </StyledUl>
                 </Box>
-                <Divider sx={{ mt: 2, mb: 2 }} />
+                <Divider margin={2} />
                 {vocaTree === "NoFile" ? (
                   <NoFile text="단어장이 비어있습니다." />
                 ) : (

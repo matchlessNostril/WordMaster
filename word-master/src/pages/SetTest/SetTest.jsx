@@ -2,7 +2,6 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { useState, useCallback, useEffect } from "react";
 import {
   Box,
-  Divider,
   Typography,
   Stack,
   FormControl,
@@ -14,7 +13,13 @@ import {
   InputAdornment,
   Chip,
 } from "@mui/material";
-import { Transition, SubHeader, Loading, ScrollList } from "../../components";
+import {
+  Transition,
+  SubHeader,
+  Loading,
+  Divider,
+  ScrollList,
+} from "../../components";
 import ProgressBar from "../../components/Test/SetTest/ProgressBar";
 import VocaPathListItem from "../../components/Test/SetTest/VocaPathListItem";
 import operateData from "../../service/database/operateData";
@@ -127,7 +132,7 @@ const SetTest = () => {
         btnName="시작"
         handleClickBtn={onClickStartBtn}
       />
-      <Divider sx={{ mt: 2, mb: 2 }} />
+      <Divider margin={2} />
       {isLoading ? (
         <Loading />
       ) : (
@@ -140,8 +145,7 @@ const SetTest = () => {
               <RadioGroup
                 row
                 value={radio}
-                onChange={(event) => setRadio(event.target.value)}
-              >
+                onChange={(event) => setRadio(event.target.value)}>
                 <FormControlLabel
                   value="word"
                   control={<Radio />}
@@ -188,7 +192,7 @@ const SetTest = () => {
               </Stack>
             </FormControl>
           </Box>
-          <Divider sx={{ mt: 2, mb: 2 }} />
+          <Divider margin={2} />
           {!isEmpty(testInfo) && (
             <Box sx={{ pl: 1 }}>
               <Stack direction="row" alignItems="center" spacing={2}>
@@ -216,7 +220,7 @@ const SetTest = () => {
               </Stack>
             </Box>
           )}
-          <Divider sx={{ mt: 2, mb: 2 }} />
+          <Divider margin={2} />
           <Box sx={{ pl: 1, maxWidth: "85vw" }}>
             <Typography variant="subtitle1">
               <strong>단어장 리스트</strong>
