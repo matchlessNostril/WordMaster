@@ -3,22 +3,25 @@ import { Stack, IconButton } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
-import { isEqual } from "lodash";
 
-const NextBtns = ({ onClickPassBtn, onClickFailBtn, isTimeOut = false }) => {
+const NextBtns = ({
+  handleClickPassBtn,
+  handleClickFailBtn,
+  isTimeOut = false,
+}) => {
   return (
     <Stack direction="row-reverse" spacing={1}>
       {!isTimeOut ? (
         <>
-          <IconButton onClick={onClickPassBtn}>
+          <IconButton onClick={handleClickPassBtn}>
             <CheckCircleIcon sx={{ fontSize: "40px", color: "#6d8ecc" }} />
           </IconButton>
-          <IconButton onClick={onClickFailBtn}>
+          <IconButton onClick={handleClickFailBtn}>
             <CancelIcon sx={{ fontSize: "40px", color: "#ff6c6c" }} />
           </IconButton>
         </>
       ) : (
-        <IconButton onClick={onClickFailBtn}>
+        <IconButton onClick={handleClickFailBtn}>
           <PlayCircleIcon sx={{ fontSize: "40px", color: "#77b97a" }} />
         </IconButton>
       )}
@@ -26,7 +29,10 @@ const NextBtns = ({ onClickPassBtn, onClickFailBtn, isTimeOut = false }) => {
   );
 };
 
-// onClickPassBtn 함수와 isTimeOut을 검사해야 하기 때문에 isEqual 사용
-export default React.memo(NextBtns, (prevProps, nextProps) =>
-  isEqual(prevProps, nextProps)
+// handleClickFailBtn은 검사할 필요 없음
+export default React.memo(
+  NextBtns,
+  (prevProps, nextProps) =>
+    prevProps.handleClickPassBtn === nextProps.handleClickPassBtn &&
+    prevProps.isTimeOut === nextProps.isTimeOut
 );

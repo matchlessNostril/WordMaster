@@ -2,6 +2,8 @@ import { useReducer } from "react";
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case "INIT":
+      return action.initialState;
     case "CORRECT": {
       let newWaitingQuestionList;
 
@@ -60,8 +62,6 @@ const reducer = (state, action) => {
         numOfPassed: state.numOfPassed,
       };
     }
-    case "INIT":
-      return action.initialState;
     default:
       console.error(`올바르지 않은 타입입니다 : ${action.type}`);
       return state;

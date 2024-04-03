@@ -35,7 +35,6 @@ const Header = () => {
     // SaveVoca (수정) 에서 Voca로 넘어온 경우
     // 뒤로 가기 버튼을 눌렀을 때 다시 SaveVoca로 넘어가기 때문에
     // to를 -3으로 바꿔 VocaList로 넘어갈 수 있도록
-    console.log(location)
     if(location.pathname === "/Voca" && location.state.isAfterModify) {
       setBtnInfo({...btnInfoList[location.pathname], to: -3 })
       return;

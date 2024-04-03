@@ -1,14 +1,15 @@
-import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useRef, useCallback, useEffect } from "react";
-import useQuestionReducer from "./hooks/useQuestionReducer";
+import { useLocation, useNavigate } from "react-router-dom";
+import useQuestionReducer from "./useQuestionReducer";
 import { useMediaQuery, Stack } from "@mui/material";
-import { Transition, Loading } from "../../components";
-import { Progress, QuestionCard, Timer, NextBtns } from "./components";
+import { Transition, Loading, TextChip } from "../../components";
+import { Progress, QuestionCard, NextBtns } from "./components";
 import operateData from "../../service/database/operateData";
 import { shuffle } from "lodash";
 
 const Test = () => {
-  // location.state
+  const isPortrait = useMediaQuery("(orientation: portrait)");
+  const navigate = useNavigate();
   const location = useLocation();
   const {
     title,
@@ -19,20 +20,11 @@ const Test = () => {
     round,
   } = location.state;
 
-  // State
+  const [isLoading, setIsLoading] = useState(false);
   const { question, questionDispatch } = useQuestionReducer();
   const [questionTimer, setQuestionTimer] = useState(time);
-  const [isLoading, setIsLoading] = useState(false);
-
-  // Ref
   const timerId = useRef(null);
 
-  // MediaQuery
-  const isPortrait = useMediaQuery("(orientation: portrait)");
-  // Navigate
-  const navigate = useNavigate();
-
-  // Timer 초기화 후 시작 함수
   const startTimer = useCallback(() => {
     setQuestionTimer(time);
     timerId.current = setInterval(
@@ -75,12 +67,14 @@ const Test = () => {
     }
   }, [questionTimer]);
 
-  // 버튼 클릭 함수 1. 통과
-  const onClickPassBtn = useCallback(async () => {
+  // 1. 통과
+  const handleClickPassBtn = useCallback(async (question) => {
     // 타이머가 설정되어 있었다면, 중단
     if (onTimer) clearInterval(timerId.current);
 
     // DB 상에서 waitng에 있는 해당 word를 passed로 이동
+    // question.currentQuestion[0] : 경로 key
+    // question.currentQuestion[1] : value
     await operateData(
       "REMOVE",
       `Test/${title}/wordList/${type}Test/waiting/${question.currentQuestion[0]}`
@@ -119,10 +113,10 @@ const Test = () => {
     // 타이머 설정되어 있었다면, 재시작
     if (!onTimer) return;
     startTimer();
-  }, [question]);
+  }, []);
 
-  // 버튼 클릭 함수 2. 실패 (= 틀림, 시간 초과)
-  const onClickFailBtn = useCallback(() => {
+  // 2. 실패 (= 틀림, 시간 초과)
+  const handleClickFailBtn = useCallback(() => {
     // 타이머가 설정되어 있었고 아직 중단되지 않았다면, 중단
     if (onTimer && timerId.current) clearInterval(timerId.current);
 
@@ -148,17 +142,27 @@ const Test = () => {
           )}
           {question.currentQuestion && (
             <QuestionCard
-              questionWord={question.currentQuestion[1]}
               {...{ type }}
+              questionWord={question.currentQuestion[1]}
             />
           )}
           <Stack
             direction="row"
-            justifyContent={onTimer ? "space-between" : "flex-end"}
-          >
-            {onTimer && <Timer {...{ questionTimer }} />}
+            justifyContent={onTimer ? "space-between" : "flex-end"}>
+            {onTimer && (
+              <TextChip
+                label={`${questionTimer}`}
+                sx={
+                  questionTimer === 0 && {
+                    color: "white",
+                    backgroundColor: "#ff6c6c",
+                  }
+                }
+              />
+            )}
             <NextBtns
-              {...{ onClickPassBtn, onClickFailBtn }}
+              handleClickPassBtn={() => handleClickPassBtn(question)}
+              {...{ handleClickFailBtn }}
               isTimeOut={questionTimer === 0}
             />
           </Stack>

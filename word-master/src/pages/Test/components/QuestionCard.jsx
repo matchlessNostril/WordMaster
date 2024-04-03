@@ -12,13 +12,11 @@ import TouchAppIcon from "@mui/icons-material/TouchApp";
 // QuestionCard의 isFlipped State로 인해 리렌더링 되지 않도록 children 얕은 비교로 메모이제이션
 const TextCard = React.memo(
   ({ setIsFlipped, isFront = false, children }) => {
-    // MediaQuery
     const isPortrait = useMediaQuery("(orientation: portrait)");
 
     const [showAnswer, setShowAnswer] = useState(true);
     useEffect(() => {
       if (isFront) return;
-
       setShowAnswer(false);
       setTimeout(() => setShowAnswer(true), 600);
     }, [children]);
@@ -29,12 +27,10 @@ const TextCard = React.memo(
           flexGrow: 1,
           mt: 2,
           backgroundColor: isFront ? "#535353" : "#dbdbdb",
-        }}
-      >
+        }}>
         <CardActionArea
           onClick={() => setIsFlipped((prev) => !prev)}
-          sx={{ height: isPortrait ? "30vh" : "40vh" }}
-        >
+          sx={{ height: isPortrait ? "30vh" : "40vh" }}>
           <CardContent sx={{ p: 0, width: "100%", textAlign: "center" }}>
             {showAnswer && (
               <strong
@@ -43,8 +39,7 @@ const TextCard = React.memo(
                   fontSize: "20px",
                   fontWeight: "initial",
                   whiteSpace: "pre-line",
-                }}
-              >
+                }}>
                 {children}
               </strong>
             )}
