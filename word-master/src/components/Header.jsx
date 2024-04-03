@@ -22,7 +22,7 @@ const btnInfoList = {
   "/TestList": { title: "홈", to: "/Main", icon: <HomeIcon /> },
   "/CreateTest": { title: "뒤로 가기", to: "/TestList", icon: <NavigateBeforeIcon /> },
   "/SetTest": { title: "뒤로 가기", to: "/TestList", icon: <NavigateBeforeIcon /> },
-  "/Test": { title: "테스트 종료", to: "/SetTest", icon: <CloseIcon /> },
+  "/Test": { title: "테스트 종료", to: -1, icon: <CloseIcon /> },
 };
 /* prettier-ignore */
 
