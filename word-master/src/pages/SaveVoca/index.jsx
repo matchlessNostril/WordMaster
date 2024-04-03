@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import useWordListReducer from "./useWordListReducer";
-import { Box, TextField, ListItem, IconButton } from "@mui/material";
+import { Box } from "@mui/material";
 import { Transition, SubHeader, Loading, ScrollList } from "../../components";
 import { InputField, WordCard, AddBtn } from "./components";
 import { getList } from "../../service/database/getList";
