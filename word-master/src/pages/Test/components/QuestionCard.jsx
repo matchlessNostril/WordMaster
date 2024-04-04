@@ -1,4 +1,3 @@
-import ReactCardFlip from "react-card-flip";
 import React, { useState, useEffect } from "react";
 import {
   useMediaQuery,
@@ -9,55 +8,42 @@ import {
 import TouchAppIcon from "@mui/icons-material/TouchApp";
 
 const QuestionCard = ({ type, questionWord }) => {
-  const [isFlipped, setIsFlipped] = useState(false);
+  const isPortrait = useMediaQuery("(orientation: portrait)");
+  const [showAnswer, setShowAnswer] = useState(false);
 
   useEffect(() => {
-    setIsFlipped(false);
+    setShowAnswer(false);
   }, [questionWord]);
-
-  return (
-    <ReactCardFlip
-      isFlipped={isFlipped}
-      flipSpeedBackToFront={0.01}
-      flipDirection="vertical">
-      <TextCard {...{ setIsFlipped }} isFront>
-        {type === "word" ? questionWord.word : questionWord.mean}
-      </TextCard>
-      <TextCard {...{ setIsFlipped }}>
-        {type === "word" ? questionWord.mean : questionWord.word}
-        {questionWord.hasOwnProperty("pronunciation") &&
-          `\n\n${questionWord.pronunciation}`}
-      </TextCard>
-    </ReactCardFlip>
-  );
-};
-
-export default QuestionCard;
-
-const TextCard = ({ setIsFlipped, isFront = false, children }) => {
-  const isPortrait = useMediaQuery("(orientation: portrait)");
 
   return (
     <Card
       sx={{
         flexGrow: 1,
         mt: 2,
-        backgroundColor: isFront ? "#535353" : "#dbdbdb",
+        backgroundColor: showAnswer ? "#dbdbdb" : "#535353",
       }}>
       <CardActionArea
-        onClick={() => setIsFlipped((prev) => !prev)}
+        onClick={() => setShowAnswer((prev) => !prev)}
         sx={{ height: isPortrait ? "30vh" : "40vh" }}>
         <CardContent sx={{ p: 0, width: "100%", textAlign: "center" }}>
           <strong
             style={{
-              color: isFront ? "white" : "#535353",
+              color: showAnswer ? "#535353" : "white",
               fontSize: "20px",
               fontWeight: "initial",
               whiteSpace: "pre-line",
             }}>
-            {children}
+            {showAnswer ? (
+              <>
+                {type === "word" ? questionWord.mean : questionWord.word}
+                {questionWord.hasOwnProperty("pronunciation") &&
+                  `\n\n${questionWord.pronunciation}`}
+              </>
+            ) : (
+              <>{type === "word" ? questionWord.word : questionWord.mean}</>
+            )}
           </strong>
-          {isFront && (
+          {!showAnswer && (
             <TouchAppIcon
               sx={{
                 position: "absolute",
@@ -72,3 +58,5 @@ const TextCard = ({ setIsFlipped, isFront = false, children }) => {
     </Card>
   );
 };
+
+export default QuestionCard;
