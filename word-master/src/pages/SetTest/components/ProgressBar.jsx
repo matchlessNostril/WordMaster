@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   Stack,
   Box,
@@ -13,8 +13,6 @@ import RestartAltIcon from "@mui/icons-material/RestartAlt";
 
 const ProgressBar = ({ title, type, numOfPassed, listLength, setTestInfo }) => {
   const [isLoading, setIsLoading] = useState(false);
-
-  // Slider 정보 State
   const [percentage, setPercentage] = useState(
     Math.floor((numOfPassed / listLength) * 100)
   );
@@ -29,8 +27,7 @@ const ProgressBar = ({ title, type, numOfPassed, listLength, setTestInfo }) => {
     },
   ]);
 
-  // 리셋 함수
-  const onClickResetBtn = async () => {
+  const handleClickResetBtn = async () => {
     setIsLoading(true);
 
     // 통과된 단어 리스트 불러오고 삭제
@@ -69,8 +66,7 @@ const ProgressBar = ({ title, type, numOfPassed, listLength, setTestInfo }) => {
       sx={{
         width: "100%",
         height: "70px",
-      }}
-    >
+      }}>
       <Box sx={{ mr: 2, width: "40px" }}>
         <Typography variant="body2" style={{ whiteSpace: "pre-line" }}>
           {`${type === "word" ? "단어" : "뜻"}\n(${percentage}%)`}
@@ -103,12 +99,11 @@ const ProgressBar = ({ title, type, numOfPassed, listLength, setTestInfo }) => {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-        }}
-      >
+        }}>
         {isLoading ? (
           <CircularProgress size={20} />
         ) : (
-          <IconButton onClick={onClickResetBtn} disabled={!numOfPassed}>
+          <IconButton onClick={handleClickResetBtn} disabled={!numOfPassed}>
             <RestartAltIcon />
           </IconButton>
         )}
@@ -117,4 +112,11 @@ const ProgressBar = ({ title, type, numOfPassed, listLength, setTestInfo }) => {
   );
 };
 
-export default ProgressBar;
+export default React.memo(
+  ProgressBar,
+  (prevProps, nextProps) =>
+    prevProps.type === nextProps.type &&
+    prevProps.numOfPassed === nextProps.numOfPassed &&
+    prevProps.listLength &&
+    nextProps.listLength
+);
