@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import {
   useMediaQuery,
   Card,
@@ -7,13 +6,8 @@ import {
 } from "@mui/material";
 import TouchAppIcon from "@mui/icons-material/TouchApp";
 
-const QuestionCard = ({ type, questionWord }) => {
+const QuestionCard = ({ type, showAnswer, setShowAnswer, questionWord }) => {
   const isPortrait = useMediaQuery("(orientation: portrait)");
-  const [showAnswer, setShowAnswer] = useState(false);
-
-  useEffect(() => {
-    setShowAnswer(false);
-  }, [questionWord]);
 
   return (
     <Card

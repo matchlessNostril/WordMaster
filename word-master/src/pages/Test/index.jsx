@@ -22,6 +22,7 @@ const Test = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const { question, questionDispatch } = useQuestionReducer();
+  const [showAnswer, setShowAnswer] = useState(false);
   const [questionTimer, setQuestionTimer] = useState(time);
   const timerId = useRef(null);
 
@@ -107,6 +108,10 @@ const Test = () => {
       return;
     }
 
+    // 뒷면일 때 다음 버튼을 누르면 다음 문제 답이 잠깐 보이고 넘어가는 현상을 막기 위해
+    // 먼저 showAnswer를 false로
+    setShowAnswer(false);
+
     // State 업데이트
     questionDispatch({ type: "CORRECT" });
 
@@ -119,6 +124,8 @@ const Test = () => {
   const handleClickFailBtn = useCallback(() => {
     // 타이머가 설정되어 있었고 아직 중단되지 않았다면, 중단
     if (onTimer && timerId.current) clearInterval(timerId.current);
+
+    setShowAnswer(false);
 
     // State 업데이트
     questionDispatch({ type: "INCORRECT" });
@@ -142,7 +149,7 @@ const Test = () => {
           )}
           {question.currentQuestion && (
             <QuestionCard
-              {...{ type }}
+              {...{ type, showAnswer, setShowAnswer }}
               questionWord={question.currentQuestion[1]}
             />
           )}
