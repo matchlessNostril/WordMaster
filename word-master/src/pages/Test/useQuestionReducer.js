@@ -16,12 +16,6 @@ const reducer = (state, action) => {
         newWaitingQuestionList.shift();
       }
 
-      console.log("CORRECT return :", {
-        waitingQuestionList: newWaitingQuestionList,
-        currentQuestion: state.waitingQuestionList[1],
-        numOfPassed: state.numOfPassed + 1,
-      });
-
       return {
         waitingQuestionList: newWaitingQuestionList,
         currentQuestion: state.waitingQuestionList[1],
@@ -49,12 +43,6 @@ const reducer = (state, action) => {
         newWaitingQuestionList.shift();
         newWaitingQuestionList.splice(randomIndex, 0, wrongQuestion);
       }
-
-      console.log("INCORRECT return :", {
-        waitingQuestionList: newWaitingQuestionList,
-        currentQuestion: state.waitingQuestionList[1],
-        numOfPassed: state.numOfPassed,
-      });
 
       return {
         waitingQuestionList: newWaitingQuestionList,
