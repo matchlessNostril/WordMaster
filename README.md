@@ -12,8 +12,7 @@ and take tests **anytime, as much as you want, freely and conveniently!**
 
 ## 🕐 Development Period
 
-- `Jan 19, 2023 - Ongoing`
-- `Currently fixing bugs and refactoring`
+- `Jan 2023 - Feb 2023`
 
 ## 📚 Frameworks, Libraries, and Platforms Used
 
