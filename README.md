@@ -11,6 +11,7 @@ and take tests **anytime, as much as you want, freely and conveniently!**
 ## 🕐 Development Period
 
 - `24.01 - 24.02`
+- `Renewal Version (in progress)` → [ben-kyoh Repository](https://github.com/matchlessNostril/ben-kyoh)
 
 ## 📚 Frameworks, Libraries, and Platforms Used
 
