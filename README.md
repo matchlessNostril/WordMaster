@@ -1,5 +1,3 @@
-![header](https://capsule-render.vercel.app/api?type=soft&color=bbe3a1&height=150&section=header&text=Word%20Master&fontSize=50&fontColor=FFFFFF&animation=fadeIn)
-
 ## 💻 Introduction
 
 Have you ever needed to memorize **both the spelling and pronunciation** of words?
