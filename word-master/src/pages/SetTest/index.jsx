@@ -65,13 +65,13 @@ const SetTest = () => {
 
     if (radio === "word" && numOfPassedWord === wordListLength) {
       alert(
-        "현재 단어 테스트 달성률이 100%입니다. 단어 테스트를 새로 진행하고 싶다면, 리셋 버튼을 눌러주세요."
+        "現在の単語テストの達成率は100%です。単語テストを新しく始めたい場合は、リセットボタンを押してください。"
       );
       return;
     }
     if (radio === "mean" && numOfPassedMean === wordListLength) {
       alert(
-        "현재 뜻 테스트 달성률이 100%입니다. 뜻 테스트를 새로 진행하고 싶다면, 리셋 버튼을 눌러주세요."
+        "現在の意味テストの達成率は100%です。意味テストを新しく始めたい場合は、リセットボタンを押してください。"
       );
       return;
     }
@@ -118,7 +118,7 @@ const SetTest = () => {
             ? false
             : true
         }
-        btnName="시작"
+        btnName="スタート"
         handleClickBtn={() => handleClickStartBtn(testInfo, radio, timer)}
       />
       <Divider margin={2} />

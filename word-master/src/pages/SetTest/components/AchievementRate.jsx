@@ -5,10 +5,10 @@ const AchievementRate = ({ wordRound, meanRound }) => {
   return (
     <Stack direction="row" alignItems="center" spacing={2}>
       <Typography variant="subtitle1">
-        <strong>현재 달성률</strong>
+        <strong>現在の達成率</strong>
       </Typography>
-      <Chip label={`단어 ${wordRound}회독`} size="small" />
-      <Chip label={`뜻 ${meanRound}회독`} size="small" />
+      <Chip label={`単語 ${wordRound}回`} size="small" />
+      <Chip label={`意味 ${meanRound}回`} size="small" />
     </Stack>
   );
 };

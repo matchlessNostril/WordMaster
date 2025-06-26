@@ -66,10 +66,11 @@ const ProgressBar = ({ title, type, numOfPassed, listLength, setTestInfo }) => {
       sx={{
         width: "100%",
         height: "70px",
-      }}>
+      }}
+    >
       <Box sx={{ mr: 2, width: "40px" }}>
         <Typography variant="body2" style={{ whiteSpace: "pre-line" }}>
-          {`${type === "word" ? "단어" : "뜻"}\n(${percentage}%)`}
+          {`${type === "word" ? "単語" : "意味"}\n(${percentage}%)`}
         </Typography>
       </Box>
       <Box sx={{ flexGrow: 1 }}>
@@ -99,7 +100,8 @@ const ProgressBar = ({ title, type, numOfPassed, listLength, setTestInfo }) => {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-        }}>
+        }}
+      >
         {isLoading ? (
           <CircularProgress size={20} />
         ) : (

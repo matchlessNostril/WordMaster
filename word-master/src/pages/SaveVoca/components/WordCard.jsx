@@ -42,7 +42,7 @@ const WordCard = ({ index, word, wordListDispatch, autoFocus }) => {
               <Grid container rowSpacing={1}>
                 <Grid item xs={12} sm={6}>
                   <InputField
-                    label="단어"
+                    label="単語"
                     value={word.word}
                     autoFocus={autoFocus}
                     type="word"
@@ -51,7 +51,7 @@ const WordCard = ({ index, word, wordListDispatch, autoFocus }) => {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <InputField
-                    label="뜻"
+                    label="意味"
                     value={word.mean}
                     type="mean"
                     handleInput={handleInput}
@@ -70,7 +70,7 @@ const WordCard = ({ index, word, wordListDispatch, autoFocus }) => {
                     }}
                   >
                     <InputField
-                      label="발음"
+                      label="発音"
                       value={word?.pronunciation}
                       type="pronunciation"
                       handleInput={handleInput}

@@ -10,8 +10,10 @@ const Start = () => {
     <>
       <img
         src={require("../assets/images/slogan.png")}
-        style={{ width: isPortrait ? "70vw" : "30vw" }}
-        alt="Word Master 로고 이미지"
+        style={{
+          width: isPortrait ? "90vw" : "50vw",
+        }}
+        alt="Word Master ロゴイメージ"
       />
       {isLoginUser === "yes" && <Loading onMarginTop={false} />}
     </>

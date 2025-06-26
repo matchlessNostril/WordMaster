@@ -47,7 +47,7 @@ const ListItemCard = ({ itemKey, title, path, isDir = false }) => {
 
     // 포함될 수 없는 문자가 있는 지 확인
     if (/[.#$\[\]]/.test(inputValue)) {
-      alert(`이름에 「 .  #  $  [  ] 」 기호는 들어갈 수 없습니다.`);
+      alert(`名前に「 .  #  $  [  ] 」記号は入れられません。`);
       return;
     }
 
@@ -58,7 +58,7 @@ const ListItemCard = ({ itemKey, title, path, isDir = false }) => {
 
     // 현재 디렉토리 내에서 중복된 이름으로 생성 불가능
     if (entireList.includes(inputValue)) {
-      alert(`현재 폴더 내에 이미 존재하는 이름으로는 변경할 수 없습니다.`);
+      alert(`現在のフォルダ内に、すでに存在する名前では変更できません。`);
       return;
     }
 
@@ -99,16 +99,16 @@ const ListItemCard = ({ itemKey, title, path, isDir = false }) => {
   const modalContents = useMemo(
     () => [
       {
-        title: "이름 바꾸기",
+        title: "名前を変更",
         textField: {
-          label: "변경할 이름",
+          label: "変更する名前",
         },
-        btnName: "확인",
+        btnName: "確認",
         handleClickBtn: handleClickChangeBtn,
       },
       {
-        title: "정말 삭제하시겠습니까?",
-        btnName: "삭제",
+        title: "本当に削除しますか？",
+        btnName: "削除",
         handleClickBtn: handleClickRemoveBtn,
       },
     ],
@@ -118,14 +118,14 @@ const ListItemCard = ({ itemKey, title, path, isDir = false }) => {
   const popoverBtns = useMemo(
     () => [
       {
-        name: "이름 바꾸기",
+        name: "名前を変更",
         handleClick: () => {
           setPopoverAnchor(null);
           handleClickOpenModal(modalContents[0]);
         },
       },
       {
-        name: "삭제",
+        name: "削除",
         handleClick: () => {
           setPopoverAnchor(null);
           handleClickOpenModal(modalContents[1]);
@@ -143,7 +143,8 @@ const ListItemCard = ({ itemKey, title, path, isDir = false }) => {
           justifyContent: "center",
           paddingLeft: 0,
           paddingRight: 0,
-        }}>
+        }}
+      >
         <Card variant="outlined" sx={{ display: "flex", width: "83vw" }}>
           <CardActionArea onClick={moveToNextPath}>
             <CardContent sx={{ display: "flex" }}>
@@ -153,7 +154,7 @@ const ListItemCard = ({ itemKey, title, path, isDir = false }) => {
                     ? require("../../../assets/icons/folder_closed.png")
                     : require("../../../assets/icons/document.png")
                 }
-                alt="폴더 혹은 단어장 아이콘"
+                alt="フォルダまたは単語帳アイコン"
                 style={{
                   width: "25px",
                   height: "25px",

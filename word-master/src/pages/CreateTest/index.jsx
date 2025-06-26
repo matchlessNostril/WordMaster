@@ -4,7 +4,7 @@ import {
   VocaPathContext,
   VocaPathProvider,
 } from "../../contexts/VocaPathContext";
-import { Box, TextField } from "@mui/material";
+import { Box } from "@mui/material";
 import {
   Transition,
   SubHeader,
@@ -37,7 +37,7 @@ const CreateTest = () => {
     async (testName, selectedVocaPaths) => {
       // 테스트 이름에 포함될 수 없는 문자가 있는 지 확인
       if (/[.#$\[\]]/.test(testName)) {
-        alert(`이름에 「 .  #  $  [  ] 」 기호는 들어갈 수 없습니다.`);
+        alert(`名前に「 .  #  $  [  ] 」記号は入れられません。`);
         return;
       }
 
@@ -46,7 +46,7 @@ const CreateTest = () => {
 
       // 중복된 이름으로 생성 불가능
       if (testList.includes(testName)) {
-        alert(`이미 존재하는 이름으로는 생성할 수 없습니다.`);
+        alert(`すでに存在する名前では作成できません。`);
         return;
       }
 
@@ -56,17 +56,20 @@ const CreateTest = () => {
       // TestList에 저장
       await operateData("PUSH", "Test/testList", { name: testName });
 
-      // 선택된 Path 저장하면서, 해당하는 단어 리스트 불러오기
-      let wordList = [];
+      // "Voca/root" 이후 문자열 저장 (이 부분은 그대로 순차 처리)
       for (let i = 0; i < selectedVocaPaths.length; i++) {
-        // "Voca/root" 이후 문자열 저장
         await operateData(
           "PUSH",
           `Test/${testName}/paths`,
           selectedVocaPaths[i].slice(10)
         );
-        wordList = wordList.concat(await getList(selectedVocaPaths[i]));
       }
+
+      // 단어 리스트 병렬로 불러오기
+      const wordListArr = await Promise.all(
+        selectedVocaPaths.map((path) => getList(path))
+      );
+      let wordList = wordListArr.flat();
 
       // 기본 정보 저장
       await operateData("SET", `Test/${testName}/info`, {
@@ -77,16 +80,13 @@ const CreateTest = () => {
         meanRound: 0,
       });
 
-      // wordTest, meanTest에 단어 리스트 저장
-      for (let i = 0; i < wordList.length; i++) {
-        await operateData(
-          "PUSH",
-          `Test/${testName}/wordList/wordTest/waiting`,
-          wordList[i]
-        );
-      }
+      // wordTest에 단어 리스트 저장
+      const wordTestPromises = wordList.map((word) =>
+        operateData("PUSH", `Test/${testName}/wordList/wordTest/waiting`, word)
+      );
+      await Promise.all(wordTestPromises);
 
-      // key가 같아야 해서 for문에서 meanTest 단어 저장 하지 않음
+      // key가 같아야 해서 wordTest를 불러와 meanTest에 저장
       const waitingWordList = await operateData(
         "GET",
         `Test/${testName}/wordList/wordTest/waiting`
@@ -116,11 +116,11 @@ const CreateTest = () => {
         <>
           <Box sx={{ minWidth: "85vw", minHeight: "85vh" }}>
             <SubHeader
-              title="테스트 만들기"
+              title="テストを作成"
               disabled={
                 !testName || selectedVocaPaths.length === 0 ? true : false
               }
-              btnName="만들기"
+              btnName="作成"
               handleClickBtn={() =>
                 handleClickCreateBtn(testName, selectedVocaPaths)
               }
@@ -134,7 +134,7 @@ const CreateTest = () => {
                 <Description />
                 <Divider margin={2} />
                 {vocaTree === "NoFile" ? (
-                  <NoFile text="단어장이 비어있습니다." />
+                  <NoFile text="単語帳が空です。" />
                 ) : (
                   <ScrollList maxHeight="48vh">
                     {dirList &&

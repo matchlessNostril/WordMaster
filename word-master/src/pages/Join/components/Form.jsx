@@ -30,7 +30,7 @@ const Form = ({ method }) => {
   // joinInfoValid 값 바뀔 때만, 제출 버튼 활성화 여부 재계산
   const disabled = useMemo(() => {
     // 회원 가입 + nickname 유효성 통과되지 않은 경우 -> disabled를 true로
-    if (method === "회원 가입" && !joinInfoValid.nickname) return true;
+    if (method === "会員登録" && !joinInfoValid.nickname) return true;
 
     // nickname은 유효성 통과된 상태이고,
     // email, password까지 유효성 통과된 경우 -> disabled를 false로
@@ -44,9 +44,9 @@ const Form = ({ method }) => {
     <Stack direction="column" spacing={3}>
       <GoogleBtn method={method} handleClick={googleAuth} />
       <TextDivider method={method} />
-      {method === "회원 가입" && (
+      {method === "会員登録" && (
         <InputField
-          fieldName="닉네임"
+          fieldName="ニックネーム"
           value={joinInfo.nickname}
           setValue={setJoinInfo}
           validCheck={isValidNickname}
@@ -55,7 +55,7 @@ const Form = ({ method }) => {
         />
       )}
       <InputField
-        fieldName="이메일"
+        fieldName="メールアドレス"
         value={joinInfo.email}
         setValue={setJoinInfo}
         validCheck={isValidEmail}
@@ -63,7 +63,7 @@ const Form = ({ method }) => {
         setValid={setJoinInfoValid}
       />
       <InputField
-        fieldName="비밀번호"
+        fieldName="パスワード"
         fieldType="password"
         value={joinInfo.password}
         setValue={setJoinInfo}
@@ -76,7 +76,7 @@ const Form = ({ method }) => {
       <SubmitBtn
         {...{ method, disabled }}
         handleSubmit={
-          method === "로그인"
+          method === "ログイン"
             ? () => Login(joinInfo.email, joinInfo.password)
             : () =>
                 Register(joinInfo.nickname, joinInfo.email, joinInfo.password)

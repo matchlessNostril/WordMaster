@@ -16,28 +16,29 @@ const Form = ({ radio, handleRadio, timer, handleTimer }) => {
   return (
     <Box sx={{ pl: 1 }}>
       <Typography variant="subtitle1">
-        <strong>테스트 설정</strong>
+        <strong>テスト設定</strong>
       </Typography>
       <FormControl>
         <RadioGroup
           row
           value={radio}
-          onChange={(event) => handleRadio(event.target.value)}>
+          onChange={(event) => handleRadio(event.target.value)}
+        >
           <FormControlLabel
             value="word"
             control={<Radio />}
-            label="단어 테스트"
+            label="単語テスト"
           />
           <FormControlLabel
             value="mean"
             control={<Radio />}
-            label="뜻 테스트"
+            label="意味テスト"
           />
         </RadioGroup>
         <Stack direction="row">
           <FormControlLabel
             control={<Checkbox onChange={() => handleTimer("ON")} />}
-            label="타이머"
+            label="タイマー"
           />
           {timer.onTimer && (
             <TextField
@@ -46,7 +47,7 @@ const Form = ({ radio, handleRadio, timer, handleTimer }) => {
               onChange={(event) => handleTimer("TIME", event.target.value)}
               InputProps={{
                 endAdornment: (
-                  <InputAdornment position="end">(초)</InputAdornment>
+                  <InputAdornment position="end">(秒)</InputAdornment>
                 ),
               }}
               sx={{ marginLeft: "10px" }}

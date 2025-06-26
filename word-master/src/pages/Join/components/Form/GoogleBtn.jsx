@@ -6,14 +6,14 @@ const GoogleBtn = ({ method, handleClick }) => {
     <StyledButton variant="outlined" onClick={handleClick}>
       <img
         src={require("../../../../assets/icons/google.png")}
-        alt="구글로 간편 시작"
+        alt="Googleアカウントでログイン"
         style={{
           width: "30px",
           height: "30px",
           marginRight: "20px",
         }}
       />
-      Google 계정으로 {method}
+      Googleアカウントで{method}
     </StyledButton>
   );
 };

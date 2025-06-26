@@ -30,7 +30,7 @@ const TestList = () => {
         ) : (
           <>
             {isEmpty(testList) ? (
-              <NoFile text="아직 생성된 테스트가 없습니다." />
+              <NoFile text="まだ作成されたテストがありません。" />
             ) : (
               <ScrollList maxHeight="73vh">
                 {Object.entries(testList).map(([key, value]) => (

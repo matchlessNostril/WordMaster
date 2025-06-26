@@ -31,7 +31,7 @@ const ActionModal = ({ open, setOpen, content }) => {
               onChange={(event) => setValue(event.target.value)}
               autoComplete="off"
               helperText={
-                "이미 존재하는 이름은 불가능하며, 「 .  #  $  [  ] 」 기호는 들어갈 수 없습니다."
+                "すでに存在する名前は作成できません。また、「 .  #  $  [  ] 」記号は入れられません。"
               }
               sx={{
                 width: "100%",

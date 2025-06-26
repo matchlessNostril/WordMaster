@@ -6,7 +6,7 @@ const VocaList = ({ vocaPaths }) => {
   return (
     <Box sx={{ pl: 1, maxWidth: "85vw" }}>
       <Typography variant="subtitle1">
-        <strong>단어장 리스트</strong>
+        <strong>単語帳リスト</strong>
       </Typography>
       <ScrollList maxHeight="25vh">
         {vocaPaths.length > 0 &&
@@ -33,7 +33,7 @@ const VocaPathListItem = ({ dirPath, vocaList }) => {
         <Stack direction="row" alignItems="center" spacing={2}>
           <img
             src={require("../../../assets/icons/folder_opened.png")}
-            alt="열린 폴더 아이콘"
+            alt="開いたフォルダアイコン"
             style={{ width: "20px", height: "20px", marginRight: "-5px" }}
           />
           <Typography variant="body2">{replacedDirPath}</Typography>
@@ -42,7 +42,7 @@ const VocaPathListItem = ({ dirPath, vocaList }) => {
           <Stack key={index} direction="row" alignItems="center" spacing={2}>
             <img
               src={require("../../../assets/icons/document.png")}
-              alt="단어장 아이콘"
+              alt="単語帳アイコン"
               style={{
                 width: "20px",
                 height: "20px",

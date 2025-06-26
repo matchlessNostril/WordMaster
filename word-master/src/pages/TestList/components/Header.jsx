@@ -12,7 +12,7 @@ const Header = () => {
   return (
     <RowSpaceBetween>
       <Typography variant="h5" ml={2}>
-        <strong>{displayName}</strong>님의 테스트
+        <strong>{displayName}</strong>様のテスト
       </Typography>
       <IconButton onClick={() => navigate("/CreateTest")}>
         <AddCircleIcon sx={{ fontSize: "40px" }} />

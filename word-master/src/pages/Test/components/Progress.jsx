@@ -8,7 +8,7 @@ const Progress = ({ type, numOfPassed, listLength }) => {
   return (
     <>
       <Stack direction="row" alignItems="center" spacing={2}>
-        <TextChip label={`${type === "word" ? "단어" : "뜻"} 테스트`} />
+        <TextChip label={`${type === "word" ? "単語" : "意味"}テスト`} />
         <TextChip label={`${percentage} %`} />
       </Stack>
       <ProgressBar {...{ percentage, numOfPassed, listLength }} />

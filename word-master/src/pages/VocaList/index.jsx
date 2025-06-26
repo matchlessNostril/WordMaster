@@ -64,7 +64,7 @@ const VocaList = () => {
     (inputValue) => {
       // 포함될 수 없는 문자가 있는 지 확인
       if (/[.#$\[\]]/.test(inputValue)) {
-        alert(`이름에 「 .  #  $  [  ] 」 기호는 들어갈 수 없습니다.`);
+        alert(`名前に「 .  #  $  [  ] 」記号は入れられません。`);
         return;
       }
 
@@ -78,7 +78,7 @@ const VocaList = () => {
 
       // 현재 디렉토리 내에서 중복된 이름으로 생성 불가능
       if (entireList.includes(inputValue)) {
-        alert(`현재 폴더 내에 이미 존재하는 이름으로는 생성할 수 없습니다.`);
+        alert(`現在のフォルダ内に、すでに存在する名前では作成できません。`);
         return;
       }
 
@@ -104,7 +104,7 @@ const VocaList = () => {
         ) : (
           <>
             {isEmpty(dirList) && isEmpty(vocaList) ? (
-              <NoFile text="비어있는 폴더입니다." />
+              <NoFile text="空のフォルダです。" />
             ) : (
               <ScrollList maxHeight="73vh">
                 {Object.entries(dirList).map(([key, value]) => (

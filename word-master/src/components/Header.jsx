@@ -13,16 +13,16 @@ import CloseIcon from "@mui/icons-material/Close"; // 닫기
 // currentPath 값에 따른 버튼 정보
 /* prettier-ignore */
 const btnInfoList = {
-  "/": { title: "로그인", to: "/Join", icon: <DirectionsRunIcon /> },
-  "/Join": { title: "뒤로 가기", to: "/", icon: <NavigateBeforeIcon /> },
-  "/Main": { title: "로그아웃", to: logout, icon: <EmojiPeopleIcon /> }, // Main 화면에서만 화면 이동이 아닌 로그아웃
-  "/VocaList": { title: "홈", to: "/Main", icon: <HomeIcon /> },
-  "/SaveVoca": { title: "뒤로 가기", to: -1, icon: <NavigateBeforeIcon /> },
-  "/Voca": { title: "뒤로 가기", to: -1, icon: <NavigateBeforeIcon /> },
-  "/TestList": { title: "홈", to: "/Main", icon: <HomeIcon /> },
-  "/CreateTest": { title: "뒤로 가기", to: "/TestList", icon: <NavigateBeforeIcon /> },
-  "/SetTest": { title: "뒤로 가기", to: "/TestList", icon: <NavigateBeforeIcon /> },
-  "/Test": { title: "테스트 종료", to: -1, icon: <CloseIcon /> },
+  "/": { title: "ログイン", to: "/Join", icon: <DirectionsRunIcon /> },
+  "/Join": { title: "戻る", to: "/", icon: <NavigateBeforeIcon /> },
+  "/Main": { title: "ログアウト", to: logout, icon: <EmojiPeopleIcon /> }, // Main 화면에서만 화면 이동이 아닌 로그아웃
+  "/VocaList": { title: "ホーム", to: "/Main", icon: <HomeIcon /> },
+  "/SaveVoca": { title: "戻る", to: -1, icon: <NavigateBeforeIcon /> },
+  "/Voca": { title: "戻る", to: -1, icon: <NavigateBeforeIcon /> },
+  "/TestList": { title: "ホーム", to: "/Main", icon: <HomeIcon /> },
+  "/CreateTest": { title: "戻る", to: "/TestList", icon: <NavigateBeforeIcon /> },
+  "/SetTest": { title: "戻る", to: "/TestList", icon: <NavigateBeforeIcon /> },
+  "/Test": { title: "テスト終了", to: -1, icon: <CloseIcon /> },
 };
 /* prettier-ignore */
 
@@ -57,8 +57,8 @@ const Header = () => {
             <Box display="flex" alignItems="center" sx={{ flexGrow: 1 }}>
               <img
                 src={require("../assets/images/logo.png")}
-                alt="Word Master 로고"
-                style={{ width: "40px", height: "22px" }}
+                alt="Word Master ロゴ"
+                style={{ width: "40px", height: "40px" }}
               />
             </Box>
             <Tooltip title={btnInfo.title}>

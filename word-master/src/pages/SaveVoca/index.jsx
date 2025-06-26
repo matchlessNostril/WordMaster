@@ -36,13 +36,13 @@ const SaveVoca = () => {
     for (let i = 0; i < wordList.length; i++) {
       for (const propName in wordList[i]) {
         if (!wordList[i][propName]) {
-          const propNameInKor =
-            propName === "word" ? "단어" : propName === "mean" ? "뜻" : "발음";
-          alert(
-            `${
-              i + 1
-            }번 단어에서 ${propNameInKor} 부분이 아직 입력되지 않았습니다.`
-          );
+          const propNameInJp =
+            propName === "word"
+              ? "単語"
+              : propName === "mean"
+              ? "意味"
+              : "発音";
+          alert(`${i + 1}番目の単語に、${propNameInJp} が入力されていません。`);
           isValid = false;
           break;
         }
@@ -55,7 +55,7 @@ const SaveVoca = () => {
     if (mode === "Create" || vocaName !== title) {
       // 단어장 이름에 포함될 수 없는 문자가 있는 지 확인
       if (/[.#$\[\]]/.test(vocaName)) {
-        alert(`이름에 「 .  #  $  [  ] 」 기호는 들어갈 수 없습니다.`);
+        alert(`名前に「 .  #  $  [  ] 」記号は入れられません。`);
         return;
       }
 
@@ -67,8 +67,8 @@ const SaveVoca = () => {
       // 현재 디렉토리 내에서 중복된 이름으로 생성 불가능
       if (entireList.includes(vocaName)) {
         alert(
-          `현재 폴더 내에 이미 존재하는 이름으로는 ${
-            mode === "Modify" ? "수정" : "생성"
+          `現在のフォルダ内に、すでに存在する名前では ${
+            mode === "Modify" ? "変更" : "作成"
           }할 수 없습니다.`
         );
         return;
@@ -114,9 +114,9 @@ const SaveVoca = () => {
   return (
     <Box sx={{ minWidth: "85vw", minHeight: "85vh" }}>
       <SubHeader
-        title={mode === "Modify" ? "단어장 수정" : "단어장 만들기"}
+        title={mode === "Modify" ? "単語帳を変更" : "単語帳を作成"}
         disabled={vocaName ? false : true}
-        btnName={mode === "Modify" ? "수정" : "만들기"}
+        btnName={mode === "Modify" ? "変更" : "作成"}
         handleClickBtn={() => handleClickSaveBtn(vocaName, wordList)}
       />
       <ScrollList maxHeight="75vh">

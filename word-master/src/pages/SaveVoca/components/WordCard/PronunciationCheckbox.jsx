@@ -6,7 +6,7 @@ const PronunciationCheckbox = React.memo(({ isChecked, handleCheck }) => {
     <Grid item xs={12} sm={6}>
       <FormControlLabel
         control={<Checkbox checked={isChecked} onChange={handleCheck} />}
-        label="발음 추가"
+        label="発音追加"
         sx={{ m: 0, mt: 1 }}
       />
     </Grid>

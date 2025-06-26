@@ -32,7 +32,7 @@ const PrivatePage = ({ isLoginUser, page: Page }) => {
 
   useEffect(() => {
     if (!isLoginUser) {
-      alert("로그인 후 접속 가능합니다.");
+      alert("ログイン後、アクセス可能です。");
       navigate("/");
     }
   }, []);

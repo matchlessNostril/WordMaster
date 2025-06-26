@@ -5,7 +5,7 @@ const InputField = React.memo(({ vocaName, setVocaName }) => {
   return (
     <ListItem>
       <TextField
-        label="단어장 이름"
+        label="単語帳名"
         variant="outlined"
         value={vocaName}
         onChange={(event) => setVocaName(event.target.value)}

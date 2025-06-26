@@ -5,7 +5,7 @@ const InputField = ({ handleInput }) => {
   return (
     <Box mt={1} p={1}>
       <TextField
-        label="테스트 이름"
+        label="テスト名"
         variant="outlined"
         autoComplete="off"
         onChange={(event) => handleInput(event.target.value)}

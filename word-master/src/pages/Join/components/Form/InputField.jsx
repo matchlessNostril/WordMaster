@@ -25,11 +25,11 @@ const InputField = ({
   // 다시 계산될 필요 없기 때문에 useMemo로 메모이제이션
   const fieldNameinEn = useMemo(() => {
     switch (fieldName) {
-      case "닉네임":
+      case "ニックネーム":
         return "nickname";
-      case "이메일":
+      case "メールアドレス":
         return "email";
-      case "비밀번호":
+      case "パスワード":
         return "password";
     }
   }, []);
@@ -69,8 +69,9 @@ const InputField = ({
                 endAdornment: (
                   <InputAdornment position="end">
                     <IconButton
-                      aria-label="입력값 공개"
-                      onClick={handleClickShowBtn}>
+                      aria-label="入力値を表示"
+                      onClick={handleClickShowBtn}
+                    >
                       {isPasswordVisible ? <Visibility /> : <VisibilityOff />}
                     </IconButton>
                   </InputAdornment>

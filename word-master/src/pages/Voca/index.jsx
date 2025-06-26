@@ -54,7 +54,7 @@ const Voca = () => {
         <SubHeader
           title={title}
           disabled={false}
-          btnName="수정"
+          btnName="変更"
           handleClickBtn={handleClickModifyBtn}
         />
         <Divider margin={3} />
@@ -68,23 +68,24 @@ const Voca = () => {
                   row
                   value={radio}
                   onChange={(event) => setRadio(event.target.value)}
-                  sx={{ ml: 2 }}>
+                  sx={{ ml: 2 }}
+                >
                   <FormControlLabel
                     value="word"
                     control={<Radio />}
-                    label="단어"
+                    label="単語"
                   />
                   <FormControlLabel
                     value="mean"
                     control={<Radio />}
-                    label="뜻"
+                    label="意味"
                   />
                 </RadioGroup>
                 <FormControlLabel
                   control={
                     <Checkbox onChange={() => setIsChecked((prev) => !prev)} />
                   }
-                  label="답 숨기기"
+                  label="答えを隠す"
                 />
               </RowSpaceBetween>
             </FormControl>

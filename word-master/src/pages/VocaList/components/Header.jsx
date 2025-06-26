@@ -20,11 +20,11 @@ const Header = ({
 
   const modalContents = useMemo(
     () => ({
-      title: "새로운 폴더 만들기",
+      title: "新しいフォルダを作成",
       textField: {
-        label: "폴더 이름",
+        label: "フォルダ名",
       },
-      btnName: "만들기",
+      btnName: "作成",
       handleClickBtn: handleClickCreateDir,
     }),
     [handleClickCreateDir]
@@ -33,14 +33,14 @@ const Header = ({
   const popoverBtns = useMemo(
     () => [
       {
-        name: "폴더 생성",
+        name: "フォルダを作成",
         handleClick: () => {
           setPopoverAnchor(null);
           handleClickOpenModal(modalContents);
         },
       },
       {
-        name: "단어 세트 생성",
+        name: "単語帳を作成",
         handleClick: () => {
           setPopoverAnchor(null);
           navigate("/SaveVoca", {
@@ -72,7 +72,7 @@ const Header = ({
           </Stack>
         ) : (
           <Typography variant="h5" ml={2}>
-            <strong>{displayName}</strong>님의 단어장
+            <strong>{displayName}</strong> 様の単語帳
           </Typography>
         )}
         <IconButton onClick={handleClickPopoverBtn}>

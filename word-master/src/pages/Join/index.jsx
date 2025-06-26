@@ -3,7 +3,7 @@ import { Transition } from "../../components";
 import { MethodToggle, Form } from "./components";
 
 const Join = () => {
-  const [method, setMethod] = useState("로그인");
+  const [method, setMethod] = useState("ログイン");
 
   return (
     <>

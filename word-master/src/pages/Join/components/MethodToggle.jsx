@@ -22,7 +22,7 @@ const MethodToggle = ({ method, setMethod }) => {
           if (!value) return;
           setMethod(value);
         }}
-        aria-label="로그인 혹은 회원가입 선택"
+        aria-label="ログインまたは会員登録選択"
         sx={{
           mb: 7,
           [theme.breakpoints.down("sm")]: {
@@ -34,11 +34,11 @@ const MethodToggle = ({ method, setMethod }) => {
         }}
       >
         {/* 하위 컴포넌트에 모두 fullWidth를 넣음으로써 토글 요소 너비 일치 */}
-        <StyledToggleButton value="로그인" fullWidth>
-          로그인
+        <StyledToggleButton value="ログイン" fullWidth>
+          ログイン
         </StyledToggleButton>
-        <StyledToggleButton value="회원 가입" fullWidth>
-          회원 가입
+        <StyledToggleButton value="会員登録" fullWidth>
+          会員登録
         </StyledToggleButton>
       </ToggleButtonGroup>
     </>

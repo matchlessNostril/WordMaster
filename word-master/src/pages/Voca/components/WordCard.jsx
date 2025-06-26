@@ -19,12 +19,14 @@ const WordCard = ({ index, word, sortingBy, onHideAnswer }) => {
             width: "100%",
             padding: 0,
             "&.MuiCardContent-root:last-child": { p: 0 },
-          }}>
+          }}
+        >
           <Grid
             container
             alignItems="center"
             wrap="nowrap"
-            sx={{ height: "100%" }}>
+            sx={{ height: "100%" }}
+          >
             <NumberCircle index={index} />
             <Grid item xs sx={fullHeightStyle}>
               <Grid container alignItems="center" sx={fullHeightStyle}>
@@ -43,9 +45,10 @@ const WordCard = ({ index, word, sortingBy, onHideAnswer }) => {
                     ...flexStyle,
                     pt: 2,
                     pb: 2,
-                  }}>
+                  }}
+                >
                   <MultilineTextField
-                    label={sortingBy === "word" ? "단어" : "뜻"}
+                    label={sortingBy === "word" ? "単語" : "意味"}
                     value={sortingBy === "word" ? word.word : word.mean}
                   />
                 </Grid>
@@ -55,7 +58,8 @@ const WordCard = ({ index, word, sortingBy, onHideAnswer }) => {
                     sx={{
                       display:
                         onHideAnswer && !visibleAnswer ? "none" : "block",
-                    }}>
+                    }}
+                  >
                     <Grid
                       item
                       xs={12}
@@ -63,9 +67,10 @@ const WordCard = ({ index, word, sortingBy, onHideAnswer }) => {
                         ...flexStyle,
                         pt: 2,
                         pb: hasPronunciation ? 1 : 2,
-                      }}>
+                      }}
+                    >
                       <MultilineTextField
-                        label={sortingBy === "word" ? "뜻" : "단어"}
+                        label={sortingBy === "word" ? "意味" : "単語"}
                         value={sortingBy === "word" ? word.mean : word.word}
                       />
                     </Grid>
@@ -77,9 +82,10 @@ const WordCard = ({ index, word, sortingBy, onHideAnswer }) => {
                           ...flexStyle,
                           pt: hasPronunciation ? 1 : 2,
                           pb: 2,
-                        }}>
+                        }}
+                      >
                         <MultilineTextField
-                          label="발음"
+                          label="発音"
                           value={word.pronunciation}
                         />
                       </Grid>
@@ -89,7 +95,8 @@ const WordCard = ({ index, word, sortingBy, onHideAnswer }) => {
                     <Grid container>
                       <Grid item xs={12} sx={{ ...flexStyle, p: 2 }}>
                         <IconButton
-                          onClick={() => setVisibleAnswer((prev) => !prev)}>
+                          onClick={() => setVisibleAnswer((prev) => !prev)}
+                        >
                           {visibleAnswer ? (
                             <KeyboardArrowUpIcon />
                           ) : (
