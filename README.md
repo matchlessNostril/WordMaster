@@ -11,7 +11,6 @@ and take tests **anytime, as much as you want, freely and conveniently!**
 ## 🕐 Development Period
 
 - `24.01 - 24.02`
-- `Renewal Version (in progress)` → [ben-kyoh Repository](https://github.com/matchlessNostril/ben-kyoh)
 
 ## 📚 Frameworks, Libraries, and Platforms Used
 
@@ -22,8 +21,6 @@ and take tests **anytime, as much as you want, freely and conveniently!**
 </div>
 
 ## ✔️ Supported Devices
-
-<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/6794b9f7-efba-419a-a403-451abb8acb11" width="900"/>
 
 - `Desktop`
 - `Laptop`
@@ -36,12 +33,12 @@ and take tests **anytime, as much as you want, freely and conveniently!**
 
 ### 1️⃣ WELCOME, Login / Sign-up
 
-<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/640827e1-8902-4c3f-b1ca-bcaac1bf21e7" width="900" />
+<img src="https://github.com/user-attachments/assets/4832386f-9f72-4455-9022-21fbc45f25eb" width="900" />
 
 - **Word Master**, your personal vocabulary book and test system! 🤗  
 - Click the **icon at the top right** to go to the login screen.
 
-<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/1c970232-06f3-4f9c-9380-3416812b2392" width="700" />
+<img src="https://github.com/user-attachments/assets/8ef60270-910d-4c3d-9f27-83adc055fb5a" width="700" />
 
 - Toggle between **Login / Sign-up**
 - **Google sign-in** and sign-up available
@@ -52,7 +49,7 @@ and take tests **anytime, as much as you want, freely and conveniently!**
 
 ### 2️⃣ Vocabulary & Test Mode Selection (Home)
 
-<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/d3d00583-1a92-4952-b3f4-2ea4a5d6307c" width="900" />
+<img src="https://github.com/user-attachments/assets/e8421219-e16a-47e7-922e-229138c44dbc" width="900" />
 
 - **Vocabulary**
   - Create folders to organize your **word sets** as you like.
@@ -63,25 +60,25 @@ and take tests **anytime, as much as you want, freely and conveniently!**
 
 ### 3️⃣ Vocabulary List
 
-<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/47063832-42db-402e-9456-85c2ad8aff9a" width="900" />
+<img src="https://github.com/user-attachments/assets/582afe4c-9ef1-4177-b97d-b3f155c9dc51" width="900" />
 
 - **Organize words by category** using folders.
 - **Unlimited folders** thanks to scrolling!
 - Click a **folder** to navigate inside.
 - Click a **word set** to open it.
 
-<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/568c70a0-f6a1-403c-8210-79b309d56f8e" width="700" />
+<img src="https://github.com/user-attachments/assets/f701907f-e96c-49a5-a0c2-9b787ad8d5ca" width="700" />
 
 - Press the **➕ button** to create a **new folder** or **word set**.
 - Selecting **Create Word Set** moves you to the word set creation screen.
 
-<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/a6c1edfc-86f8-409f-b609-2a2d3a2da758" width="700" />
+<img src="https://github.com/user-attachments/assets/36c48862-5301-4d6f-ab99-f5c9763ff674" width="700" />
 
 - Click the **🔽 button** to rename or delete folders and word sets.
 
 ### 4️⃣ Create Word Set
 
-<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/b55360be-ef36-48ff-beca-1c5089ec0dd6" width="900" />
+<img src="https://github.com/user-attachments/assets/8dfdcf32-70f3-4bf7-9cca-9b28a59978aa" width="900" />
 
 - Enter words into your categorized **word sets**.
 - **Words, meanings, and pronunciation fields** are available.
@@ -94,28 +91,28 @@ and take tests **anytime, as much as you want, freely and conveniently!**
 
 ### 5️⃣ Word Set 
 
-<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/f3c7823f-4e97-47c8-9cda-93626aa08bac" width="900" />
+<img src="https://github.com/user-attachments/assets/eae5dc3a-7d4f-4143-bdda-29a62660edd4" width="900" />
 
 - Before testing, review the words!
 - **Use sorting options and hide answers** for efficient memorization.
 
-<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/d3699300-6698-4954-aa0e-d4c7caf527ff" width="900" />
+<img src="https://github.com/user-attachments/assets/2030bd11-e31e-48b2-bb0d-bb19f9a54ede" width="900" />
 
 - **Sorting by meaning** swaps words and definitions.
 - Pronunciations remain **unchanged**.
 
-<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/a1a38e84-ec0a-4a3e-89ab-defaaae6f3f2" width="900" />
+<img src="https://github.com/user-attachments/assets/7475621f-a7ce-48b3-a54a-1402a67cf041" width="900" />
 
 - **Hiding answers** covers the right-side column.
 
-<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/b1d58626-01b6-4857-bd85-bf9a9f805881" width="900" />
+<img src="https://github.com/user-attachments/assets/4d2682bf-8ae0-42cc-a1c9-7d4d1cda268e" width="900" />
 
 - Click **🔽 to reveal answers**, and **🔼 to hide them**.
 - **Perfect for quick review before tests!**
 
 ### 6️⃣ Test List
 
-<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/0100e0ae-fc5c-4a3a-918c-7e3be4e8d32a" width="900" />
+<img src="https://github.com/user-attachments/assets/531a39be-4d19-45e9-ba52-40f918e90ce0" width="900" />
 
 - **Daily review is key** to mastering vocabulary!
 - Click the **➕ button** to create a new test.
@@ -123,27 +120,19 @@ and take tests **anytime, as much as you want, freely and conveniently!**
 
 ### 7️⃣ Create a Test
 
-<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/9479a740-b495-4d78-8f54-fe4a67aa3578" width="900" />
+<img src="https://github.com/user-attachments/assets/25d279db-acfa-47c4-baab-5ae23a2c4366" width="900" />
 
 - **Group word sets freely** to take comprehensive tests.
 - Forget words quickly? **Test older and newer words together!** 🫵
 
-<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/34341d2a-952a-4379-a3e2-3e8e463aff80" width="900" />
+<img src="https://github.com/user-attachments/assets/d87b822a-8ace-4747-a05b-68a8ef675df7" width="900" />
 
 - Select **entire folders** to include all sub-word sets.
 - **Empty folders** cannot be selected.
 
-<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/7d86e506-d874-4970-95c7-2846e5cbb354" width="900" />
-
-- **Deeply nested word sets?** No problem—just **scroll**!
-
-<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/0546d0db-55ad-4340-bb0d-03d459eb0ce1" width="300" />
-
-- **Screen too small?** Horizontal scrolling is available!
-
 ### 8️⃣ Test Settings
 
-<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/0c51ed05-3360-46d1-9675-16cb16ceafb8" width="900" />
+<img src="https://github.com/user-attachments/assets/c64733c7-b3cc-49c6-a5d7-758337169beb" width="900" />
 
 - **Customize your test settings** before starting.
 - Choose between **word tests or meaning tests**.
@@ -157,7 +146,7 @@ and take tests **anytime, as much as you want, freely and conveniently!**
 
 ### 9️⃣ Test Mode
 
-<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/af7f6b18-7d78-42fd-9bc8-879055727541" width="900" />
+<img src="https://github.com/user-attachments/assets/2a533853-62a7-4975-9e50-7c336af87062" width="900" />
 
 - **Test progress** and status displayed at the top.
 - If a **timer is set**, time appears on the bottom left.
