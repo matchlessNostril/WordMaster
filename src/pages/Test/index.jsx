@@ -6,6 +6,7 @@ import { Transition, Loading, TextChip } from "../../components";
 import { Progress, QuestionCard, NextBtns } from "./components";
 import operateData from "../../service/database/operateData";
 import { shuffle } from "lodash";
+import { Box } from "@mui/system";
 
 const Test = () => {
   const isPortrait = useMediaQuery("(orientation: portrait)");
@@ -34,30 +35,57 @@ const Test = () => {
     );
   }, []);
 
-  // 마운트 시, wordList 불러와 question State 초기화
+  // 0. 마운트 시, wordList 불러와 question State 초기화
   useEffect(() => {
     setIsLoading(true);
 
-    operateData("GET", `Test/${title}/wordList/${type}Test/waiting`)
-      .then((wordList) => {
-        // 객체 → 배열화 + 셔플
-        const shuffledWordList = shuffle(Object.entries(wordList));
+    const initQuestions = async () => {
+      try {
+        const waitingList = await operateData(
+          "GET",
+          `Test/${title}/wordList/${type}Test/waiting`
+        );
+
+        const shuffledWordList = shuffle(
+          Object.entries(waitingList || {}).flatMap(
+            ([testWordPathKey, { path, addressList }]) =>
+              addressList.map((address) => ({
+                testWordPathKey,
+                vocaPath: path,
+                wordAddress: address,
+              }))
+          )
+        );
+
+        const firstWord = await operateData(
+          "GET",
+          `${shuffledWordList[0].vocaPath}/${shuffledWordList[0].wordAddress}`
+        );
 
         questionDispatch({
           type: "INIT",
           initialState: {
             waitingQuestionList: shuffledWordList,
-            currentQuestion: shuffledWordList[0],
+            currentQuestion: [
+              shuffledWordList[0].wordAddress,
+              firstWord,
+              shuffledWordList[0].vocaPath,
+              shuffledWordList[0].testWordPathKey,
+            ],
             numOfPassed: initialNumOfPassed,
           },
         });
-      })
-      .then(() => setIsLoading(false))
-      .then(() => {
+
         // 타이머 설정되어 있으면, 시작
-        if (!onTimer) return;
-        startTimer();
-      });
+        if (onTimer) startTimer();
+      } catch (error) {
+        console.error("単語一覧を読み込めませんでした。", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    initQuestions();
   }, []);
 
   // 타이머가 0초가 되면 clearInterval
@@ -74,28 +102,53 @@ const Test = () => {
     if (onTimer) clearInterval(timerId.current);
 
     // DB 상에서 waitng에 있는 해당 word를 passed로 이동
-    // question.currentQuestion[0] : 경로 key
+    // question.currentQuestion[0] : Voca에서 word address key 값
     // question.currentQuestion[1] : value
+    // question.currentQuestion[2] : Voca에서 path 값
+    // question.currentQuestion[3] : Test word에서 path key 값
+    const [wordAddress, _word, vocaPath, testWordPathKey] =
+      question.currentQuestion;
 
-    // TODO(memo): currentQuestion[0] 이 주소, [1]이 값
-    await operateData(
-      "REMOVE",
-      `Test/${title}/wordList/${type}Test/waiting/${question.currentQuestion[0]}`
+    const [prevWaitingAddressList, prevPassedAddressList] = await Promise.all([
+      operateData(
+        "GET",
+        `Test/${title}/wordList/${type}Test/waiting/${testWordPathKey}/addressList`
+      ),
+      operateData(
+        "GET",
+        `Test/${title}/wordList/${type}Test/passed/${testWordPathKey}/addressList`
+      ),
+    ]);
+    const newWaitingAddressList = prevWaitingAddressList.filter(
+      (address) => address !== wordAddress
     );
-    await operateData(
-      "SET",
-      `Test/${title}/wordList/${type}Test/passed/${question.currentQuestion[0]}`,
-      question.currentQuestion[1]
-    );
+    const newPassedAddressList = [
+      ...(prevPassedAddressList ?? []),
+      wordAddress,
+    ];
 
-    // 통과된 수 1 증가
-    await operateData(
-      "UPDATE",
-      `Test/${title}/info`,
-      type === "word"
-        ? { numOfPassedWord: question.numOfPassed + 1 }
-        : { numOfPassedMean: question.numOfPassed + 1 }
-    );
+    Promise.all([
+      operateData(
+        "SET",
+        `Test/${title}/wordList/${type}Test/waiting/${testWordPathKey}/addressList`,
+        newWaitingAddressList
+      ),
+      operateData(
+        "SET",
+        `Test/${title}/wordList/${type}Test/passed/${testWordPathKey}`,
+        {
+          path: vocaPath,
+          addressList: newPassedAddressList,
+        }
+      ),
+      operateData(
+        "UPDATE",
+        `Test/${title}/info`,
+        type === "word"
+          ? { numOfPassedWord: question.numOfPassed + 1 }
+          : { numOfPassedMean: question.numOfPassed + 1 }
+      ),
+    ]);
 
     // 마지막 문제 통과 였다면, 라운드 1 증가 + 화면 이동
     if (question.numOfPassed + 1 === listLength) {
@@ -137,6 +190,23 @@ const Test = () => {
     startTimer();
   }, []);
 
+  // 3. 다음 문제 불러오기
+  useEffect(() => {
+    if (!question.currentQuestion[0]) return;
+
+    const fetchNextQuestion = async () => {
+      try {
+        const [wordAddress, _word, vocaPath] = question.currentQuestion;
+        const nextWord = await operateData("GET", `${vocaPath}/${wordAddress}`);
+        questionDispatch({ type: "SET_NEXT_WORD", nextWord });
+      } catch (error) {
+        console.error("次の問題を読み込めませんでした。", error);
+      }
+    };
+
+    fetchNextQuestion();
+  }, [question.currentQuestion[1]]);
+
   return (
     <>
       {isLoading ? (
@@ -149,12 +219,21 @@ const Test = () => {
               {...{ type, listLength }}
             />
           )}
-          {question.currentQuestion && (
-            <QuestionCard
-              {...{ type, showAnswer, setShowAnswer }}
-              questionWord={question.currentQuestion[1]}
-            />
-          )}
+          <QuestionCard
+            {...{ type, showAnswer, setShowAnswer }}
+            questionWord={question.currentQuestion[1]}
+          />
+          <Box
+            sx={{
+              fontSize: "0.8rem",
+              color: "#999",
+              backgroundColor: "#f0f0f0",
+              p: 0.5,
+              borderRadius: 1,
+            }}
+          >
+            出典 : {question.currentQuestion[2]}
+          </Box>
           <Stack
             direction="row"
             justifyContent={onTimer ? "space-between" : "flex-end"}

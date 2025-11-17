@@ -53,8 +53,12 @@ const CreateTest = () => {
       // DB 저장 시작 시, 로딩 On
       setIsLoading(true);
 
-      // TestList에 저장
+      // TestList에 저장 + 기본 정보 저장
       await operateData("PUSH", "Test/testList", { name: testName });
+      await operateData("SET", `Test/${testName}/info`, {
+        wordRound: 0,
+        meanRound: 0,
+      });
 
       // "Voca/root" 이후 문자열 저장 (이 부분은 그대로 순차 처리)
       for (let i = 0; i < selectedVocaPaths.length; i++) {
@@ -65,35 +69,26 @@ const CreateTest = () => {
         );
       }
 
-      const tmpList = await Promise.all(
-        selectedVocaPaths.map((path) => {
-          return { path, addressList: getAddressList(path) };
-        })
+      // 테스트 생성 시 단어는 복제하지 않고, 주소로 접근
+      // wordAddressList 리스트 불러오기
+      const wordAddressList = await Promise.all(
+        selectedVocaPaths.map(async (path) => ({
+          path,
+          addressList: await getAddressList(path),
+        }))
       );
-      console.log("tmpList", tmpList);
-
-      // 단어 리스트 병렬로 불러오기
-      const wordListArr = await Promise.all(
-        selectedVocaPaths.map((path) => getList(path))
-      );
-      let wordList = wordListArr.flat();
-
-      // 기본 정보 저장
-      await operateData("SET", `Test/${testName}/info`, {
-        wordListLength: wordList.length,
-        numOfPassedWord: 0,
-        numOfPassedMean: 0,
-        wordRound: 0,
-        meanRound: 0,
-      });
 
       // wordTest에 단어 리스트 저장
-      const wordTestPromises = wordList.map((word) =>
-        operateData("PUSH", `Test/${testName}/wordList/wordTest/waiting`, word)
+      const wordTestPromises = wordAddressList.map((wordAddress) =>
+        operateData(
+          "PUSH",
+          `Test/${testName}/wordList/wordTest/waiting`,
+          wordAddress
+        )
       );
       await Promise.all(wordTestPromises);
 
-      // key가 같아야 해서 wordTest를 불러와 meanTest에 저장
+      // wordTest 그대로 meanTest에 저장
       const waitingWordList = await operateData(
         "GET",
         `Test/${testName}/wordList/wordTest/waiting`

@@ -3,6 +3,7 @@ import {
   Card,
   CardActionArea,
   CardContent,
+  Fade,
 } from "@mui/material";
 import TouchAppIcon from "@mui/icons-material/TouchApp";
 
@@ -15,28 +16,41 @@ const QuestionCard = ({ type, showAnswer, setShowAnswer, questionWord }) => {
         flexGrow: 1,
         mt: 2,
         backgroundColor: showAnswer ? "#dbdbdb" : "#535353",
-      }}>
+      }}
+    >
       <CardActionArea
         onClick={() => setShowAnswer((prev) => !prev)}
-        sx={{ height: isPortrait ? "30vh" : "40vh" }}>
+        sx={{ height: isPortrait ? "30vh" : "40vh" }}
+      >
         <CardContent sx={{ p: 0, width: "100%", textAlign: "center" }}>
-          <strong
-            style={{
-              color: showAnswer ? "#535353" : "white",
-              fontSize: "20px",
-              fontWeight: "initial",
-              whiteSpace: "pre-line",
-            }}>
-            {showAnswer ? (
-              <>
-                {type === "word" ? questionWord.mean : questionWord.word}
-                {questionWord.hasOwnProperty("pronunciation") &&
-                  `\n\n${questionWord.pronunciation}`}
-              </>
-            ) : (
-              <>{type === "word" ? questionWord.word : questionWord.mean}</>
-            )}
-          </strong>
+          {questionWord && (
+            <Fade
+              in
+              timeout={1000}
+              key={`${questionWord.word}-${questionWord.mean}-${showAnswer}`}
+            >
+              <strong
+                style={{
+                  color: showAnswer ? "#535353" : "white",
+                  fontSize: "20px",
+                  fontWeight: "initial",
+                  whiteSpace: "pre-line",
+                  display: "inline-block",
+                }}
+              >
+                {showAnswer ? (
+                  <>
+                    {type === "word" ? questionWord.mean : questionWord.word}
+                    {questionWord.hasOwnProperty("pronunciation") &&
+                      `\n\n${questionWord.pronunciation}`}
+                  </>
+                ) : (
+                  <>{type === "word" ? questionWord.word : questionWord.mean}</>
+                )}
+              </strong>
+            </Fade>
+          )}
+
           {!showAnswer && (
             <TouchAppIcon
               sx={{

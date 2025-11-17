@@ -7,6 +7,13 @@ import operateData from "../../service/database/operateData";
 import { getList } from "../../service/database/getList";
 import { isEmpty } from "lodash";
 
+const getLengthOfwordList = (wordList) => {
+  if (wordList === null) return 0;
+  return Object.values(wordList)
+    .map(({ addressList }) => addressList)
+    .flat().length;
+};
+
 const SetTest = () => {
   const navigate = useNavigate();
   const [searchParams, _] = useSearchParams();
@@ -21,12 +28,30 @@ const SetTest = () => {
   useEffect(() => {
     setIsLoading(true);
 
-    operateData("GET", `Test/${title}/info`)
-      .then((info) => {
-        setTestInfo(info);
-      })
-      .then(() => getList(`Test/${title}/paths`))
-      .then((paths) => {
+    const fetchTestData = async () => {
+      try {
+        const [info, paths, wordWaitingList, wordPassedList, meanPassedList] =
+          await Promise.all([
+            operateData("GET", `Test/${title}/info`),
+            getList(`Test/${title}/paths`),
+            operateData("GET", `Test/${title}/wordList/wordTest/waiting`),
+            operateData("GET", `Test/${title}/wordList/wordTest/passed`),
+            operateData("GET", `Test/${title}/wordList/meanTest/passed`),
+          ]);
+
+        const numOfWaitingWord = getLengthOfwordList(wordWaitingList);
+        const numOfPassedWord = getLengthOfwordList(wordPassedList);
+        const numOfPassedMean = getLengthOfwordList(meanPassedList);
+        const wordListLength = numOfWaitingWord + numOfPassedWord;
+
+        // 테스트 기본 정보
+        setTestInfo({
+          ...info,
+          numOfPassedWord,
+          numOfPassedMean,
+          wordListLength,
+        });
+
         // path가 같은 단어장끼리 분류
         let newVocaPaths = [];
         let isExistingPath, lastSlashIndex, dirPath, vocaName;
@@ -50,9 +75,15 @@ const SetTest = () => {
         }
 
         setVocaPaths(newVocaPaths);
+      } catch (error) {
+        console.error("테스트 정보를 불러오는 중 오류가 발생했습니다.", error);
+      } finally {
         setIsLoading(false);
-      });
-  }, []);
+      }
+    };
+
+    fetchTestData();
+  }, [title]);
 
   const handleClickStartBtn = useCallback((testInfo, radio, timer) => {
     const {

@@ -7,7 +7,6 @@ export const getList = async (path, propName = "") => {
     const uid = wordMasterAuth.currentUser.uid;
     const pathRef = ref(wordMasterDB, `${uid}/${path}`);
     const listObject = (await get(pathRef)).val();
-    console.log(listObject);
     const list = [];
 
     if (propName) {
