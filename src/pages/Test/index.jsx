@@ -76,6 +76,8 @@ const Test = () => {
     // DB 상에서 waitng에 있는 해당 word를 passed로 이동
     // question.currentQuestion[0] : 경로 key
     // question.currentQuestion[1] : value
+
+    // TODO(memo): currentQuestion[0] 이 주소, [1]이 값
     await operateData(
       "REMOVE",
       `Test/${title}/wordList/${type}Test/waiting/${question.currentQuestion[0]}`
@@ -155,7 +157,8 @@ const Test = () => {
           )}
           <Stack
             direction="row"
-            justifyContent={onTimer ? "space-between" : "flex-end"}>
+            justifyContent={onTimer ? "space-between" : "flex-end"}
+          >
             {onTimer && (
               <TextChip
                 label={`${questionTimer}`}

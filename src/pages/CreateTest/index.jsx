@@ -14,7 +14,7 @@ import {
   ScrollList,
 } from "../../components";
 import { InputField, Description, Checkbox } from "./components";
-import { getList } from "../../service/database/getList";
+import { getList, getAddressList } from "../../service/database/getList";
 import operateData from "../../service/database/operateData";
 import listObjToArr from "../../utils/listObjToArr";
 
@@ -64,6 +64,13 @@ const CreateTest = () => {
           selectedVocaPaths[i].slice(10)
         );
       }
+
+      const tmpList = await Promise.all(
+        selectedVocaPaths.map((path) => {
+          return { path, addressList: getAddressList(path) };
+        })
+      );
+      console.log("tmpList", tmpList);
 
       // 단어 리스트 병렬로 불러오기
       const wordListArr = await Promise.all(

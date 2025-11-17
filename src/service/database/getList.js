@@ -7,6 +7,7 @@ export const getList = async (path, propName = "") => {
     const uid = wordMasterAuth.currentUser.uid;
     const pathRef = ref(wordMasterDB, `${uid}/${path}`);
     const listObject = (await get(pathRef)).val();
+    console.log(listObject);
     const list = [];
 
     if (propName) {
@@ -20,6 +21,17 @@ export const getList = async (path, propName = "") => {
     }
 
     return list;
+  } catch (error) {
+    printError(error);
+  }
+};
+
+export const getAddressList = async (path) => {
+  try {
+    const uid = wordMasterAuth.currentUser.uid;
+    const pathRef = ref(wordMasterDB, `${uid}/${path}`);
+    const listObject = (await get(pathRef)).val();
+    return Object.keys(listObject);
   } catch (error) {
     printError(error);
   }
