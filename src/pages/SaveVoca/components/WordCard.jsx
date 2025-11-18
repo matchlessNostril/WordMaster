@@ -1,36 +1,48 @@
 import React, { useState, useCallback } from "react";
-import { useTheme } from "@mui/material/styles";
 import { ListItem, Card, CardContent, Grid } from "@mui/material";
-import { Header, InputField, PronunciationCheckbox } from "./WordCard/index";
+import { Header, InputField, TextFieldWithCheckbox } from "./WordCard/index";
 import { isEqual } from "lodash";
 
 const WordCard = ({ index, word, wordListDispatch, autoFocus }) => {
-  const theme = useTheme();
+  const [checkList, setCheckList] = useState({
+    pronunciation: word.hasOwnProperty("pronunciation") ? true : false,
+    explain: word.hasOwnProperty("explain") ? true : false,
+    example: word.hasOwnProperty("example") ? true : false,
+  });
 
-  const [isChecked, setIsChecked] = useState(
-    word.hasOwnProperty("pronunciation") ? true : false
+  const handleRemove = useCallback(
+    (index) => {
+      wordListDispatch({ type: "REMOVE", index });
+    },
+    [wordListDispatch]
   );
 
-  const handleRemove = useCallback((index) => {
-    wordListDispatch({ type: "REMOVE", index });
-  }, []);
+  const handleInput = useCallback(
+    (event, propName) => {
+      wordListDispatch({
+        type: "UPDATE",
+        index,
+        propName,
+        value: event.target.value,
+      });
+    },
+    [index, wordListDispatch]
+  );
 
-  const handleInput = useCallback((event, propName) => {
-    wordListDispatch({
-      type: "UPDATE",
-      index,
-      propName,
-      value: event.target.value,
-    });
-  }, []);
-
-  const handleCheck = useCallback(() => {
-    setIsChecked((prev) => !prev);
-    wordListDispatch({
-      type: "CHECK",
-      index,
-    });
-  }, []);
+  const handleCheck = useCallback(
+    (propName) => {
+      setCheckList((prev) => ({
+        ...prev,
+        [propName]: !prev[propName],
+      }));
+      wordListDispatch({
+        type: "CHECK",
+        index,
+        propName,
+      });
+    },
+    [index, wordListDispatch]
+  );
 
   return (
     <ListItem>
@@ -39,13 +51,21 @@ const WordCard = ({ index, word, wordListDispatch, autoFocus }) => {
           <Grid container>
             <Header {...{ index, handleRemove }} />
             <Grid item xs={12}>
-              <Grid container rowSpacing={1}>
+              <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                   <InputField
                     label="単語"
                     value={word.word}
                     autoFocus={autoFocus}
                     type="word"
+                    handleInput={handleInput}
+                  />
+                  <TextFieldWithCheckbox
+                    checked={checkList.pronunciation}
+                    label="発音"
+                    type="pronunciation"
+                    value={word.pronunciation}
+                    handleCheck={() => handleCheck("pronunciation")}
                     handleInput={handleInput}
                   />
                 </Grid>
@@ -56,27 +76,21 @@ const WordCard = ({ index, word, wordListDispatch, autoFocus }) => {
                     type="mean"
                     handleInput={handleInput}
                   />
-                </Grid>
-                <PronunciationCheckbox {...{ isChecked, handleCheck }} />
-                {isChecked && (
-                  <Grid
-                    item
-                    xs={12}
-                    sm={6}
-                    sx={{
-                      [theme.breakpoints.down("sm")]: {
-                        mt: -1.2,
-                      },
-                    }}
-                  >
-                    <InputField
-                      label="発音"
-                      value={word?.pronunciation}
-                      type="pronunciation"
+                  {[
+                    { propName: "explain", label: "説明" },
+                    { propName: "example", label: "例文" },
+                  ].map(({ propName, label }) => (
+                    <TextFieldWithCheckbox
+                      key={propName}
+                      checked={checkList[propName]}
+                      label={label}
+                      type={propName}
+                      value={word[propName]}
+                      handleCheck={() => handleCheck(propName)}
                       handleInput={handleInput}
                     />
-                  </Grid>
-                )}
+                  ))}
+                </Grid>
               </Grid>
             </Grid>
           </Grid>

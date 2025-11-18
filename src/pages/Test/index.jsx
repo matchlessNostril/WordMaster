@@ -65,13 +65,14 @@ const Test = () => {
         questionDispatch({
           type: "INIT",
           initialState: {
+            index: 0,
             waitingQuestionList: shuffledWordList,
-            currentQuestion: [
-              shuffledWordList[0].wordAddress,
-              firstWord,
-              shuffledWordList[0].vocaPath,
-              shuffledWordList[0].testWordPathKey,
-            ],
+            currentQuestion: {
+              wordAddress: shuffledWordList[0].wordAddress,
+              word: firstWord,
+              vocaPath: shuffledWordList[0].vocaPath,
+              testWordPathKey: shuffledWordList[0].testWordPathKey,
+            },
             numOfPassed: initialNumOfPassed,
           },
         });
@@ -106,7 +107,7 @@ const Test = () => {
     // question.currentQuestion[1] : value
     // question.currentQuestion[2] : Voca에서 path 값
     // question.currentQuestion[3] : Test word에서 path key 값
-    const [wordAddress, _word, vocaPath, testWordPathKey] =
+    const { wordAddress, word, vocaPath, testWordPathKey } =
       question.currentQuestion;
 
     const [prevWaitingAddressList, prevPassedAddressList] = await Promise.all([
@@ -192,20 +193,21 @@ const Test = () => {
 
   // 3. 다음 문제 불러오기
   useEffect(() => {
-    if (!question.currentQuestion[0]) return;
+    if (!question.currentQuestion.wordAddress) return;
 
     const fetchNextQuestion = async () => {
       try {
-        const [wordAddress, _word, vocaPath] = question.currentQuestion;
+        const { wordAddress, vocaPath } = question.currentQuestion;
         const nextWord = await operateData("GET", `${vocaPath}/${wordAddress}`);
         questionDispatch({ type: "SET_NEXT_WORD", nextWord });
+        console.log("?????");
       } catch (error) {
         console.error("次の問題を読み込めませんでした。", error);
       }
     };
 
     fetchNextQuestion();
-  }, [question.currentQuestion[1]]);
+  }, [question.index]);
 
   return (
     <>
@@ -221,7 +223,7 @@ const Test = () => {
           )}
           <QuestionCard
             {...{ type, showAnswer, setShowAnswer }}
-            questionWord={question.currentQuestion[1]}
+            questionWord={question.currentQuestion.word}
           />
           <Box
             sx={{
@@ -232,7 +234,7 @@ const Test = () => {
               borderRadius: 1,
             }}
           >
-            出典 : {question.currentQuestion[2]}
+            出典 : {question.currentQuestion.vocaPath}
           </Box>
           <Stack
             direction="row"

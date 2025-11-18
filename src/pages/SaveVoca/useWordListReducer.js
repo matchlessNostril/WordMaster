@@ -15,7 +15,7 @@ const reducer = (state, action) => {
       return [...state, initialWord];
     case "REMOVE": {
       if (state.length === 1) {
-        alert("단어를 최소한 1개 이상 등록해야 합니다.");
+        alert("単語を最低1つ以上登録する必要があります。");
         return state;
       }
       return [...state.filter((_, index) => index !== action.index)];
@@ -30,14 +30,14 @@ const reducer = (state, action) => {
       let word = { ...state[action.index] };
 
       // pronunciation이라는 속성이 이미 있었으면 체크박스 체크되어 있던 것
-      const isChecked = word.hasOwnProperty("pronunciation");
+      const isChecked = word.hasOwnProperty(action.propName);
 
       if (isChecked) {
-        const { pronunciation, ...rest } = word;
+        const { [action.propName]: _, ...rest } = word;
         word = rest;
       } else {
-        // pronunciation 속성 추가
-        word.pronunciation = "";
+        // [action.propName] 속성 추가
+        word[action.propName] = "";
       }
 
       return [

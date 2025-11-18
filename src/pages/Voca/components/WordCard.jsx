@@ -9,6 +9,8 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 const WordCard = ({ index, word, sortingBy, onHideAnswer }) => {
   const theme = useTheme();
   const hasPronunciation = word.hasOwnProperty("pronunciation");
+  const hasExplain = word.hasOwnProperty("explain");
+  const hasExample = word.hasOwnProperty("example");
   const [visibleAnswer, setVisibleAnswer] = useState(false);
 
   return (
@@ -55,7 +57,9 @@ const WordCard = ({ index, word, sortingBy, onHideAnswer }) => {
                 <Grid item xs={12} sm={6}>
                   <Grid
                     container
+                    rowSpacing={0.5}
                     sx={{
+                      py: 2,
                       display:
                         onHideAnswer && !visibleAnswer ? "none" : "block",
                     }}
@@ -65,8 +69,6 @@ const WordCard = ({ index, word, sortingBy, onHideAnswer }) => {
                       xs={12}
                       sx={{
                         ...flexStyle,
-                        pt: 2,
-                        pb: hasPronunciation ? 1 : 2,
                       }}
                     >
                       <MultilineTextField
@@ -74,21 +76,31 @@ const WordCard = ({ index, word, sortingBy, onHideAnswer }) => {
                         value={sortingBy === "word" ? word.mean : word.word}
                       />
                     </Grid>
-                    {hasPronunciation && (
-                      <Grid
-                        item
-                        xs={12}
-                        sx={{
-                          ...flexStyle,
-                          pt: hasPronunciation ? 1 : 2,
-                          pb: 2,
-                        }}
-                      >
-                        <MultilineTextField
-                          label="発音"
-                          value={word.pronunciation}
-                        />
-                      </Grid>
+                    {[
+                      {
+                        propName: "pronunciation",
+                        label: "発音",
+                        has: hasPronunciation,
+                      },
+                      { propName: "explain", label: "説明", has: hasExplain },
+                      { propName: "example", label: "例文", has: hasExample },
+                    ].map(
+                      ({ propName, label, has }, index) =>
+                        has && (
+                          <Grid
+                            item
+                            xs={12}
+                            sx={{
+                              ...flexStyle,
+                            }}
+                            key={propName + index}
+                          >
+                            <MultilineTextField
+                              label={label}
+                              value={word[propName]}
+                            />
+                          </Grid>
+                        )
                     )}
                   </Grid>
                   {onHideAnswer && (

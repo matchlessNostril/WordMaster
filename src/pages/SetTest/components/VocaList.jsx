@@ -25,19 +25,21 @@ const VocaList = ({ vocaPaths }) => {
 export default React.memo(VocaList);
 
 const VocaPathListItem = ({ dirPath, vocaList }) => {
-  const replacedDirPath = dirPath.replace(/\//g, " / ");
+  const replacedDirPath = dirPath ? dirPath.replace(/\//g, " / ") : null;
 
   return (
     <ListItem key={dirPath} sx={{ pl: 0 }}>
       <Stack spacing={2}>
-        <Stack direction="row" alignItems="center" spacing={2}>
-          <img
-            src={require("../../../assets/icons/folder_opened.png")}
-            alt="開いたフォルダアイコン"
-            style={{ width: "20px", height: "20px", marginRight: "-5px" }}
-          />
-          <Typography variant="body2">{replacedDirPath}</Typography>
-        </Stack>
+        {replacedDirPath && (
+          <Stack direction="row" alignItems="center" spacing={2}>
+            <img
+              src={require("../../../assets/icons/folder_opened.png")}
+              alt="開いたフォルダアイコン"
+              style={{ width: "20px", height: "20px", marginRight: "-5px" }}
+            />
+            <Typography variant="body2">{replacedDirPath}</Typography>
+          </Stack>
+        )}
         {vocaList.map((value, index) => (
           <Stack key={index} direction="row" alignItems="center" spacing={2}>
             <img
@@ -46,7 +48,7 @@ const VocaPathListItem = ({ dirPath, vocaList }) => {
               style={{
                 width: "20px",
                 height: "20px",
-                marginLeft: "30px",
+                marginLeft: replacedDirPath ? "30px" : "0px",
                 marginRight: "-5px",
               }}
             />

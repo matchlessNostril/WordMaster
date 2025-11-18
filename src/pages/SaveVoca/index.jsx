@@ -36,13 +36,7 @@ const SaveVoca = () => {
     for (let i = 0; i < wordList.length; i++) {
       for (const propName in wordList[i]) {
         if (!wordList[i][propName]) {
-          const propNameInJp =
-            propName === "word"
-              ? "単語"
-              : propName === "mean"
-              ? "意味"
-              : "発音";
-          alert(`${i + 1}番目の単語に、${propNameInJp} が入力されていません。`);
+          alert(`${i + 1}番目の単語に、未入力の項目があります。`);
           isValid = false;
           break;
         }

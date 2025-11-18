@@ -16,14 +16,15 @@ const reducer = (state, action) => {
         newWaitingQuestionList.shift();
       }
 
-      const currentQuestion = [
-        state.waitingQuestionList[1].wordAddress,
-        null,
-        state.waitingQuestionList[1].vocaPath,
-        state.waitingQuestionList[1].testWordPathKey,
-      ];
+      const currentQuestion = {
+        wordAddress: state.waitingQuestionList[1].wordAddress,
+        word: null,
+        vocaPath: state.waitingQuestionList[1].vocaPath,
+        testWordPathKey: state.waitingQuestionList[1].testWordPathKey,
+      };
 
       return {
+        index: state.index + 1,
         waitingQuestionList: newWaitingQuestionList,
         currentQuestion,
         numOfPassed: state.numOfPassed + 1,
@@ -51,30 +52,27 @@ const reducer = (state, action) => {
         newWaitingQuestionList.splice(randomIndex, 0, wrongQuestion);
       }
 
-      const currentQuestion = [
-        state.waitingQuestionList[1].wordAddress,
-        null,
-        state.waitingQuestionList[1].vocaPath,
-        state.waitingQuestionList[1].testWordPathKey,
-      ];
+      const currentQuestion = {
+        wordAddress: state.waitingQuestionList[1].wordAddress,
+        word: null,
+        vocaPath: state.waitingQuestionList[1].vocaPath,
+        testWordPathKey: state.waitingQuestionList[1].testWordPathKey,
+      };
 
       return {
+        index: state.index + 1,
         waitingQuestionList: newWaitingQuestionList,
         currentQuestion,
         numOfPassed: state.numOfPassed,
       };
     }
     case "SET_NEXT_WORD": {
-      const [wordAddress, _word, vocaPath, testWordPathKey] =
-        state.currentQuestion;
       return {
         ...state,
-        currentQuestion: [
-          wordAddress,
-          action.nextWord,
-          vocaPath,
-          testWordPathKey,
-        ],
+        currentQuestion: {
+          ...state.currentQuestion,
+          word: action.nextWord,
+        },
       };
     }
     default:
@@ -85,8 +83,14 @@ const reducer = (state, action) => {
 
 const useQuestionReducer = () => {
   const [question, questionDispatch] = useReducer(reducer, {
+    index: 0,
     waitingQuestionList: null,
-    currentQuestion: [null, null, null, null],
+    currentQuestion: {
+      wordAddress: null,
+      word: null,
+      vocaPath: null,
+      testWordPathKey: null,
+    },
     numOfPassed: null,
   });
 

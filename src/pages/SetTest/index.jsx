@@ -53,11 +53,17 @@ const SetTest = () => {
         });
 
         // path가 같은 단어장끼리 분류
-        let newVocaPaths = [];
+        let newVocaPaths = [{ dirPath: null, vocaList: [] }];
         let isExistingPath, lastSlashIndex, dirPath, vocaName;
         for (let i = 0; i < paths.length; i++) {
           isExistingPath = false;
           lastSlashIndex = paths[i].lastIndexOf("/");
+
+          if (lastSlashIndex === -1) {
+            newVocaPaths[0].vocaList.push(paths[i]);
+            continue;
+          }
+
           dirPath = paths[i].slice(0, lastSlashIndex);
           vocaName = paths[i].slice(lastSlashIndex + 1, paths[i].length);
 
