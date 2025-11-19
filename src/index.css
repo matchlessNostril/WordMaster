@@ -7,3 +7,9 @@
 body {
   margin: 0;
 }
+
+:root {
+  --toastify-color-success: #6d8ecc;
+  --toastify-color-error: #ff6c6c;
+  --toastify-color-info: #dbdbdb;
+}

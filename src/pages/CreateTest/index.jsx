@@ -17,6 +17,7 @@ import { InputField, Description, Checkbox } from "./components";
 import { getList, getAddressList } from "../../service/database/getList";
 import operateData from "../../service/database/operateData";
 import listObjToArr from "../../utils/listObjToArr";
+import { toast } from "react-toastify";
 
 const CreateTest = () => {
   const navigate = useNavigate();
@@ -37,7 +38,7 @@ const CreateTest = () => {
     async (testName, selectedVocaPaths) => {
       // 테스트 이름에 포함될 수 없는 문자가 있는 지 확인
       if (/[.#$\[\]]/.test(testName)) {
-        alert(`名前に「 .  #  $  [  ] 」記号は入れられません。`);
+        toast.error(`名前に「 .  #  $  [  ] 」記号は入れられません。`);
         return;
       }
 
@@ -46,7 +47,7 @@ const CreateTest = () => {
 
       // 중복된 이름으로 생성 불가능
       if (testList.includes(testName)) {
-        alert(`すでに存在する名前では作成できません。`);
+        toast.error(`すでに存在する名前では作成できません。`);
         return;
       }
 

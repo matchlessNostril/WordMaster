@@ -16,6 +16,7 @@ import {
 } from "../../service/database/autoFetchList";
 import operateData from "../../service/database/operateData";
 import { isEmpty } from "lodash";
+import { toast } from "react-toastify";
 
 const VocaList = () => {
   // url 쿼리스트링에서 path 값 가져오기
@@ -64,7 +65,7 @@ const VocaList = () => {
     (inputValue) => {
       // 포함될 수 없는 문자가 있는 지 확인
       if (/[.#$\[\]]/.test(inputValue)) {
-        alert(`名前に「 .  #  $  [  ] 」記号は入れられません。`);
+        toast.error(`名前に「 .  #  $  [  ] 」記号は入れられません。`);
         return;
       }
 
@@ -78,7 +79,9 @@ const VocaList = () => {
 
       // 현재 디렉토리 내에서 중복된 이름으로 생성 불가능
       if (entireList.includes(inputValue)) {
-        alert(`現在のフォルダ内に、すでに存在する名前では作成できません。`);
+        toast.error(
+          `現在のフォルダ内に、すでに存在する名前では作成できません。`
+        );
         return;
       }
 

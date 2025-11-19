@@ -14,6 +14,7 @@ import {
   Test,
 } from "../pages";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 const privateRoutes = [
   { path: "/Main", page: <Main /> },
@@ -32,7 +33,7 @@ const PrivatePage = ({ isLoginUser, page: Page }) => {
 
   useEffect(() => {
     if (!isLoginUser) {
-      alert("ログイン後、アクセス可能です。");
+      toast.error("ログイン後、アクセス可能です。");
       navigate("/");
     }
   }, []);

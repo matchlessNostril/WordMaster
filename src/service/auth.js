@@ -7,6 +7,7 @@ import {
   signOut,
 } from "firebase/auth";
 import printError from "../utils/printError";
+import { toast } from "react-toastify";
 
 export const Register = async (nickname, email, password) => {
   try {
@@ -27,7 +28,7 @@ export const Register = async (nickname, email, password) => {
   } catch (error) {
     printError(error);
     if (error.code === "auth/email-already-in-use") {
-      alert("このメールアドレスはすでに登録されています。");
+      toast.error("このメールアドレスはすでに登録されています。");
     }
   }
 };
@@ -46,7 +47,7 @@ export const Login = async (email, password) => {
   } catch (error) {
     printError(error);
     if (error.code === "auth/invalid-credential") {
-      alert("一致するユーザーが見つかりません。");
+      toast.error("一致するユーザーが見つかりません。");
     }
   }
 };

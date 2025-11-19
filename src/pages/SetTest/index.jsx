@@ -6,6 +6,7 @@ import { Form, AchievementRate, ProgressBar, VocaList } from "./components";
 import operateData from "../../service/database/operateData";
 import { getList } from "../../service/database/getList";
 import { isEmpty } from "lodash";
+import { toast } from "react-toastify";
 
 const getLengthOfwordList = (wordList) => {
   if (wordList === null) return 0;
@@ -101,13 +102,13 @@ const SetTest = () => {
     } = testInfo;
 
     if (radio === "word" && numOfPassedWord === wordListLength) {
-      alert(
+      toast.info(
         "現在の単語テストの達成率は100%です。単語テストを新しく始めたい場合は、リセットボタンを押してください。"
       );
       return;
     }
     if (radio === "mean" && numOfPassedMean === wordListLength) {
-      alert(
+      toast.info(
         "現在の意味テストの達成率は100%です。意味テストを新しく始めたい場合は、リセットボタンを押してください。"
       );
       return;

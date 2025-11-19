@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import Header from "./components/Header";
 import Router from "./router/Router";
+import { ToastContainer, Bounce } from "react-toastify";
 
 function App() {
   return (
@@ -19,6 +20,25 @@ function App() {
       >
         <Router />
       </Box>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={4000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Bounce}
+        toastStyle={{
+          width: "fit-content",
+          minWidth: "300px",
+          maxWidth: "425px",
+          fontSize: "14px",
+        }}
+      />
     </>
   );
 }

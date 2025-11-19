@@ -6,6 +6,7 @@ import { Transition, SubHeader, Loading, ScrollList } from "../../components";
 import { InputField, WordCard, AddBtn } from "./components";
 import { getList } from "../../service/database/getList";
 import operateData from "../../service/database/operateData";
+import { toast } from "react-toastify";
 
 const SaveVoca = () => {
   const location = useLocation();
@@ -36,7 +37,7 @@ const SaveVoca = () => {
     for (let i = 0; i < wordList.length; i++) {
       for (const propName in wordList[i]) {
         if (!wordList[i][propName]) {
-          alert(`${i + 1}番目の単語に、未入力の項目があります。`);
+          toast.error(`${i + 1}番目の単語に、未入力の項目があります。`);
           isValid = false;
           break;
         }
@@ -49,7 +50,7 @@ const SaveVoca = () => {
     if (mode === "Create" || vocaName !== title) {
       // 단어장 이름에 포함될 수 없는 문자가 있는 지 확인
       if (/[.#$\[\]]/.test(vocaName)) {
-        alert(`名前に「 .  #  $  [  ] 」記号は入れられません。`);
+        toast.error(`名前に「 .  #  $  [  ] 」記号は入れられません。`);
         return;
       }
 
@@ -60,10 +61,10 @@ const SaveVoca = () => {
 
       // 현재 디렉토리 내에서 중복된 이름으로 생성 불가능
       if (entireList.includes(vocaName)) {
-        alert(
+        toast.error(
           `現在のフォルダ内に、すでに存在する名前では ${
             mode === "Modify" ? "変更" : "作成"
-          }할 수 없습니다.`
+          }できません。`
         );
         return;
       }

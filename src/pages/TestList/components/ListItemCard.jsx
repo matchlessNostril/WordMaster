@@ -15,6 +15,7 @@ import { getList } from "../../../service/database/getList";
 import operateData from "../../../service/database/operateData";
 import { isEmpty } from "lodash";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { toast } from "react-toastify";
 
 const ListItemCard = ({ itemKey, title }) => {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ const ListItemCard = ({ itemKey, title }) => {
 
     // 포함될 수 없는 문자가 있는 지 확인
     if (/[.#$\[\]]/.test(inputValue)) {
-      alert(`名前に「 .  #  $  [  ] 」記号は入れられません。`);
+      toast.error(`名前に「 .  #  $  [  ] 」記号は入れられません。`);
       return;
     }
 
@@ -42,7 +43,7 @@ const ListItemCard = ({ itemKey, title }) => {
 
     // 중복된 이름으로 생성 불가능
     if (testList.includes(inputValue)) {
-      alert(`すでに存在する名前では変更できません。`);
+      toast.error(`すでに存在する名前では変更できません。`);
       return;
     }
 

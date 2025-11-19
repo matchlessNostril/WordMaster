@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import TouchAppIcon from "@mui/icons-material/TouchApp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { toast } from "react-toastify";
 
 const QuestionCard = ({
   type,
@@ -294,7 +295,7 @@ const EditWordForm = ({ question, setOpenModal, questionDispatch }) => {
       (checkList.explain && !newWord.explain) ||
       (checkList.example && !newWord.example)
     ) {
-      alert("未入力項目があります。");
+      toast.error("未入力項目があります。");
       return;
     }
 
@@ -302,6 +303,7 @@ const EditWordForm = ({ question, setOpenModal, questionDispatch }) => {
     await operateData("SET", `${vocaPath}/${wordAddress}`, newWord);
     questionDispatch({ type: "SET_NEW_WORD", newWord });
     setOpenModal(false);
+    toast.success("単語を編集しました。");
   };
 
   return (

@@ -1,4 +1,5 @@
 import { useReducer } from "react";
+import { toast } from "react-toastify";
 
 const initialWord = {
   word: "",
@@ -15,7 +16,7 @@ const reducer = (state, action) => {
       return [...state, initialWord];
     case "REMOVE": {
       if (state.length === 1) {
-        alert("単語を最低1つ以上登録する必要があります。");
+        toast.error("単語を最低1つ以上登録する必要があります。");
         return state;
       }
       return [...state.filter((_, index) => index !== action.index)];
