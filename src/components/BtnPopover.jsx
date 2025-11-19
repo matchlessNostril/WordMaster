@@ -1,7 +1,12 @@
 import React from "react";
 import { Popover, ButtonGroup, Button } from "@mui/material";
 
-const BtnPopover = ({ anchor, setAnchor, buttons }) => {
+const BtnPopover = ({
+  anchor,
+  setAnchor,
+  buttons,
+  orientation = "vertical",
+}) => {
   return (
     <>
       <Popover
@@ -18,8 +23,9 @@ const BtnPopover = ({ anchor, setAnchor, buttons }) => {
           vertical: "top",
           horizontal: "center",
         }}
+        sx={{ marginTop: "4px" }}
       >
-        <ButtonGroup orientation="vertical" variant="text">
+        <ButtonGroup orientation={orientation} variant="text">
           {buttons.map((button, index) => (
             <Button key={index} onClick={button.handleClick}>
               {button.name}

@@ -199,8 +199,7 @@ const Test = () => {
       try {
         const { wordAddress, vocaPath } = question.currentQuestion;
         const nextWord = await operateData("GET", `${vocaPath}/${wordAddress}`);
-        questionDispatch({ type: "SET_NEXT_WORD", nextWord });
-        console.log("?????");
+        questionDispatch({ type: "SET_NEW_WORD", newWord: nextWord });
       } catch (error) {
         console.error("次の問題を読み込めませんでした。", error);
       }
@@ -223,7 +222,8 @@ const Test = () => {
           )}
           <QuestionCard
             {...{ type, showAnswer, setShowAnswer }}
-            questionWord={question.currentQuestion.word}
+            question={question.currentQuestion}
+            questionDispatch={questionDispatch}
           />
           <Box
             sx={{

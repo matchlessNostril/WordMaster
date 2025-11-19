@@ -66,12 +66,12 @@ const reducer = (state, action) => {
         numOfPassed: state.numOfPassed,
       };
     }
-    case "SET_NEXT_WORD": {
+    case "SET_NEW_WORD": {
       return {
         ...state,
         currentQuestion: {
           ...state.currentQuestion,
-          word: action.nextWord,
+          word: action.newWord,
         },
       };
     }

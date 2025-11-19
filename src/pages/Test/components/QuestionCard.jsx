@@ -1,4 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
+import { usePopOver, useModal } from "../../../hooks";
+import { BtnPopover, ActionModal } from "../../../components";
+import { WordCardForm } from "../../SaveVoca/components/WordCard/index";
+import { operateData } from "../../../service/database/operateData";
 import {
   useMediaQuery,
   Card,
@@ -7,19 +11,27 @@ import {
   Box,
   Typography,
   Fade,
+  Button,
 } from "@mui/material";
 import TouchAppIcon from "@mui/icons-material/TouchApp";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
-const QuestionCard = ({ type, showAnswer, setShowAnswer, questionWord }) => {
+const QuestionCard = ({
+  type,
+  showAnswer,
+  setShowAnswer,
+  question,
+  questionDispatch,
+}) => {
   const isPortrait = useMediaQuery("(orientation: portrait)");
-
-  console.log(questionWord);
+  const questionWord = question.word;
 
   return (
     <Card
       sx={{
         flexGrow: 1,
         mt: 2,
+        position: "relative",
         backgroundColor: showAnswer ? "#dbdbdb" : "#535353",
       }}
     >
@@ -82,6 +94,7 @@ const QuestionCard = ({ type, showAnswer, setShowAnswer, questionWord }) => {
           )}
         </CardContent>
       </CardActionArea>
+      <PopOverBtn question={question} questionDispatch={questionDispatch} />
     </Card>
   );
 };
@@ -208,8 +221,7 @@ const AnswerTable = ({ type, questionWord }) => {
                 width: "100%",
                 height: "100%",
                 overflowY: "auto",
-                pl: 2,
-                pr: 0.5,
+                px: 1,
                 display: "flex",
                 alignItems: "center",
                 scrollbarWidth: "thin",
@@ -234,5 +246,159 @@ const AnswerTable = ({ type, questionWord }) => {
         </React.Fragment>
       ))}
     </Box>
+  );
+};
+
+const EditWordForm = ({ question, setOpenModal, questionDispatch }) => {
+  const { wordAddress, word, vocaPath } = question;
+
+  const [newWord, setNewWord] = useState(word);
+  const [checkList, setCheckList] = useState({
+    pronunciation: newWord.hasOwnProperty("pronunciation") ? true : false,
+    explain: newWord.hasOwnProperty("explain") ? true : false,
+    example: newWord.hasOwnProperty("example") ? true : false,
+  });
+
+  const handleInput = (event, propName) => {
+    setNewWord((prev) => ({
+      ...prev,
+      [propName]: event.target.value,
+    }));
+  };
+
+  const handleCheck = (propName) => {
+    const isChecked = newWord.hasOwnProperty(propName);
+
+    if (isChecked) {
+      const { [propName]: _, ...rest } = newWord;
+      setNewWord(rest);
+    } else {
+      setNewWord((prev) => ({
+        ...prev,
+        [propName]: "",
+      }));
+    }
+
+    setCheckList((prev) => ({
+      ...prev,
+      [propName]: !prev[propName],
+    }));
+  };
+
+  const handleSave = async () => {
+    // validation
+    if (
+      !newWord.word ||
+      !newWord.mean ||
+      (checkList.pronunciation && !newWord.pronunciation) ||
+      (checkList.explain && !newWord.explain) ||
+      (checkList.example && !newWord.example)
+    ) {
+      alert("未入力項目があります。");
+      return;
+    }
+
+    // save
+    await operateData("SET", `${vocaPath}/${wordAddress}`, newWord);
+    questionDispatch({ type: "SET_NEW_WORD", newWord });
+    setOpenModal(false);
+  };
+
+  return (
+    <div style={{ width: "75vw" }}>
+      <WordCardForm
+        {...{ word: newWord, checkList, handleInput, handleCheck }}
+      />
+      <div
+        style={{ display: "flex", justifyContent: "flex-end", marginTop: 30 }}
+      >
+        <Button variant="contained" onClick={handleSave}>
+          保存
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+const PopOverBtn = ({ question, questionDispatch }) => {
+  const removeWord = () => {
+    const { vocaPath, wordAddress } = question;
+    operateData("REMOVE", `${vocaPath}/${wordAddress}`);
+  };
+
+  const [openModal, setOpenModal, modalContent, handleClickOpenModal] =
+    useModal();
+  const modalContents = [
+    {
+      title: "単語を編集",
+      children: (
+        <EditWordForm
+          question={question}
+          setOpenModal={setOpenModal}
+          questionDispatch={questionDispatch}
+        />
+      ),
+    },
+    {
+      title: "本当に単語を削除しますか？",
+      btnName: "削除",
+      handleClickBtn: removeWord,
+    },
+  ];
+
+  const [popoverAnchor, setPopoverAnchor, handleClickPopoverBtn] = usePopOver();
+  const popoverBtns = [
+    {
+      name: "編集",
+      handleClick: () => {
+        setPopoverAnchor(null);
+        handleClickOpenModal(modalContents[0]);
+      },
+    },
+    {
+      name: "削除",
+      handleClick: () => {
+        setPopoverAnchor(null);
+        handleClickOpenModal(modalContents[1]);
+      },
+    },
+  ];
+
+  return (
+    <>
+      <Button
+        variant="contained"
+        sx={{
+          position: "absolute",
+          top: 0,
+          right: 5,
+          borderTopLeftRadius: 0,
+          borderTopRightRadius: 0,
+          minWidth: 30,
+          width: 30,
+          height: 20,
+          backgroundColor: "white",
+          "&:hover": {
+            backgroundColor: "#f0f0f0",
+            transform: "scale(0.975)",
+            transition: "transform 0.1s ease-in-out",
+          },
+        }}
+        onClick={handleClickPopoverBtn}
+      >
+        <KeyboardArrowDownIcon sx={{ fontSize: 16, color: "#535353" }} />
+      </Button>
+      <BtnPopover
+        anchor={popoverAnchor}
+        setAnchor={setPopoverAnchor}
+        buttons={popoverBtns}
+        orientation="horizontal"
+      />
+      <ActionModal
+        open={openModal}
+        setOpen={setOpenModal}
+        content={modalContent}
+      />
+    </>
   );
 };

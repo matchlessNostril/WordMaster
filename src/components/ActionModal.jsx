@@ -14,7 +14,8 @@ const ActionModal = ({ open, setOpen, content }) => {
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            width: "30vmax",
+            width: "fit-content",
+            minWidth: "30vmax",
             bgcolor: "background.paper",
             border: "1px solid #535353",
             borderRadius: "5px",
@@ -23,6 +24,7 @@ const ActionModal = ({ open, setOpen, content }) => {
           }}
         >
           <Header title={content?.title} />
+          {content?.children}
           {content?.textField && (
             <TextField
               label={`${content?.textField.label}`}
@@ -39,27 +41,29 @@ const ActionModal = ({ open, setOpen, content }) => {
               }}
             />
           )}
-          <Box position="relative" p={4}>
-            <Button
-              variant="contained"
-              disabled={content?.textField && !value}
-              onClick={() =>
-                content?.textField
-                  ? content.handleClickBtn(value)
-                  : content.handleClickBtn()
-              }
-              sx={{ position: "absolute", right: 0 }}
-            >
-              {content?.btnName}
-            </Button>
-          </Box>
+          {content?.btnName && (
+            <Box position="relative" p={4}>
+              <Button
+                variant="contained"
+                disabled={content?.textField && !value}
+                onClick={() =>
+                  content?.textField
+                    ? content.handleClickBtn(value)
+                    : content.handleClickBtn()
+                }
+                sx={{ position: "absolute", right: 0 }}
+              >
+                {content?.btnName}
+              </Button>
+            </Box>
+          )}
         </Box>
       </Modal>
     </>
   );
 };
 
-export default React.memo(ActionModal);
+export default ActionModal;
 
 const Header = React.memo(({ title }) => {
   return (
