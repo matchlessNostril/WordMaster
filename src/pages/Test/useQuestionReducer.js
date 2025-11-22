@@ -17,10 +17,10 @@ const reducer = (state, action) => {
       }
 
       const currentQuestion = {
-        wordAddress: state.waitingQuestionList[1].wordAddress,
+        wordAddress: newWaitingQuestionList[0].wordAddress,
         word: null,
-        vocaPath: state.waitingQuestionList[1].vocaPath,
-        testWordPathKey: state.waitingQuestionList[1].testWordPathKey,
+        vocaPath: newWaitingQuestionList[0].vocaPath,
+        testWordPathKey: newWaitingQuestionList[0].testWordPathKey,
       };
 
       return {
@@ -53,10 +53,10 @@ const reducer = (state, action) => {
       }
 
       const currentQuestion = {
-        wordAddress: state.waitingQuestionList[1].wordAddress,
+        wordAddress: newWaitingQuestionList[0].wordAddress,
         word: null,
-        vocaPath: state.waitingQuestionList[1].vocaPath,
-        testWordPathKey: state.waitingQuestionList[1].testWordPathKey,
+        vocaPath: newWaitingQuestionList[0].vocaPath,
+        testWordPathKey: newWaitingQuestionList[0].testWordPathKey,
       };
 
       return {
@@ -90,10 +90,10 @@ const reducer = (state, action) => {
       } else {
         // 나머지 문제가 있다면, 다음 문제로 이동
         const currentQuestion = {
-          wordAddress: newWaitingQuestionList[1].wordAddress,
+          wordAddress: newWaitingQuestionList[0].wordAddress,
           word: null,
-          vocaPath: newWaitingQuestionList[1].vocaPath,
-          testWordPathKey: newWaitingQuestionList[1].testWordPathKey,
+          vocaPath: newWaitingQuestionList[0].vocaPath,
+          testWordPathKey: newWaitingQuestionList[0].testWordPathKey,
         };
 
         return {

@@ -44,10 +44,9 @@ export const updateTestListInVoca = async (type, vocaPaths, testName) => {
   await Promise.all(promises);
 };
 
-// 해당 단어가 포함된 voca, test에서 삭제
-export const removeWordInDB = async (vocaPath, wordAddress) => {
+// '해당 단어가 포함된 voca, test에서 삭제' ---------
+export const removeWordInVoca = async (vocaPath, wordAddress) => {
   console.log("vocaPath", vocaPath);
-  // 1. voca에서 삭제
   const _prevVoca = await getList(vocaPath);
   const prevVoca = _prevVoca.filter((value) => value.hasOwnProperty("word"));
   if (prevVoca.length === 1) {
@@ -56,8 +55,10 @@ export const removeWordInDB = async (vocaPath, wordAddress) => {
   } else {
     await operateData("REMOVE", `${vocaPath}/${wordAddress}`);
   }
+};
 
-  // 2. 해당 vocaPath가 포함된 test 리스트 찾기
+export const removeWordInTest = async (vocaPath, wordAddress, type = "one") => {
+  // 1. 해당 vocaPath가 포함된 test 리스트 찾기
   const _allTestNames = await operateData("GET", `Test/testList`);
   const allTestNames = Object.values(_allTestNames).map((test) => test.name);
 
@@ -82,7 +83,7 @@ export const removeWordInDB = async (vocaPath, wordAddress) => {
     .map(({ testName }) => testName);
   console.log("filteredTestNames", filteredTestNames);
 
-  // 3. Test의 waiting address list에서 삭제
+  // 2. Test의 waiting address list에서 삭제
   // TODO: 망했다 (testWordPathKey 필요한데, 단어 하나 삭제하겠다고 이걸 다 조회하는 건 말이 안돼. 근데 방법이 없어 일단 해봐... 테스트 계정 구색용, 실제로 내가 쓸 땐 너무 느리면 사용 X)
   for (const testName of filteredTestNames) {
     promises.push(
@@ -113,53 +114,57 @@ export const removeWordInDB = async (vocaPath, wordAddress) => {
       "meanTest/passed",
     ][wordListPathIndex];
 
-    if (wordListPathIndex === 0) {
-      // 4개씩 묶어서 처리하므로, 4개씩 묶음 초기화
-      findInWordTest = false;
-      findInMeanTest = false;
-    } else if (wordListPath === "wordTest/passed") {
-      // wordTest/passed일 때, 만약 wordTest/waiting에서 이미 발견했다면 패스
-      if (findInWordTest) continue;
-    } else if (wordListPath === "meanTest/passed") {
-      // meanTest/passed일 때, 만약 meanTest/waiting에서 이미 발견했다면 패스
-      if (findInMeanTest) continue;
+    if (type === "one") {
+      if (wordListPathIndex === 0) {
+        // 4개씩 묶어서 처리하므로, 4개씩 묶음 초기화
+        findInWordTest = false;
+        findInMeanTest = false;
+      } else if (wordListPath === "wordTest/passed") {
+        // wordTest/passed일 때, 만약 wordTest/waiting에서 이미 발견했다면 패스
+        if (findInWordTest) continue;
+      } else if (wordListPath === "meanTest/passed") {
+        // meanTest/passed일 때, 만약 meanTest/waiting에서 이미 발견했다면 패스
+        if (findInMeanTest) continue;
+      }
     }
 
-    const testWordList = Object.entries(allTestWordList[i]);
+    const testWordList = allTestWordList[i] ? Object.entries(allTestWordList[i]) : null;
+    if(!testWordList) continue;
 
     const testNameIndex = Math.floor(i / 4);
     const currentTestName = filteredTestNames[testNameIndex];
 
-    let hasWord = false;
-    let testWordPathKey = "";
-    for (const [key, { path, addressList }] of testWordList) {
+    const targetAddressList = type === "one" ? [wordAddress] : wordAddress;
+    for (const [key, value] of testWordList) {
+      if(!value) continue;
+      
+      const { path, addressList } = value;
       if (path !== vocaPath) continue;
-      if (addressList.includes(wordAddress)) {
-        console.log(
-          "발견",
-          currentTestName,
-          wordListPath,
-          "testWordPathKey",
-          key
-        );
-        hasWord = true;
-        testWordPathKey = key;
-        break;
-      }
-    }
 
-    if (hasWord) {
-      promises.push(
-        changeWordAddressList(
-          `Test/${currentTestName}/wordList/${wordListPath}/${testWordPathKey}`,
-          wordAddress
-        )
+      // 삭제 이후 남은 address list
+      const newAddressList = addressList.filter(
+        (address) => !targetAddressList.includes(address)
       );
 
-      if (wordListPath.includes("wordTest")) {
-        findInWordTest = true;
-      } else {
-        findInMeanTest = true;
+      if (newAddressList.length === addressList.length) continue; // 삭제할 게 없음
+      else {
+        console.log("before 삭제", addressList, "after 삭제", newAddressList);
+        // 삭제될 게 있음
+        promises.push(
+          operateData(
+            "SET",
+            `Test/${currentTestName}/wordList/${wordListPath}/${key}/addressList`,
+            newAddressList
+          )
+        );
+
+        if (type === "one") {
+          if (wordListPath.includes("wordTest")) {
+            findInWordTest = true;
+          } else {
+            findInMeanTest = true;
+          }
+        }
       }
     }
   }
@@ -168,10 +173,7 @@ export const removeWordInDB = async (vocaPath, wordAddress) => {
   return "success";
 };
 
-export const changeWordAddressList = async (path, wordAddress) => {
-  const prevWordAddressList = await operateData("GET", `${path}/addressList`);
-  const newAddressList = prevWordAddressList.filter(
-    (address) => address !== wordAddress
-  );
-  await operateData("SET", `${path}/addressList`, newAddressList);
+export const removeWordInDB = async (vocaPath, wordAddress) => {
+  await removeWordInVoca(vocaPath, wordAddress);
+  await removeWordInTest(vocaPath, wordAddress);
 };

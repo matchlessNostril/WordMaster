@@ -7,6 +7,7 @@ import { InputField, WordCard, AddBtn } from "./components";
 import { getList } from "../../service/database/getList";
 import operateData from "../../service/database/operateData";
 import { toast } from "react-toastify";
+import { removeWordInTest } from "../../utils/utils";
 
 let originalWordList = [];
 
@@ -95,20 +96,32 @@ const SaveVoca = () => {
         // (2) 새 단어 추가 (add모드는 여기만 해당)
         await operateData("PUSH", `Voca/${path}/${vocaName}`, word);
       }
-      // (3) 기존 단어 삭제
-      const removedWord = originalWordList.filter(
-        ({ addressKey }) =>
-          !wordList.some(
-            (word) =>
-              word?.hasOwnProperty("addressKey") &&
-              word.addressKey === addressKey
-          )
-      );
-      removedWord.forEach((word) => {
+      // (3) 기존 단어 삭제 (voca에서 + test에서)
+      const removedWordAddressList = originalWordList
+        .filter(
+          ({ addressKey }) =>
+            !wordList.some(
+              (word) =>
+                word?.hasOwnProperty("addressKey") &&
+                word.addressKey === addressKey
+            )
+        )
+        .map(({ addressKey }) => addressKey);
+
+      removedWordAddressList.forEach((addressKey) => {
         promises.push(
-          operateData("REMOVE", `Voca/${path}/${vocaName}/${word.addressKey}`)
+          operateData("REMOVE", `Voca/${path}/${vocaName}/${addressKey}`)
         );
       });
+
+      if (removedWordAddressList.length > 0)
+        promises.push(
+          removeWordInTest(
+            `Voca/${path}/${vocaName}`,
+            removedWordAddressList,
+            "multiple"
+          )
+        );
     }
     await Promise.all(promises);
 
