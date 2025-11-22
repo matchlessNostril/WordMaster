@@ -1,5 +1,30 @@
 import operateData from "../service/database/operateData";
-import { getList } from "../service/database/getList";
+import { getList, getAddressList } from "../service/database/getList";
+
+export const saveWordInTest = async (
+  testName,
+  selectedVocaPaths,
+  testType = "word"
+) => {
+  // wordAddressList 리스트 불러오기
+  const wordAddressList = await Promise.all(
+    selectedVocaPaths.map(async (path) => ({
+      path,
+      addressList: (
+        await getAddressList(path)
+      ).filter((value) => value.startsWith("-O")),
+    }))
+  );
+
+  const wordTestPromises = wordAddressList.map((wordAddress) =>
+    operateData(
+      "PUSH",
+      `Test/${testName}/wordList/${testType}Test/waiting`,
+      wordAddress
+    )
+  );
+  await Promise.all(wordTestPromises);
+};
 
 export const updateTestListInVoca = async (type, vocaPaths, testName) => {
   let promises = [];
@@ -70,7 +95,7 @@ export const getAllTestNamesContainingVoca = async (vocaPath) => {
     .map(({ testName }) => testName);
 
   return filteredTestNames;
-}
+};
 
 // '해당 단어가 포함된 voca, test에서 삭제' ---------
 export const removeWordInVoca = async (vocaPath, wordAddress) => {
@@ -133,16 +158,18 @@ export const removeWordInTest = async (vocaPath, wordAddress, type = "one") => {
       }
     }
 
-    const testWordList = allTestWordList[i] ? Object.entries(allTestWordList[i]) : null;
-    if(!testWordList) continue;
+    const testWordList = allTestWordList[i]
+      ? Object.entries(allTestWordList[i])
+      : null;
+    if (!testWordList) continue;
 
     const testNameIndex = Math.floor(i / 4);
     const currentTestName = filteredTestNames[testNameIndex];
 
     const targetAddressList = type === "one" ? [wordAddress] : wordAddress;
     for (const [key, value] of testWordList) {
-      if(!value) continue;
-      
+      if (!value) continue;
+
       const { path, addressList } = value;
       if (path !== vocaPath) continue;
 
@@ -151,7 +178,7 @@ export const removeWordInTest = async (vocaPath, wordAddress, type = "one") => {
         (address) => !targetAddressList.includes(address)
       );
 
-      if (newAddressList.length === addressList.length) continue; // 삭제할 게 없음
+      if (newAddressList.length === addressList.length) continue;
       else {
         // 삭제될 게 있음
         promises.push(
@@ -200,29 +227,34 @@ export const addWordInTest = async (vocaPath, wordAddress) => {
 
   for (let i = 0; i < allTestWordList.length; i++) {
     const wordListPathIndex = i % 2;
-    const wordListPath = [
-      "wordTest/waiting",
-      "meanTest/waiting",
-    ][wordListPathIndex];
+    const wordListPath = ["wordTest/waiting", "meanTest/waiting"][
+      wordListPathIndex
+    ];
 
-    const testWordList = allTestWordList[i] ? Object.entries(allTestWordList[i]) : null;
+    const testWordList = allTestWordList[i]
+      ? Object.entries(allTestWordList[i])
+      : null;
 
     const testNameIndex = Math.floor(i / 2);
     const currentTestName = filteredTestNames[testNameIndex];
 
     for (const [key, value] of testWordList) {
-      if(!value) continue;
+      if (!value) continue;
 
       const { path, addressList } = value;
       if (path !== vocaPath) continue;
 
       const newAddressList = addressList.concat(wordAddress);
       promises.push(
-        operateData("SET", `Test/${currentTestName}/wordList/${wordListPath}/${key}/addressList`, newAddressList)
+        operateData(
+          "SET",
+          `Test/${currentTestName}/wordList/${wordListPath}/${key}/addressList`,
+          newAddressList
+        )
       );
     }
   }
   await Promise.all(promises);
 
   return "success";
-}
+};

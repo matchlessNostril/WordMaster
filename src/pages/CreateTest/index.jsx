@@ -18,7 +18,7 @@ import { getList, getAddressList } from "../../service/database/getList";
 import operateData from "../../service/database/operateData";
 import listObjToArr from "../../utils/listObjToArr";
 import { toast } from "react-toastify";
-import { updateTestListInVoca } from "../../utils/utils";
+import { updateTestListInVoca, saveWordInTest } from "../../utils/utils";
 
 const CreateTest = () => {
   const navigate = useNavigate();
@@ -72,25 +72,7 @@ const CreateTest = () => {
       }
 
       // 테스트 생성 시 단어는 복제하지 않고, 주소로 접근
-      // wordAddressList 리스트 불러오기
-      const wordAddressList = await Promise.all(
-        selectedVocaPaths.map(async (path) => ({
-          path,
-          addressList: (
-            await getAddressList(path)
-          ).filter((value) => value.startsWith("-O")),
-        }))
-      );
-
-      // wordTest에 단어 리스트 저장
-      const wordTestPromises = wordAddressList.map((wordAddress) =>
-        operateData(
-          "PUSH",
-          `Test/${testName}/wordList/wordTest/waiting`,
-          wordAddress
-        )
-      );
-      await Promise.all(wordTestPromises);
+      await saveWordInTest(testName, selectedVocaPaths, "word");
 
       // wordTest 그대로 meanTest에 저장
       const waitingWordList = await operateData(

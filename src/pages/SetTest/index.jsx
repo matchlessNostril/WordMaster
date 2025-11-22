@@ -186,6 +186,7 @@ const SetTest = () => {
                   numOfPassed={testInfo.numOfPassedMean}
                   listLength={testInfo.wordListLength}
                   setTestInfo={setTestInfo}
+                  vocaPaths={vocaPaths}
                 />
               </Stack>
             </Box>

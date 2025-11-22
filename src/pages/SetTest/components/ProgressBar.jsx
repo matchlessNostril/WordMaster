@@ -7,11 +7,19 @@ import {
   IconButton,
   CircularProgress,
 } from "@mui/material";
-import { getList } from "../../../service/database/getList";
 import operateData from "../../../service/database/operateData";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import { saveWordInTest } from "../../../utils/utils";
+import { getList } from "../../../service/database/getList";
 
-const ProgressBar = ({ title, type, numOfPassed, listLength, setTestInfo }) => {
+const ProgressBar = ({
+  title,
+  type,
+  numOfPassed,
+  listLength,
+  setTestInfo,
+  vocaPaths,
+}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [percentage, setPercentage] = useState(
     Math.floor((numOfPassed / listLength) * 100)
@@ -30,27 +38,20 @@ const ProgressBar = ({ title, type, numOfPassed, listLength, setTestInfo }) => {
   const handleClickResetBtn = async () => {
     setIsLoading(true);
 
-    // 통과된 단어 리스트 불러오고 삭제
-    const passedWordList = await getList(
-      `Test/${title}/wordList/${type}Test/passed`
-    );
+    // 먼저 기존 진행률 데이터 삭제
+    await operateData("REMOVE", `Test/${title}/wordList/${type}Test/waiting`);
     await operateData("REMOVE", `Test/${title}/wordList/${type}Test/passed`);
 
-    // 대기 리스트로 이동
-    for (let i = 0; i < passedWordList.length; i++) {
-      await operateData(
-        "PUSH",
-        `Test/${title}/wordList/${type}Test/waiting`,
-        passedWordList[i]
-      );
-    }
+    // 리셋
+    const vocaPaths = (await getList(`Test/${title}/paths`)).map(
+      (path) => `Voca/root/${path}`
+    );
+    await saveWordInTest(title, vocaPaths, type);
 
     // 통과된 단어 수 수정
     if (type === "word") {
-      await operateData("UPDATE", `Test/${title}/info`, { numOfPassedWord: 0 });
       setTestInfo((prev) => ({ ...prev, numOfPassedWord: 0 }));
     } else {
-      await operateData("UPDATE", `Test/${title}/info`, { numOfPassedMean: 0 });
       setTestInfo((prev) => ({ ...prev, numOfPassedMean: 0 }));
     }
 
