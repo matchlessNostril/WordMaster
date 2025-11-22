@@ -35,7 +35,4 @@ const ProgressBar = ({ percentage, numOfPassed, listLength }) => {
   );
 };
 
-export default React.memo(
-  ProgressBar,
-  (prevProps, nextProps) => prevProps.numOfPassed === nextProps.numOfPassed
-);
+export default ProgressBar;

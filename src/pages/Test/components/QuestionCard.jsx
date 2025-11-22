@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { usePopOver, useModal } from "../../../hooks";
 import { BtnPopover, ActionModal } from "../../../components";
 import { WordCardForm } from "../../SaveVoca/components/WordCard/index";
-import { operateData } from "../../../service/database/operateData";
+import operateData from "../../../service/database/operateData";
+import { removeWordInDB } from "../../../utils/utils";
 import {
   useMediaQuery,
   Card,
@@ -23,6 +24,7 @@ const QuestionCard = ({
   setShowAnswer,
   question,
   questionDispatch,
+  setCurrentListLength,
 }) => {
   const isPortrait = useMediaQuery("(orientation: portrait)");
   const questionWord = question.word;
@@ -95,7 +97,11 @@ const QuestionCard = ({
           )}
         </CardContent>
       </CardActionArea>
-      <PopOverBtn question={question} questionDispatch={questionDispatch} />
+      <PopOverBtn
+        question={question}
+        questionDispatch={questionDispatch}
+        setCurrentListLength={setCurrentListLength}
+      />
     </Card>
   );
 };
@@ -322,14 +328,30 @@ const EditWordForm = ({ question, setOpenModal, questionDispatch }) => {
   );
 };
 
-const PopOverBtn = ({ question, questionDispatch }) => {
-  const removeWord = () => {
-    const { vocaPath, wordAddress } = question;
-    operateData("REMOVE", `${vocaPath}/${wordAddress}`);
-  };
-
+const PopOverBtn = ({ question, questionDispatch, setCurrentListLength }) => {
   const [openModal, setOpenModal, modalContent, handleClickOpenModal] =
     useModal();
+
+  const removeWord = async () => {
+    const result = await removeWordInDB(
+      question.vocaPath,
+      question.wordAddress
+    );
+    if (result === "fail:lastWord") {
+      toast.error("該当の単語帳には単語が一つしかないため、削除できません。");
+      setOpenModal(false);
+      return;
+    }
+
+    // question state에서 삭제
+    questionDispatch({ type: "DELETE_WORD", deletedQuestion: question });
+    // currentListLength 업데이트
+    setCurrentListLength((prev) => prev - 1);
+
+    // modal 닫기
+    setOpenModal(false);
+  };
+
   const modalContents = [
     {
       title: "単語を編集",
@@ -359,7 +381,7 @@ const PopOverBtn = ({ question, questionDispatch }) => {
     },
     {
       name: "削除",
-      handleClick: () => {
+      handleClick: async () => {
         setPopoverAnchor(null);
         handleClickOpenModal(modalContents[1]);
       },

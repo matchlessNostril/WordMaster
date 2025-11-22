@@ -16,7 +16,4 @@ const Progress = ({ type, numOfPassed, listLength }) => {
   );
 };
 
-export default React.memo(
-  Progress,
-  (prevProps, nextProps) => prevProps.numOfPassed === nextProps.numOfPassed
-);
+export default Progress;

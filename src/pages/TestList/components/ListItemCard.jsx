@@ -16,6 +16,7 @@ import operateData from "../../../service/database/operateData";
 import { isEmpty } from "lodash";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { toast } from "react-toastify";
+import { updateTestListInVoca } from "../../../utils/utils";
 
 const ListItemCard = ({ itemKey, title }) => {
   const navigate = useNavigate();
@@ -64,9 +65,20 @@ const ListItemCard = ({ itemKey, title }) => {
   }, []);
 
   // 2. 삭제
-  const handleClickRemoveBtn = useCallback(() => {
-    operateData("REMOVE", `Test/${title}`);
-    operateData("REMOVE", `Test/testList/${itemKey}`);
+  const handleClickRemoveBtn = useCallback(async () => {
+    const _vocaPaths = await operateData("GET", `Test/${title}/paths`);
+    const vocaPaths = Object.values(_vocaPaths).map(
+      (path) => `Voca/root/${path}`
+    );
+
+    const promises = [
+      operateData("REMOVE", `Test/${title}`),
+      operateData("REMOVE", `Test/testList/${itemKey}`),
+    ];
+    await Promise.all(promises);
+
+    await updateTestListInVoca("REMOVE", vocaPaths, title);
+
     setOpenModal(false);
   }, []);
 

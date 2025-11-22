@@ -8,6 +8,8 @@ import { getList } from "../../service/database/getList";
 import operateData from "../../service/database/operateData";
 import { toast } from "react-toastify";
 
+let originalWordList = [];
+
 const SaveVoca = () => {
   const location = useLocation();
   const { mode, path } = location.state;
@@ -25,11 +27,20 @@ const SaveVoca = () => {
 
     setIsLoading(true);
     // useEffect에서 콜백 함수에 async, await를 사용하는 것은 불가능하지만, then은 가능
-    getList(`Voca/${path}/${title}`).then((originalWordList) => {
+    operateData("GET", `Voca/${path}/${title}`).then((_originalWordList) => {
+      originalWordList = Object.entries(_originalWordList)
+        .filter(([addressKey, value]) => addressKey.startsWith("-O"))
+        .map(([addressKey, value]) => ({ ...value, addressKey }));
       wordListDispatch({ type: "FETCH_LIST", wordList: originalWordList });
       setIsLoading(false);
     });
+
+    return () => {
+      originalWordList = [];
+    };
   }, []);
+
+  // console.log("wordList", wordList);
 
   const handleClickSaveBtn = useCallback(async (vocaName, wordList) => {
     // 제대로 입력되지 않은 단어가 있는지 먼저 확인
@@ -70,18 +81,41 @@ const SaveVoca = () => {
       }
     }
 
-    // Modify(수정) 모드인 경우 먼저 기존 데이터 삭제
+    // 단어 저장
+    let promises = [];
+    for (let i = 0; i < wordList.length; i++) {
+      const word = wordList[i];
+      if (word.hasOwnProperty("addressKey")) {
+        // (1) 기존 단어 수정
+        const { addressKey, ...rest } = word;
+        promises.push(
+          operateData("SET", `Voca/${path}/${vocaName}/${addressKey}`, rest)
+        );
+      } else {
+        // (2) 새 단어 추가 (add모드는 여기만 해당)
+        await operateData("PUSH", `Voca/${path}/${vocaName}`, word);
+      }
+      // (3) 기존 단어 삭제
+      const removedWord = originalWordList.filter(
+        ({ addressKey }) =>
+          !wordList.some(
+            (word) =>
+              word?.hasOwnProperty("addressKey") &&
+              word.addressKey === addressKey
+          )
+      );
+      removedWord.forEach((word) => {
+        promises.push(
+          operateData("REMOVE", `Voca/${path}/${vocaName}/${word.addressKey}`)
+        );
+      });
+    }
+    await Promise.all(promises);
+
     if (mode === "Modify") {
-      // 기존 단어 리스트 삭제
-      operateData("REMOVE", `Voca/${path}/${title}`);
       // 기존 단어장 이름 수정, key 바뀌지 않게
       operateData("SET", `Voca/${path}/vocaList/${key}`, { name: vocaName });
     }
-
-    // 데이터 저장
-    wordList.forEach((word) =>
-      operateData("PUSH", `Voca/${path}/${vocaName}`, word)
-    );
 
     // Create(생성) 모드인 경우 vocaList에도 저장하고 화면 이동
     if (mode === "Create") {

@@ -31,7 +31,8 @@ const Voca = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    getList(`Voca/${path}/${title}`).then((list) => {
+    getList(`Voca/${path}/${title}`).then((_list) => {
+      const list = _list.filter((value) => value.hasOwnProperty("word"));
       setWordList(list);
       setIsLoading(false);
     });

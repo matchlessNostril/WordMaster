@@ -18,6 +18,7 @@ import { getList, getAddressList } from "../../service/database/getList";
 import operateData from "../../service/database/operateData";
 import listObjToArr from "../../utils/listObjToArr";
 import { toast } from "react-toastify";
+import { updateTestListInVoca } from "../../utils/utils";
 
 const CreateTest = () => {
   const navigate = useNavigate();
@@ -75,7 +76,9 @@ const CreateTest = () => {
       const wordAddressList = await Promise.all(
         selectedVocaPaths.map(async (path) => ({
           path,
-          addressList: await getAddressList(path),
+          addressList: (
+            await getAddressList(path)
+          ).filter((value) => value.startsWith("-O")),
         }))
       );
 
@@ -99,6 +102,9 @@ const CreateTest = () => {
         `Test/${testName}/wordList/meanTest/waiting`,
         waitingWordList
       );
+
+      // voca에서 testList 저장
+      await updateTestListInVoca("ADD", selectedVocaPaths, testName);
 
       // DB 저장 완료 후, 로딩 Off하고 화면 이동
       setIsLoading(false);

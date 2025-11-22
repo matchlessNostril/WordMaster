@@ -75,6 +75,35 @@ const reducer = (state, action) => {
         },
       };
     }
+    case "DELETE_WORD": {
+      const newWaitingQuestionList = state.waitingQuestionList.filter(
+        (question) =>
+          question.wordAddress !== action.deletedQuestion.wordAddress
+      );
+
+      if (newWaitingQuestionList.length === 0) {
+        // 마지막 문제였다면, index를 -1로 설정하고 useEffect에서 화면 이동 처리
+        return {
+          ...state,
+          index: -1,
+        };
+      } else {
+        // 나머지 문제가 있다면, 다음 문제로 이동
+        const currentQuestion = {
+          wordAddress: newWaitingQuestionList[1].wordAddress,
+          word: null,
+          vocaPath: newWaitingQuestionList[1].vocaPath,
+          testWordPathKey: newWaitingQuestionList[1].testWordPathKey,
+        };
+
+        return {
+          ...state,
+          index: state.index + 1,
+          waitingQuestionList: newWaitingQuestionList,
+          currentQuestion,
+        };
+      }
+    }
     default:
       console.error(`올바르지 않은 타입입니다 : ${action.type}`);
       return state;
