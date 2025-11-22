@@ -44,21 +44,8 @@ export const updateTestListInVoca = async (type, vocaPaths, testName) => {
   await Promise.all(promises);
 };
 
-// '해당 단어가 포함된 voca, test에서 삭제' ---------
-export const removeWordInVoca = async (vocaPath, wordAddress) => {
-  console.log("vocaPath", vocaPath);
-  const _prevVoca = await getList(vocaPath);
-  const prevVoca = _prevVoca.filter((value) => value.hasOwnProperty("word"));
-  if (prevVoca.length === 1) {
-    // 마지막 단어였다면, 삭제 불가능
-    return "fail:lastWord";
-  } else {
-    await operateData("REMOVE", `${vocaPath}/${wordAddress}`);
-  }
-};
-
-export const removeWordInTest = async (vocaPath, wordAddress, type = "one") => {
-  // 1. 해당 vocaPath가 포함된 test 리스트 찾기
+// 공통
+export const getAllTestNamesContainingVoca = async (vocaPath) => {
   const _allTestNames = await operateData("GET", `Test/testList`);
   const allTestNames = Object.values(_allTestNames).map((test) => test.name);
 
@@ -81,9 +68,28 @@ export const removeWordInTest = async (vocaPath, wordAddress, type = "one") => {
       return vocaPaths.includes(vocaPath);
     })
     .map(({ testName }) => testName);
-  console.log("filteredTestNames", filteredTestNames);
+
+  return filteredTestNames;
+}
+
+// '해당 단어가 포함된 voca, test에서 삭제' ---------
+export const removeWordInVoca = async (vocaPath, wordAddress) => {
+  const _prevVoca = await getList(vocaPath);
+  const prevVoca = _prevVoca.filter((value) => value.hasOwnProperty("word"));
+  if (prevVoca.length === 1) {
+    // 마지막 단어였다면, 삭제 불가능
+    return "fail:lastWord";
+  } else {
+    await operateData("REMOVE", `${vocaPath}/${wordAddress}`);
+  }
+};
+
+export const removeWordInTest = async (vocaPath, wordAddress, type = "one") => {
+  // 1. 해당 vocaPath가 포함된 test 리스트 찾기
+  const filteredTestNames = await getAllTestNamesContainingVoca(vocaPath);
 
   // 2. Test의 waiting address list에서 삭제
+  let promises = [];
   // TODO: 망했다 (testWordPathKey 필요한데, 단어 하나 삭제하겠다고 이걸 다 조회하는 건 말이 안돼. 근데 방법이 없어 일단 해봐... 테스트 계정 구색용, 실제로 내가 쓸 땐 너무 느리면 사용 X)
   for (const testName of filteredTestNames) {
     promises.push(
@@ -100,7 +106,6 @@ export const removeWordInTest = async (vocaPath, wordAddress, type = "one") => {
     );
   }
   const allTestWordList = await Promise.all(promises);
-  console.log("allTestWordList", allTestWordList);
   promises = [];
 
   let findInWordTest = false;
@@ -148,7 +153,6 @@ export const removeWordInTest = async (vocaPath, wordAddress, type = "one") => {
 
       if (newAddressList.length === addressList.length) continue; // 삭제할 게 없음
       else {
-        console.log("before 삭제", addressList, "after 삭제", newAddressList);
         // 삭제될 게 있음
         promises.push(
           operateData(
@@ -177,3 +181,48 @@ export const removeWordInDB = async (vocaPath, wordAddress) => {
   await removeWordInVoca(vocaPath, wordAddress);
   await removeWordInTest(vocaPath, wordAddress);
 };
+
+// 해당 voca가 포함된 test에서 waiting word 추가
+export const addWordInTest = async (vocaPath, wordAddress) => {
+  const filteredTestNames = await getAllTestNamesContainingVoca(vocaPath);
+
+  let promises = [];
+  for (const testName of filteredTestNames) {
+    promises.push(
+      operateData("GET", `Test/${testName}/wordList/wordTest/waiting`)
+    );
+    promises.push(
+      operateData("GET", `Test/${testName}/wordList/meanTest/waiting`)
+    );
+  }
+  const allTestWordList = await Promise.all(promises);
+  promises = [];
+
+  for (let i = 0; i < allTestWordList.length; i++) {
+    const wordListPathIndex = i % 2;
+    const wordListPath = [
+      "wordTest/waiting",
+      "meanTest/waiting",
+    ][wordListPathIndex];
+
+    const testWordList = allTestWordList[i] ? Object.entries(allTestWordList[i]) : null;
+
+    const testNameIndex = Math.floor(i / 2);
+    const currentTestName = filteredTestNames[testNameIndex];
+
+    for (const [key, value] of testWordList) {
+      if(!value) continue;
+
+      const { path, addressList } = value;
+      if (path !== vocaPath) continue;
+
+      const newAddressList = addressList.concat(wordAddress);
+      promises.push(
+        operateData("SET", `Test/${currentTestName}/wordList/${wordListPath}/${key}/addressList`, newAddressList)
+      );
+    }
+  }
+  await Promise.all(promises);
+
+  return "success";
+}

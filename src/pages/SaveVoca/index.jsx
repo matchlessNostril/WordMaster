@@ -7,7 +7,7 @@ import { InputField, WordCard, AddBtn } from "./components";
 import { getList } from "../../service/database/getList";
 import operateData from "../../service/database/operateData";
 import { toast } from "react-toastify";
-import { removeWordInTest } from "../../utils/utils";
+import { removeWordInTest, addWordInTest } from "../../utils/utils";
 
 let originalWordList = [];
 
@@ -40,8 +40,6 @@ const SaveVoca = () => {
       originalWordList = [];
     };
   }, []);
-
-  // console.log("wordList", wordList);
 
   const handleClickSaveBtn = useCallback(async (vocaName, wordList) => {
     // 제대로 입력되지 않은 단어가 있는지 먼저 확인
@@ -84,6 +82,8 @@ const SaveVoca = () => {
 
     // 단어 저장
     let promises = [];
+    let addedWordAddressList = [];
+
     for (let i = 0; i < wordList.length; i++) {
       const word = wordList[i];
       if (word.hasOwnProperty("addressKey")) {
@@ -94,7 +94,16 @@ const SaveVoca = () => {
         );
       } else {
         // (2) 새 단어 추가 (add모드는 여기만 해당)
-        await operateData("PUSH", `Voca/${path}/${vocaName}`, word);
+        const addedWord = await operateData(
+          "PUSH",
+          `Voca/${path}/${vocaName}`,
+          word
+        );
+        const {
+          _path: { pieces_ },
+        } = addedWord;
+        const addedWordAddress = pieces_[pieces_.length - 1];
+        addedWordAddressList.push(addedWordAddress);
       }
       // (3) 기존 단어 삭제 (voca에서 + test에서)
       const removedWordAddressList = originalWordList
@@ -124,6 +133,10 @@ const SaveVoca = () => {
         );
     }
     await Promise.all(promises);
+
+    if (addedWordAddressList.length > 0) {
+      await addWordInTest(`Voca/${path}/${vocaName}`, addedWordAddressList);
+    }
 
     if (mode === "Modify") {
       // 기존 단어장 이름 수정, key 바뀌지 않게

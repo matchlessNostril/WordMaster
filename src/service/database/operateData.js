@@ -14,7 +14,8 @@ export const operateData = async (type, path, data = null) => {
         await set(pathRef, data);
         break;
       case "PUSH":
-        await push(pathRef, data);
+        const pushedData = await push(pathRef, data);
+        return pushedData;
         break;
       case "UPDATE":
         await update(pathRef, data);
