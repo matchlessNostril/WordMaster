@@ -4,7 +4,7 @@ import {
   VocaPathContext,
   VocaPathProvider,
 } from "../../contexts/VocaPathContext";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import {
   Transition,
   SubHeader,
@@ -140,8 +140,9 @@ const CreateTest = () => {
               <Loading />
             ) : (
               <>
-                <Description />
-                <Divider margin={2} />
+                <Typography variant="subtitle1">
+                  <strong>単語帳を選択</strong>
+                </Typography>
                 {vocaTree === "NoFile" ? (
                   <NoFile text="単語帳が空です。" />
                 ) : (
