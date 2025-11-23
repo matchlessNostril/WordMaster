@@ -293,21 +293,23 @@ export const updateVocaNameInTest = async (
   // 1. paths 변경
   for (const testName of filteredTestNames) {
     const prevPaths = await getList(`Test/${testName}/paths`);
+
     if (type === "REMOVE" && prevPaths.length === 1) {
       promises.push(operateData("REMOVE", `Test/${testName}`));
 
       const testList = await getList("Test/testList", "name");
       const newTestList = testList.filter((test) => test !== testName);
-      promises.push(operateData("SET", "Test/testList", newTestList));
+      await operateData("REMOVE", "Test/testList");
+      newTestList.forEach((testName) =>
+        promises.push(operateData("PUSH", "Test/testList", { name: testName }))
+      );
 
       newFilteredTestNames = newFilteredTestNames.filter(
         (test) => test !== testName
       );
 
-      console.log(testName, "그 보카만 있어서 테스트 삭제");
-
       await Promise.all(promises);
-      return;
+      continue;
     }
 
     let newPaths = [];
@@ -374,10 +376,6 @@ export const updateVocaNameInTest = async (
           )
         );
       } else if (type === "REMOVE") {
-        console.log(
-          "왜?",
-          `Test/${currentTestName}/wordList/${wordListPath}/${key}`
-        );
         promises.push(
           operateData(
             "REMOVE",

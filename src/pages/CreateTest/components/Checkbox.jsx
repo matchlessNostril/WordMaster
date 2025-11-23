@@ -125,7 +125,12 @@ const Checkbox = ({ index, isDir = false, name, path, currentTree }) => {
             />
           }
           // minWidth를 unset로 해야 startIcon과 내부 Text를 모두 감쌀 수 있음
-          sx={{ whiteSpace: "nowrap", minWidth: "unset" }}>
+          sx={{
+            whiteSpace: "nowrap",
+            minWidth: "unset",
+            textTransform: "none",
+          }}
+        >
           {name}
         </Button>
       </Stack>
