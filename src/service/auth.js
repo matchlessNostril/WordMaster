@@ -20,6 +20,7 @@ export const Register = async (nickname, email, password) => {
     // 자동 로그인 여부 로컬 스토리지에 저장
     if (registerRes) {
       localStorage.setItem("isLoginUser", "yes");
+      toast.success("会員登録に成功しました。");
     }
 
     await updateProfile(wordMasterAuth.currentUser, {
@@ -43,6 +44,7 @@ export const Login = async (email, password) => {
 
     if (loginRes) {
       localStorage.setItem("isLoginUser", "yes");
+      toast.success("ログインに成功しました。");
     }
   } catch (error) {
     printError(error);
@@ -62,6 +64,7 @@ export const googleAuth = async () => {
 
     if (googleAuthRes) {
       localStorage.setItem("isLoginUser", "yes");
+      toast.success("ログインに成功しました。");
     }
   } catch (error) {
     printError(error);
@@ -74,6 +77,7 @@ export const logout = async () => {
 
     // 자동 로그인 여부 로컬 스토리지에서 삭제
     localStorage.removeItem("isLoginUser");
+    toast.success("ログアウトしました。またのご利用をお待ちしております。");
   } catch (error) {
     printError(error);
   }

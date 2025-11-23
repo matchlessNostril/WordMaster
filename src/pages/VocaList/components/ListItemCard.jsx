@@ -91,6 +91,7 @@ const ListItemCard = ({ itemKey, title, path, isDir = false }) => {
       isDir,
     });
 
+    toast.success("名前の変更に成功しました。");
     setOpenModal(false);
   }, []);
 
@@ -109,6 +110,8 @@ const ListItemCard = ({ itemKey, title, path, isDir = false }) => {
       path: `Voca/${path}/${title}`,
       isDir,
     });
+
+    toast.success("削除に成功しました。");
     setOpenModal(false);
   }, []);
 
@@ -117,13 +120,13 @@ const ListItemCard = ({ itemKey, title, path, isDir = false }) => {
       {
         title: "名前を変更",
         textField: {
-          label: "変更する名前",
+          label: "新しい名前",
         },
-        btnName: "確認",
+        btnName: "変更",
         handleClickBtn: handleClickChangeBtn,
       },
       {
-        title: "本当に削除しますか？",
+        title: "削除してもよろしいですか？",
         btnName: "削除",
         handleClickBtn: handleClickRemoveBtn,
       },

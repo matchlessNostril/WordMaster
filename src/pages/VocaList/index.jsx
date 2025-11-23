@@ -1,13 +1,14 @@
 import { useState, useEffect, useCallback } from "react";
+import { useTheme } from "@mui/material/styles";
 import { useSearchParams } from "react-router-dom";
 import { usePathListReducer, useModal } from "../../hooks";
-import { Box } from "@mui/material";
 import {
   Transition,
   ActionModal,
   Loading,
   NoFile,
   ScrollList,
+  ResponsiveBox,
 } from "../../components";
 import { Header, ListItemCard } from "./components";
 import {
@@ -19,6 +20,8 @@ import { isEmpty } from "lodash";
 import { toast } from "react-toastify";
 
 const VocaList = () => {
+  const theme = useTheme();
+
   // url 쿼리스트링에서 path 값 가져오기
   const [searchParams, _] = useSearchParams();
   const path = searchParams.get("path");
@@ -86,6 +89,8 @@ const VocaList = () => {
       }
 
       operateData("PUSH", `Voca/${path}/dirList`, { name: inputValue });
+
+      toast.success("新規フォルダを作成しました。");
       setOpenModal(false);
     },
     [dirList, vocaList, path]
@@ -93,7 +98,7 @@ const VocaList = () => {
 
   return (
     <>
-      <Box sx={{ minWidth: "85vw", minHeight: "85vh" }}>
+      <ResponsiveBox>
         <Header
           {...{
             path,
@@ -131,7 +136,7 @@ const VocaList = () => {
             )}
           </>
         )}
-      </Box>
+      </ResponsiveBox>
       <ActionModal
         open={openModal}
         setOpen={setOpenModal}

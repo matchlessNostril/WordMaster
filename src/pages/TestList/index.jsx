@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
 import { usePathListReducer } from "../../hooks";
-import { Box } from "@mui/material";
-import { Transition, Loading, NoFile, ScrollList } from "../../components";
+import {
+  Transition,
+  Loading,
+  NoFile,
+  ScrollList,
+  ResponsiveBox,
+} from "../../components";
 import { Header, ListItemCard } from "./components";
 import {
   autoFetchList,
@@ -22,26 +27,24 @@ const TestList = () => {
   }, []);
 
   return (
-    <>
-      <Box sx={{ minWidth: "85vw", minHeight: "85vh" }}>
-        <Header />
-        {isLoading ? (
-          <Loading />
-        ) : (
-          <>
-            {isEmpty(testList) ? (
-              <NoFile text="まだ作成されたテストがありません。" />
-            ) : (
-              <ScrollList maxHeight="73vh">
-                {Object.entries(testList).map(([key, value]) => (
-                  <ListItemCard key={key} itemKey={key} title={value} />
-                ))}
-              </ScrollList>
-            )}
-          </>
-        )}
-      </Box>
-    </>
+    <ResponsiveBox>
+      <Header />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <>
+          {isEmpty(testList) ? (
+            <NoFile text="まだ作成されたテストがありません。" />
+          ) : (
+            <ScrollList maxHeight="73vh">
+              {Object.entries(testList).map(([key, value]) => (
+                <ListItemCard key={key} itemKey={key} title={value} />
+              ))}
+            </ScrollList>
+          )}
+        </>
+      )}
+    </ResponsiveBox>
   );
 };
 

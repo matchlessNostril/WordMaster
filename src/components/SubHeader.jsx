@@ -12,7 +12,8 @@ const SubHeader = ({ title, disabled, btnName, handleClickBtn }) => {
         variant="contained"
         disabled={disabled}
         onClick={handleClickBtn}
-        sx={{ marginRight: "10px" }}>
+        sx={{ marginRight: "20px" }}
+      >
         {btnName}
       </Button>
     </RowSpaceBetween>

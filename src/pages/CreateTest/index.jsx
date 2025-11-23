@@ -4,7 +4,7 @@ import {
   VocaPathContext,
   VocaPathProvider,
 } from "../../contexts/VocaPathContext";
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import {
   Transition,
   SubHeader,
@@ -12,6 +12,7 @@ import {
   NoFile,
   Divider,
   ScrollList,
+  ResponsiveBox,
 } from "../../components";
 import { InputField, Checkbox } from "./components";
 import { getList } from "../../service/database/getList";
@@ -86,6 +87,8 @@ const CreateTest = () => {
       // voca에서 testList 저장
       await updateTestListInVoca("ADD", selectedVocaPaths, testName);
 
+      toast.success("新規テストの作成に成功しました。");
+
       // DB 저장 완료 후, 로딩 Off하고 화면 이동
       setIsLoading(false);
       navigate(`/SetTest?title=${testName}`);
@@ -103,9 +106,9 @@ const CreateTest = () => {
         <Loading onMarginTop={false} />
       ) : (
         <>
-          <Box sx={{ minWidth: "85vw", minHeight: "85vh" }}>
+          <ResponsiveBox>
             <SubHeader
-              title="テストを作成"
+              title="新規テストを作成"
               disabled={
                 !testName || selectedVocaPaths.length === 0 ? true : false
               }
@@ -114,44 +117,46 @@ const CreateTest = () => {
                 handleClickCreateBtn(testName, selectedVocaPaths)
               }
             />
-            <InputField {...{ handleInput }} />
-            <Divider margin={2} />
-            {vocaTree === "Waiting" ? (
-              <Loading />
-            ) : (
-              <>
-                <Typography variant="subtitle1">
-                  <strong>単語帳を選択</strong>
-                </Typography>
-                {vocaTree === "NoFile" ? (
-                  <NoFile text="単語帳が空です。" />
-                ) : (
-                  <ScrollList maxHeight="48vh">
-                    {dirList &&
-                      dirList.map((value, key) => (
-                        <Checkbox
-                          key={key}
-                          index={0}
-                          isDir
-                          name={value}
-                          path="Voca/root"
-                          currentTree={vocaTree[value]}
-                        />
-                      ))}
-                    {vocaList &&
-                      vocaList.map((value, key) => (
-                        <Checkbox
-                          key={key}
-                          index={0}
-                          name={value}
-                          path="Voca/root"
-                        />
-                      ))}
-                  </ScrollList>
-                )}
-              </>
-            )}
-          </Box>
+            <div style={{ padding: "0 10px" }}>
+              <InputField {...{ handleInput }} />
+              <Divider margin={2} />
+              {vocaTree === "Waiting" ? (
+                <Loading />
+              ) : (
+                <>
+                  <Typography variant="subtitle1">
+                    <strong>単語帳を選択</strong>
+                  </Typography>
+                  {vocaTree === "NoFile" ? (
+                    <NoFile text="単語帳が空です。" />
+                  ) : (
+                    <ScrollList maxHeight="48vh">
+                      {dirList &&
+                        dirList.map((value, key) => (
+                          <Checkbox
+                            key={key}
+                            index={0}
+                            isDir
+                            name={value}
+                            path="Voca/root"
+                            currentTree={vocaTree[value]}
+                          />
+                        ))}
+                      {vocaList &&
+                        vocaList.map((value, key) => (
+                          <Checkbox
+                            key={key}
+                            index={0}
+                            name={value}
+                            path="Voca/root"
+                          />
+                        ))}
+                    </ScrollList>
+                  )}
+                </>
+              )}
+            </div>
+          </ResponsiveBox>
         </>
       )}
     </>

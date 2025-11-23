@@ -1,7 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
-  Box,
   FormControl,
   RadioGroup,
   FormControlLabel,
@@ -15,6 +14,7 @@ import {
   Divider,
   RowSpaceBetween,
   ScrollList,
+  ResponsiveBox,
 } from "../../components";
 import WordCard from "./components/WordCard";
 import { getList } from "../../service/database/getList";
@@ -51,11 +51,11 @@ const Voca = () => {
 
   return (
     <>
-      <Box sx={{ minWidth: "85vw", minHeight: "85vh" }}>
+      <ResponsiveBox>
         <SubHeader
           title={title}
           disabled={false}
-          btnName="変更"
+          btnName="編集"
           handleClickBtn={handleClickModifyBtn}
         />
         <Divider margin={3} />
@@ -63,8 +63,15 @@ const Voca = () => {
           <Loading />
         ) : (
           <>
-            <FormControl>
-              <RowSpaceBetween>
+            <FormControl sx={{ width: "100%" }}>
+              <div
+                style={{
+                  display: "flex",
+                  width: "100%",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
                 <RadioGroup
                   row
                   value={radio}
@@ -88,7 +95,7 @@ const Voca = () => {
                   }
                   label="答えを隠す"
                 />
-              </RowSpaceBetween>
+              </div>
             </FormControl>
             <ScrollList maxHeight="65vh">
               {wordList.map((word, index) => (
@@ -103,7 +110,7 @@ const Voca = () => {
             </ScrollList>
           </>
         )}
-      </Box>
+      </ResponsiveBox>
     </>
   );
 };

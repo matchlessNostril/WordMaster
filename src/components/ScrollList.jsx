@@ -12,18 +12,22 @@ const ScrollList = ({ maxHeight, children }) => {
           maxWidth: "90vw",
         },
         [theme.breakpoints.up("sm")]: {
-          maxWidth: "85vw",
+          maxWidth: "80vw",
         },
         overflow: "auto",
+        pr: 1,
+        borderRadius: 2,
         "&::-webkit-scrollbar": {
           width: "10px",
           height: "10px",
         },
         "&::-webkit-scrollbar-thumb": {
           backgroundColor: "#535353",
+          borderRadius: "10px",
         },
         "&::-webkit-scrollbar-track": {
           backgroundColor: "#dbdbdb",
+          borderRadius: "10px",
         },
       }}
     >

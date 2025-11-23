@@ -6,7 +6,7 @@ const VocaList = ({ vocaPaths }) => {
   return (
     <Box sx={{ pl: 1, maxWidth: "85vw" }}>
       <Typography variant="subtitle1">
-        <strong>単語帳リスト</strong>
+        <strong>単語帳一覧</strong>
       </Typography>
       <ScrollList maxHeight="25vh">
         {vocaPaths.length > 0 &&

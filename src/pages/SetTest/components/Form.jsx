@@ -23,17 +23,40 @@ const Form = ({ radio, handleRadio, timer, handleTimer }) => {
           row
           value={radio}
           onChange={(event) => handleRadio(event.target.value)}
+          sx={{
+            marginLeft: "-10px",
+          }}
         >
-          <FormControlLabel
-            value="word"
-            control={<Radio />}
-            label="単語テスト"
-          />
-          <FormControlLabel
-            value="mean"
-            control={<Radio />}
-            label="意味テスト"
-          />
+          <Box sx={{ display: "flex", alignItems: "center", mr: 3 }}>
+            <Radio value="word" id="word-radio" />
+            <label htmlFor="word-radio" style={{ cursor: "pointer" }}>
+              単語テスト
+            </label>
+            <span
+              style={{
+                fontSize: "0.75rem",
+                color: "rgba(0, 0, 0, 0.6)",
+                marginLeft: "4px",
+              }}
+            >
+              (単語を見て意味を答える形式)
+            </span>
+          </Box>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Radio value="mean" id="mean-radio" />
+            <label htmlFor="mean-radio" style={{ cursor: "pointer" }}>
+              意味テスト
+            </label>
+            <span
+              style={{
+                fontSize: "0.75rem",
+                color: "rgba(0, 0, 0, 0.6)",
+                marginLeft: "4px",
+              }}
+            >
+              (意味を見て単語を答える形式)
+            </span>
+          </Box>
         </RadioGroup>
         <Stack direction="row">
           <FormControlLabel

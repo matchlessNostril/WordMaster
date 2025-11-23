@@ -1,7 +1,13 @@
 import { useState, useCallback, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { Box, Stack } from "@mui/material";
-import { Transition, SubHeader, Loading, Divider } from "../../components";
+import { Stack, Box } from "@mui/material";
+import {
+  Transition,
+  SubHeader,
+  Loading,
+  Divider,
+  ResponsiveBox,
+} from "../../components";
 import { Form, AchievementRate, ProgressBar, VocaList } from "./components";
 import operateData from "../../service/database/operateData";
 import { getList } from "../../service/database/getList";
@@ -83,7 +89,7 @@ const SetTest = () => {
 
         setVocaPaths(newVocaPaths);
       } catch (error) {
-        console.error("테스트 정보를 불러오는 중 오류가 발생했습니다.", error);
+        console.error("テスト情報の取得に失敗しました。", error);
       } finally {
         setIsLoading(false);
       }
@@ -148,7 +154,7 @@ const SetTest = () => {
   }, []);
 
   return (
-    <Box sx={{ minWidth: "85vw", minHeight: "85vh" }}>
+    <ResponsiveBox>
       <SubHeader
         title={title}
         disabled={
@@ -159,43 +165,45 @@ const SetTest = () => {
         btnName="スタート"
         handleClickBtn={() => handleClickStartBtn(testInfo, radio, timer)}
       />
-      <Divider margin={2} />
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <>
-          <Form {...{ radio, handleRadio, timer, handleTimer }} />
-          <Divider margin={2} />
-          {!isEmpty(testInfo) && (
-            <Box sx={{ pl: 1 }}>
-              <AchievementRate
-                wordRound={testInfo.wordRound}
-                meanRound={testInfo.meanRound}
-              />
-              <Stack mt={1}>
-                <ProgressBar
-                  title={title}
-                  type="word"
-                  numOfPassed={testInfo.numOfPassedWord}
-                  listLength={testInfo.wordListLength}
-                  setTestInfo={setTestInfo}
+      <div style={{ padding: "0 10px" }}>
+        <Divider margin={2} />
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <>
+            <Form {...{ radio, handleRadio, timer, handleTimer }} />
+            <Divider margin={2} />
+            {!isEmpty(testInfo) && (
+              <Box sx={{ pl: 1 }}>
+                <AchievementRate
+                  wordRound={testInfo.wordRound}
+                  meanRound={testInfo.meanRound}
                 />
-                <ProgressBar
-                  title={title}
-                  type="mean"
-                  numOfPassed={testInfo.numOfPassedMean}
-                  listLength={testInfo.wordListLength}
-                  setTestInfo={setTestInfo}
-                  vocaPaths={vocaPaths}
-                />
-              </Stack>
-            </Box>
-          )}
-          <Divider margin={2} />
-          <VocaList {...{ vocaPaths }} />
-        </>
-      )}
-    </Box>
+                <Stack mt={1}>
+                  <ProgressBar
+                    title={title}
+                    type="word"
+                    numOfPassed={testInfo.numOfPassedWord}
+                    listLength={testInfo.wordListLength}
+                    setTestInfo={setTestInfo}
+                  />
+                  <ProgressBar
+                    title={title}
+                    type="mean"
+                    numOfPassed={testInfo.numOfPassedMean}
+                    listLength={testInfo.wordListLength}
+                    setTestInfo={setTestInfo}
+                    vocaPaths={vocaPaths}
+                  />
+                </Stack>
+              </Box>
+            )}
+            <Divider margin={2} />
+            <VocaList {...{ vocaPaths }} />
+          </>
+        )}
+      </div>
+    </ResponsiveBox>
   );
 };
 

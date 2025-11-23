@@ -17,7 +17,7 @@ const Header = React.memo(({ index, handleRemove }) => {
         >
           <IconButton
             onClick={() => handleRemove(index)}
-            sx={{ padding: 0, paddingLeft: "3px" }}
+            sx={{ padding: 0, paddingLeft: "3px", paddingRight: "3px" }}
           >
             <DeleteIcon />
           </IconButton>

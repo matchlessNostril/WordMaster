@@ -12,7 +12,7 @@ export const saveWordInTest = async (
       path,
       addressList: (
         await getAddressList(path)
-      ).filter((value) => value.startsWith("-O")),
+      ).filter((value) => value !== "testList"),
     }))
   );
 

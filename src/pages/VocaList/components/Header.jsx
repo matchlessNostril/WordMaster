@@ -20,7 +20,7 @@ const Header = ({
 
   const modalContents = useMemo(
     () => ({
-      title: "新しいフォルダを作成",
+      title: "新規フォルダ作成",
       textField: {
         label: "フォルダ名",
       },
@@ -33,14 +33,14 @@ const Header = ({
   const popoverBtns = useMemo(
     () => [
       {
-        name: "フォルダを作成",
+        name: "新規フォルダを作成",
         handleClick: () => {
           setPopoverAnchor(null);
           handleClickOpenModal(modalContents);
         },
       },
       {
-        name: "単語帳を作成",
+        name: "新規単語帳を作成",
         handleClick: () => {
           setPopoverAnchor(null);
           navigate("/SaveVoca", {
@@ -60,19 +60,22 @@ const Header = ({
       <RowSpaceBetween>
         {path !== "root" ? (
           <Stack direction="row" alignItems="center">
-            <IconButton onClick={() => navigate(-1)}>
+            <IconButton
+              onClick={() => navigate(-1)}
+              sx={{ padding: 0, marginRight: "6px" }}
+            >
               <NavigateBeforeIcon
                 sx={{
                   fontSize: "40px",
-                  "& > button": { padding: 0, paddingRight: "2px" },
+                  "& > button": { padding: 0, paddingRight: "4px" },
                 }}
               />
             </IconButton>
             <Typography variant="h5">{currentDirName}</Typography>
           </Stack>
         ) : (
-          <Typography variant="h5" ml={2}>
-            <strong>{displayName}</strong> 様の単語帳
+          <Typography variant="h5">
+            <strong>{displayName}</strong> 様の単語帳一覧
           </Typography>
         )}
         <IconButton onClick={handleClickPopoverBtn}>

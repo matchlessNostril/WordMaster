@@ -1,8 +1,13 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import useWordListReducer from "./useWordListReducer";
-import { Box } from "@mui/material";
-import { Transition, SubHeader, Loading, ScrollList } from "../../components";
+import {
+  Transition,
+  SubHeader,
+  Loading,
+  ScrollList,
+  ResponsiveBox,
+} from "../../components";
 import { InputField, WordCard, AddBtn } from "./components";
 import { getList } from "../../service/database/getList";
 import operateData from "../../service/database/operateData";
@@ -30,7 +35,7 @@ const SaveVoca = () => {
     // useEffect에서 콜백 함수에 async, await를 사용하는 것은 불가능하지만, then은 가능
     operateData("GET", `Voca/${path}/${title}`).then((_originalWordList) => {
       originalWordList = Object.entries(_originalWordList)
-        .filter(([addressKey, value]) => addressKey.startsWith("-O"))
+        .filter(([addressKey, value]) => addressKey !== "testList")
         .map(([addressKey, value]) => ({ ...value, addressKey }));
       wordListDispatch({ type: "FETCH_LIST", wordList: originalWordList });
       setIsLoading(false);
@@ -144,25 +149,30 @@ const SaveVoca = () => {
     if (mode === "Modify") {
       // 기존 단어장 이름 수정, key 바뀌지 않게
       operateData("SET", `Voca/${path}/vocaList/${key}`, { name: vocaName });
+    } else {
+      // Create(생성) 모드인 경우 vocaList에도 저장하고 화면 이동
+      operateData("PUSH", `Voca/${path}/vocaList`, { name: vocaName });
     }
 
-    // Create(생성) 모드인 경우 vocaList에도 저장하고 화면 이동
-    if (mode === "Create") {
-      operateData("PUSH", `Voca/${path}/vocaList`, { name: vocaName });
-      // 전달 State 바뀌지 않음
-      navigate(-1);
-      return;
-    }
+    toast.success(
+      mode === "Modify"
+        ? "単語帳の編集に成功しました。"
+        : "新規単語帳の作成に成功しました。"
+    );
 
     // Modify(수정) 모드에서는 Voca 화면으로 이동 하기 때문에, 바뀐 State로 전달해야 함
-    navigate("/Voca", {
-      state: {
-        key,
-        title: vocaName,
-        path,
-        isAfterModify: true,
-      },
-    });
+    if (mode === "Modify") {
+      navigate("/Voca", {
+        state: {
+          key,
+          title: vocaName,
+          path,
+          isAfterModify: true,
+        },
+      });
+    } else {
+      navigate(-1);
+    }
   }, []);
 
   const handleClickAddBtn = useCallback(() => {
@@ -170,11 +180,11 @@ const SaveVoca = () => {
   }, []);
 
   return (
-    <Box sx={{ minWidth: "85vw", minHeight: "85vh" }}>
+    <ResponsiveBox>
       <SubHeader
-        title={mode === "Modify" ? "単語帳を変更" : "単語帳を作成"}
+        title={mode === "Modify" ? "単語帳を編集" : "新規単語帳を作成"}
         disabled={vocaName ? false : true}
-        btnName={mode === "Modify" ? "変更" : "作成"}
+        btnName={mode === "Modify" ? "編集" : "作成"}
         handleClickBtn={() => handleClickSaveBtn(vocaName, wordList)}
       />
       <ScrollList maxHeight="75vh">
@@ -194,7 +204,7 @@ const SaveVoca = () => {
           </>
         )}
       </ScrollList>
-    </Box>
+    </ResponsiveBox>
   );
 };
 

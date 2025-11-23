@@ -309,7 +309,7 @@ const EditWordForm = ({ question, setOpenModal, questionDispatch }) => {
     await operateData("SET", `${vocaPath}/${wordAddress}`, newWord);
     questionDispatch({ type: "SET_NEW_WORD", newWord });
     setOpenModal(false);
-    toast.success("単語を編集しました。");
+    toast.success("単語の編集に成功しました。");
   };
 
   return (
@@ -348,7 +348,7 @@ const PopOverBtn = ({ question, questionDispatch, setCurrentListLength }) => {
     // currentListLength 업데이트
     setCurrentListLength((prev) => prev - 1);
 
-    // modal 닫기
+    toast.success("単語の削除に成功しました。");
     setOpenModal(false);
   };
 
@@ -364,7 +364,7 @@ const PopOverBtn = ({ question, questionDispatch, setCurrentListLength }) => {
       ),
     },
     {
-      title: "本当に単語を削除しますか？",
+      title: "削除してもよろしいですか？",
       btnName: "削除",
       handleClickBtn: removeWord,
     },
