@@ -234,7 +234,8 @@ export const removeWordInTest = async (vocaPath, wordAddress, type = "one") => {
 };
 
 export const removeWordInDB = async (vocaPath, wordAddress) => {
-  await removeWordInVoca(vocaPath, wordAddress);
+  const result = await removeWordInVoca(vocaPath, wordAddress);
+  if (result === "fail:lastWord") return "fail:lastWord";
   await removeWordInTest(vocaPath, wordAddress);
 };
 
