@@ -84,14 +84,12 @@ const ListItemCard = ({ itemKey, title, path, isDir = false }) => {
     );
 
     // Test에서도 변경된 이름으로 업데이트
-    if (isDir) {
-    } else {
-      await updateVocaNameInTest(
-        "UPDATE",
-        `Voca/${path}/${title}`,
-        `Voca/${path}/${inputValue}`
-      );
-    }
+    await updateVocaNameInTest({
+      type: "UPDATE",
+      path: `Voca/${path}/${title}`,
+      newPath: `Voca/${path}/${inputValue}`,
+      isDir,
+    });
 
     setOpenModal(false);
   }, []);
@@ -106,10 +104,11 @@ const ListItemCard = ({ itemKey, title, path, isDir = false }) => {
         : `Voca/${path}/vocaList/${itemKey}`
     );
 
-    if (isDir) {
-    } else {
-      await updateVocaNameInTest("REMOVE", `Voca/${path}/${title}`);
-    }
+    await updateVocaNameInTest({
+      type: "REMOVE",
+      path: `Voca/${path}/${title}`,
+      isDir,
+    });
     setOpenModal(false);
   }, []);
 

@@ -85,7 +85,7 @@ export const updateTestListInVoca = async (
 };
 
 // 공통
-export const getAllTestNamesContainingVoca = async (vocaPath) => {
+export const getAllVocaPathsListInTest = async () => {
   const _allTestNames = await operateData("GET", `Test/testList`);
   if (_allTestNames === null) return null;
 
@@ -105,9 +105,20 @@ export const getAllTestNamesContainingVoca = async (vocaPath) => {
     };
   });
 
+  return vocaPathsList;
+};
+
+export const getAllTestNamesContainingVocaOrDir = async (
+  path,
+  isDir = false
+) => {
+  const vocaPathsList = await getAllVocaPathsListInTest();
+
   const filteredTestNames = vocaPathsList
     .filter(({ vocaPaths }) => {
-      return vocaPaths.includes(vocaPath);
+      return isDir
+        ? vocaPaths.some((_path) => _path.startsWith(path))
+        : vocaPaths.includes(path);
     })
     .map(({ testName }) => testName);
 
@@ -128,7 +139,7 @@ export const removeWordInVoca = async (vocaPath, wordAddress) => {
 
 export const removeWordInTest = async (vocaPath, wordAddress, type = "one") => {
   // 1. 해당 vocaPath가 포함된 test 리스트 찾기
-  const filteredTestNames = await getAllTestNamesContainingVoca(vocaPath);
+  const filteredTestNames = await getAllTestNamesContainingVocaOrDir(vocaPath);
   if (filteredTestNames === null) return;
 
   // 2. Test의 waiting address list에서 삭제
@@ -229,7 +240,7 @@ export const removeWordInDB = async (vocaPath, wordAddress) => {
 
 // 해당 voca가 포함된 test에서 waiting word 추가
 export const addWordInTest = async (vocaPath, wordAddress) => {
-  const filteredTestNames = await getAllTestNamesContainingVoca(vocaPath);
+  const filteredTestNames = await getAllTestNamesContainingVocaOrDir(vocaPath);
   if (filteredTestNames === null) return;
 
   let promises = [];
@@ -278,13 +289,17 @@ export const addWordInTest = async (vocaPath, wordAddress) => {
   return "success";
 };
 
-// vocaName 변겅/삭제 -> test 반영
-export const updateVocaNameInTest = async (
+// vocaName, dirName 변겅/삭제 -> test 반영
+export const updateVocaNameInTest = async ({
   type,
-  vocaPath,
-  newVocaPath = null
-) => {
-  const filteredTestNames = await getAllTestNamesContainingVoca(vocaPath);
+  path,
+  newPath = null,
+  isDir = false,
+}) => {
+  const filteredTestNames = await getAllTestNamesContainingVocaOrDir(
+    path,
+    isDir
+  );
   if (filteredTestNames === null) return;
 
   let promises = [];
@@ -294,7 +309,39 @@ export const updateVocaNameInTest = async (
   for (const testName of filteredTestNames) {
     const prevPaths = await getList(`Test/${testName}/paths`);
 
-    if (type === "REMOVE" && prevPaths.length === 1) {
+    let newPaths = [];
+    if (type === "UPDATE") {
+      if (isDir) {
+        newPaths = [...prevPaths];
+        const prevPathIndexes = prevPaths
+          .map((_path, index) =>
+            _path.startsWith(path.split("Voca/root/")[1]) ? index : null
+          )
+          .filter((index) => index !== null);
+        prevPathIndexes.forEach((prevPathIndex) => {
+          newPaths[prevPathIndex] = newPaths[prevPathIndex].replace(
+            path.split("Voca/root/")[1],
+            newPath.split("Voca/root/")[1]
+          );
+        });
+      } else {
+        const prevPathIndex = prevPaths.indexOf(path.split("Voca/root/")[1]);
+        newPaths = [...prevPaths];
+        newPaths[prevPathIndex] = newPath.split("Voca/root/")[1];
+      }
+    } else {
+      if (isDir) {
+        newPaths = prevPaths.filter(
+          (_path) => !_path.startsWith(path.split("Voca/root/")[1])
+        );
+      } else {
+        newPaths = prevPaths.filter(
+          (_path) => _path !== path.split("Voca/root/")[1]
+        );
+      }
+    }
+
+    if (type === "REMOVE" && (newPaths === null || newPaths.length === 0)) {
       promises.push(operateData("REMOVE", `Test/${testName}`));
 
       const testList = await getList("Test/testList", "name");
@@ -307,22 +354,9 @@ export const updateVocaNameInTest = async (
       newFilteredTestNames = newFilteredTestNames.filter(
         (test) => test !== testName
       );
-
-      await Promise.all(promises);
-      continue;
-    }
-
-    let newPaths = [];
-    if (type === "UPDATE") {
-      const prevPathIndex = prevPaths.indexOf(vocaPath.split("Voca/root/")[1]);
-      newPaths = [...prevPaths];
-      newPaths[prevPathIndex] = newVocaPath.split("Voca/root/")[1];
     } else {
-      newPaths = prevPaths.filter(
-        (path) => path !== vocaPath.split("Voca/root/")[1]
-      );
+      promises.push(operateData("SET", `Test/${testName}/paths`, newPaths));
     }
-    promises.push(operateData("SET", `Test/${testName}/paths`, newPaths));
   }
   await Promise.all(promises);
   promises = [];
@@ -365,14 +399,18 @@ export const updateVocaNameInTest = async (
     for (const [key, value] of testWordList) {
       if (!value) continue;
 
-      const { path, addressList } = value;
-      if (path !== vocaPath) continue;
+      const { path: pathInTest, addressList } = value;
+      if (isDir) {
+        if (!pathInTest.startsWith(path)) continue;
+      } else {
+        if (pathInTest !== path) continue;
+      }
       if (type === "UPDATE") {
         promises.push(
           operateData(
             "SET",
             `Test/${currentTestName}/wordList/${wordListPath}/${key}/path`,
-            newVocaPath
+            isDir ? pathInTest.replace(path, newPath) : newPath
           )
         );
       } else if (type === "REMOVE") {

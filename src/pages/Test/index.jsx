@@ -249,7 +249,7 @@ const Test = () => {
               borderRadius: 1,
             }}
           >
-            出典 : {question.currentQuestion.vocaPath}
+            出典 : {question.currentQuestion.vocaPath.split("Voca/root/")[1]}
           </Box>
           <Stack
             direction="row"
