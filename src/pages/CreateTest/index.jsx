@@ -13,8 +13,8 @@ import {
   Divider,
   ScrollList,
 } from "../../components";
-import { InputField, Description, Checkbox } from "./components";
-import { getList, getAddressList } from "../../service/database/getList";
+import { InputField, Checkbox } from "./components";
+import { getList } from "../../service/database/getList";
 import operateData from "../../service/database/operateData";
 import listObjToArr from "../../utils/listObjToArr";
 import { toast } from "react-toastify";
@@ -63,13 +63,11 @@ const CreateTest = () => {
       });
 
       // "Voca/root" 이후 문자열 저장 (이 부분은 그대로 순차 처리)
-      for (let i = 0; i < selectedVocaPaths.length; i++) {
-        await operateData(
-          "PUSH",
-          `Test/${testName}/paths`,
-          selectedVocaPaths[i].slice(10)
-        );
-      }
+      await operateData(
+        "SET",
+        `Test/${testName}/paths`,
+        selectedVocaPaths.map((path) => path.split("Voca/root/")[1])
+      );
 
       // 테스트 생성 시 단어는 복제하지 않고, 주소로 접근
       await saveWordInTest(testName, selectedVocaPaths, "word");

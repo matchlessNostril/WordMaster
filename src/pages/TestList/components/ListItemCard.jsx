@@ -52,7 +52,14 @@ const ListItemCard = ({ itemKey, title }) => {
     // 먼저 기존 데이터 일시 저장
     const tempData = await operateData("GET", `Test/${title}`);
 
-    // 빈 데이터가 아니라면, 데이터 이전하고 기존 경로 삭제
+    // testList에서도 변경된 이름으로 업데이트
+    const _vocaPaths = await operateData("GET", `Test/${title}/paths`);
+    const vocaPaths = Object.values(_vocaPaths).map(
+      (path) => `Voca/root/${path}`
+    );
+    await updateTestListInVoca("UPDATE", vocaPaths, title, inputValue);
+
+    // 데이터 이전하고 기존 경로 삭제
     if (!isEmpty(tempData)) {
       operateData("SET", `Test/${inputValue}`, tempData);
       operateData("REMOVE", `Test/${title}`);

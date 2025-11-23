@@ -16,6 +16,7 @@ import operateData from "../../../service/database/operateData";
 import { isEmpty } from "lodash";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { toast } from "react-toastify";
+import { updateVocaNameInTest } from "../../../utils/utils";
 
 const ListItemCard = ({ itemKey, title, path, isDir = false }) => {
   const navigate = useNavigate();
@@ -69,12 +70,12 @@ const ListItemCard = ({ itemKey, title, path, isDir = false }) => {
 
     // 빈 데이터가 아니라면, 데이터 이전하고 기존 경로 삭제
     if (!isEmpty(tempData)) {
-      operateData("SET", `Voca/${path}/${inputValue}`, tempData);
-      operateData("REMOVE", `Voca/${path}/${title}`);
+      await operateData("SET", `Voca/${path}/${inputValue}`, tempData);
+      await operateData("REMOVE", `Voca/${path}/${title}`);
     }
 
     // 리스트에서도 변경된 이름으로 업데이트
-    operateData(
+    await operateData(
       "UPDATE",
       isDir
         ? `Voca/${path}/dirList/${itemKey}`
@@ -82,18 +83,33 @@ const ListItemCard = ({ itemKey, title, path, isDir = false }) => {
       { name: inputValue }
     );
 
+    // Test에서도 변경된 이름으로 업데이트
+    if (isDir) {
+    } else {
+      await updateVocaNameInTest(
+        "UPDATE",
+        `Voca/${path}/${title}`,
+        `Voca/${path}/${inputValue}`
+      );
+    }
+
     setOpenModal(false);
   }, []);
 
   // 2. 삭제
-  const handleClickRemoveBtn = useCallback(() => {
-    operateData("REMOVE", `Voca/${path}/${title}`);
-    operateData(
+  const handleClickRemoveBtn = useCallback(async () => {
+    await operateData("REMOVE", `Voca/${path}/${title}`);
+    await operateData(
       "REMOVE",
       isDir
         ? `Voca/${path}/dirList/${itemKey}`
         : `Voca/${path}/vocaList/${itemKey}`
     );
+
+    if (isDir) {
+    } else {
+      await updateVocaNameInTest("REMOVE", `Voca/${path}/${title}`);
+    }
     setOpenModal(false);
   }, []);
 

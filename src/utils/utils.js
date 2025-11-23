@@ -26,7 +26,12 @@ export const saveWordInTest = async (
   await Promise.all(wordTestPromises);
 };
 
-export const updateTestListInVoca = async (type, vocaPaths, testName) => {
+export const updateTestListInVoca = async (
+  type,
+  vocaPaths,
+  testName,
+  newTestName = null
+) => {
   let promises = [];
   vocaPaths.forEach((path) => {
     promises.push(operateData("GET", `${path}/testList`));
@@ -63,6 +68,16 @@ export const updateTestListInVoca = async (type, vocaPaths, testName) => {
         }
       });
       break;
+    case "UPDATE":
+      prevTestListAll.forEach((testList, index) => {
+        const newTestList = [...testList];
+        const testIndex = newTestList.indexOf(testName);
+        newTestList[testIndex] = newTestName;
+        promises.push(
+          operateData("SET", `${vocaPaths[index]}/testList`, newTestList)
+        );
+      });
+      break;
     default:
       break;
   }
@@ -72,6 +87,8 @@ export const updateTestListInVoca = async (type, vocaPaths, testName) => {
 // 공통
 export const getAllTestNamesContainingVoca = async (vocaPath) => {
   const _allTestNames = await operateData("GET", `Test/testList`);
+  if (_allTestNames === null) return null;
+
   const allTestNames = Object.values(_allTestNames).map((test) => test.name);
 
   let promises = [];
@@ -97,7 +114,7 @@ export const getAllTestNamesContainingVoca = async (vocaPath) => {
   return filteredTestNames;
 };
 
-// '해당 단어가 포함된 voca, test에서 삭제' ---------
+// word 변경 반영
 export const removeWordInVoca = async (vocaPath, wordAddress) => {
   const _prevVoca = await getList(vocaPath);
   const prevVoca = _prevVoca.filter((value) => value.hasOwnProperty("word"));
@@ -112,6 +129,7 @@ export const removeWordInVoca = async (vocaPath, wordAddress) => {
 export const removeWordInTest = async (vocaPath, wordAddress, type = "one") => {
   // 1. 해당 vocaPath가 포함된 test 리스트 찾기
   const filteredTestNames = await getAllTestNamesContainingVoca(vocaPath);
+  if (filteredTestNames === null) return;
 
   // 2. Test의 waiting address list에서 삭제
   let promises = [];
@@ -212,6 +230,7 @@ export const removeWordInDB = async (vocaPath, wordAddress) => {
 // 해당 voca가 포함된 test에서 waiting word 추가
 export const addWordInTest = async (vocaPath, wordAddress) => {
   const filteredTestNames = await getAllTestNamesContainingVoca(vocaPath);
+  if (filteredTestNames === null) return;
 
   let promises = [];
   for (const testName of filteredTestNames) {
@@ -252,6 +271,120 @@ export const addWordInTest = async (vocaPath, wordAddress) => {
           newAddressList
         )
       );
+    }
+  }
+  await Promise.all(promises);
+
+  return "success";
+};
+
+// vocaName 변겅/삭제 -> test 반영
+export const updateVocaNameInTest = async (
+  type,
+  vocaPath,
+  newVocaPath = null
+) => {
+  const filteredTestNames = await getAllTestNamesContainingVoca(vocaPath);
+  if (filteredTestNames === null) return;
+
+  let promises = [];
+  let newFilteredTestNames = [...filteredTestNames];
+
+  // 1. paths 변경
+  for (const testName of filteredTestNames) {
+    const prevPaths = await getList(`Test/${testName}/paths`);
+    if (type === "REMOVE" && prevPaths.length === 1) {
+      promises.push(operateData("REMOVE", `Test/${testName}`));
+
+      const testList = await getList("Test/testList", "name");
+      const newTestList = testList.filter((test) => test !== testName);
+      promises.push(operateData("SET", "Test/testList", newTestList));
+
+      newFilteredTestNames = newFilteredTestNames.filter(
+        (test) => test !== testName
+      );
+
+      console.log(testName, "그 보카만 있어서 테스트 삭제");
+
+      await Promise.all(promises);
+      return;
+    }
+
+    let newPaths = [];
+    if (type === "UPDATE") {
+      const prevPathIndex = prevPaths.indexOf(vocaPath.split("Voca/root/")[1]);
+      newPaths = [...prevPaths];
+      newPaths[prevPathIndex] = newVocaPath.split("Voca/root/")[1];
+    } else {
+      newPaths = prevPaths.filter(
+        (path) => path !== vocaPath.split("Voca/root/")[1]
+      );
+    }
+    promises.push(operateData("SET", `Test/${testName}/paths`, newPaths));
+  }
+  await Promise.all(promises);
+  promises = [];
+
+  // 2. wordList 변경
+  for (const testName of newFilteredTestNames) {
+    promises.push(
+      operateData("GET", `Test/${testName}/wordList/wordTest/waiting`)
+    );
+    promises.push(
+      operateData("GET", `Test/${testName}/wordList/wordTest/passed`)
+    );
+    promises.push(
+      operateData("GET", `Test/${testName}/wordList/meanTest/waiting`)
+    );
+    promises.push(
+      operateData("GET", `Test/${testName}/wordList/meanTest/passed`)
+    );
+  }
+  const allTestWordList = await Promise.all(promises);
+  promises = [];
+
+  for (let i = 0; i < allTestWordList.length; i++) {
+    const wordListPathIndex = i % 4;
+    const wordListPath = [
+      "wordTest/waiting",
+      "wordTest/passed",
+      "meanTest/waiting",
+      "meanTest/passed",
+    ][wordListPathIndex];
+
+    const testWordList = allTestWordList[i]
+      ? Object.entries(allTestWordList[i])
+      : null;
+    if (!testWordList) continue;
+
+    const testNameIndex = Math.floor(i / 4);
+    const currentTestName = newFilteredTestNames[testNameIndex];
+
+    for (const [key, value] of testWordList) {
+      if (!value) continue;
+
+      const { path, addressList } = value;
+      if (path !== vocaPath) continue;
+      if (type === "UPDATE") {
+        promises.push(
+          operateData(
+            "SET",
+            `Test/${currentTestName}/wordList/${wordListPath}/${key}/path`,
+            newVocaPath
+          )
+        );
+      } else if (type === "REMOVE") {
+        console.log(
+          "왜?",
+          `Test/${currentTestName}/wordList/${wordListPath}/${key}`
+        );
+        promises.push(
+          operateData(
+            "REMOVE",
+            `Test/${currentTestName}/wordList/${wordListPath}/${key}`
+          )
+        );
+      }
     }
   }
   await Promise.all(promises);

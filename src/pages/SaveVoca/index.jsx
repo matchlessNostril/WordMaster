@@ -99,11 +99,14 @@ const SaveVoca = () => {
           `Voca/${path}/${vocaName}`,
           word
         );
-        const {
-          _path: { pieces_ },
-        } = addedWord;
-        const addedWordAddress = pieces_[pieces_.length - 1];
-        addedWordAddressList.push(addedWordAddress);
+
+        if (mode === "Modify") {
+          const {
+            _path: { pieces_ },
+          } = addedWord;
+          const addedWordAddress = pieces_[pieces_.length - 1];
+          addedWordAddressList.push(addedWordAddress);
+        }
       }
       // (3) 기존 단어 삭제 (voca에서 + test에서)
       const removedWordAddressList = originalWordList
