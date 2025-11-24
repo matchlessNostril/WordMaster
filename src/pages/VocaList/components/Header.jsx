@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useMemo } from "react";
 import { usePopOver } from "../../../hooks";
 import { AuthContext } from "../../../contexts/AuthContext";
-import { Stack, Typography, IconButton, useTheme } from "@mui/material";
+import { Stack, Typography, IconButton, useTheme, alpha } from "@mui/material";
 import {
   RowSpaceBetween,
   BtnPopover,
@@ -33,7 +33,7 @@ const Header = ({
       btnName: "作成",
       handleClickBtn: handleClickCreateDir,
     }),
-    [handleClickCreateDir]
+    []
   );
 
   const popoverBtns = useMemo(
@@ -60,7 +60,7 @@ const Header = ({
         icon: <DescriptionSharpIcon sx={{ color: theme.palette.blue[400] }} />,
       },
     ],
-    [modalContents]
+    []
   );
 
   return (
@@ -70,16 +70,32 @@ const Header = ({
           <Stack direction="row" alignItems="center">
             <IconButton
               onClick={() => navigate(-1)}
-              sx={{ padding: 0, marginRight: "6px" }}
+              sx={{
+                padding: "6px",
+                borderRadius: "10px",
+                color: theme.palette.textColors.slate300,
+                transition: "all 0.2s ease",
+                "&:hover": {
+                  color: theme.palette.textColors.slate100,
+                  backgroundColor: alpha(theme.palette.slate[700], 0.4),
+                },
+                marginRight: "12px",
+              }}
             >
               <NavigateBeforeIcon
                 sx={{
                   fontSize: "40px",
                   "& > button": { padding: 0, paddingRight: "4px" },
+                  color: theme.palette.textColors.slate100,
                 }}
               />
             </IconButton>
-            <Typography variant="h4">{currentDirName}</Typography>
+            <Typography
+              variant="h5"
+              sx={{ color: theme.palette.textColors.slate100 }}
+            >
+              {currentDirName}
+            </Typography>
           </Stack>
         ) : (
           <Typography

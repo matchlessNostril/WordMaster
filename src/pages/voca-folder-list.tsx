@@ -1,21 +1,31 @@
-import React, { useState } from 'react';
-import { BookOpen, Folder, FileText, ChevronDown, Plus, MoreVertical, Edit2, Trash2, X } from 'lucide-react';
+import React, { useState } from "react";
+import {
+  BookOpen,
+  Folder,
+  FileText,
+  ChevronDown,
+  Plus,
+  MoreVertical,
+  Edit2,
+  Trash2,
+  X,
+} from "lucide-react";
 
 export default function VocaFolderList() {
   const [folders, setFolders] = useState([
-    { id: 1, name: '単語', type: 'folder', isOpen: false },
-    { id: 2, name: '単位', type: 'folder', isOpen: false },
-    { id: 3, name: '文法', type: 'folder', isOpen: false },
-    { id: 4, name: 'E1', type: 'file', isOpen: false }
+    { id: 1, name: "単語", type: "folder", isOpen: false },
+    { id: 2, name: "単位", type: "folder", isOpen: false },
+    { id: 3, name: "文法", type: "folder", isOpen: false },
+    { id: 4, name: "E1", type: "file", isOpen: false },
   ]);
-  
+
   const [showCreateMenu, setShowCreateMenu] = useState(false);
   const [contextMenu, setContextMenu] = useState(null);
 
   const toggleFolder = (id) => {
-    setFolders(folders.map(f => 
-      f.id === id ? { ...f, isOpen: !f.isOpen } : f
-    ));
+    setFolders(
+      folders.map((f) => (f.id === id ? { ...f, isOpen: !f.isOpen } : f))
+    );
   };
 
   const handleContextMenu = (e, item) => {
@@ -39,8 +49,10 @@ export default function VocaFolderList() {
       <main className="max-w-5xl mx-auto px-6 pt-24 pb-12">
         {/* Page Title */}
         <div className="flex items-center justify-between mb-8">
-          <h1 className="text-3xl font-bold text-slate-100">ソル 様の単語帳一覧</h1>
-          
+          <h1 className="text-3xl font-bold text-slate-100">
+            ソル 様の単語帳一覧
+          </h1>
+
           {/* Create Button */}
           <div className="relative">
             <button
@@ -53,8 +65,8 @@ export default function VocaFolderList() {
             {/* Create Dropdown Menu */}
             {showCreateMenu && (
               <>
-                <div 
-                  className="fixed inset-0 z-40" 
+                <div
+                  className="fixed inset-0 z-40"
                   onClick={() => setShowCreateMenu(false)}
                 />
                 <div className="absolute right-0 mt-2 w-56 bg-slate-800 backdrop-blur-xl border border-slate-700 rounded-lg shadow-2xl overflow-hidden z-50">
@@ -79,7 +91,7 @@ export default function VocaFolderList() {
               <div className="bg-slate-800/50 backdrop-blur-xl rounded-xl border border-slate-700/50 shadow-lg hover:border-slate-600 transition-all">
                 <div className="flex items-center gap-4 px-6 py-4">
                   {/* Icon */}
-                  {item.type === 'folder' ? (
+                  {item.type === "folder" ? (
                     <Folder className="w-6 h-6 text-amber-400 flex-shrink-0" />
                   ) : (
                     <FileText className="w-6 h-6 text-slate-400 flex-shrink-0" />
@@ -92,49 +104,18 @@ export default function VocaFolderList() {
 
                   {/* Actions */}
                   <div className="flex items-center gap-2">
-                    {item.type === 'folder' && (
+                    {item.type === "folder" && (
                       <button
                         onClick={() => toggleFolder(item.id)}
                         className="p-2 text-slate-400 hover:text-slate-200 hover:bg-slate-700/50 rounded-lg transition-all"
                       >
-                        <ChevronDown 
-                          className={`w-5 h-5 transition-transform ${item.isOpen ? 'rotate-180' : ''}`}
+                        <ChevronDown
+                          className={`w-5 h-5 transition-transform ${
+                            item.isOpen ? "rotate-180" : ""
+                          }`}
                         />
                       </button>
                     )}
-                    
-                    <div className="relative">
-                      <button
-                        onClick={(e) => handleContextMenu(e, item)}
-                        className="p-2 text-slate-400 hover:text-slate-200 hover:bg-slate-700/50 rounded-lg transition-all"
-                      >
-                        <MoreVertical className="w-5 h-5" />
-                      </button>
-
-                      {/* Context Menu */}
-                      {contextMenu?.id === item.id && (
-                        <>
-                          <div 
-                            className="fixed inset-0 z-40" 
-                            onClick={() => setContextMenu(null)}
-                          />
-                          <div className="absolute right-0 mt-2 w-48 bg-slate-800 backdrop-blur-xl border border-slate-700 rounded-lg shadow-2xl overflow-hidden z-50">
-                            <button 
-                              className="w-full px-4 py-3 text-left text-slate-200 hover:bg-cyan-500/20 hover:text-cyan-300 transition-colors flex items-center gap-3"
-                            >
-                              <Edit2 className="w-4 h-4" />
-                              <span>名前を変更</span>
-                            </button>
-                            <button 
-                              className="w-full px-4 py-3 text-left text-red-400 hover:bg-red-500/20 hover:text-red-300 transition-colors flex items-center gap-3"
-                            >
-                              <Trash2 className="w-4 h-4" />
-                              <span>削除</span>
-                            </button>
-                          </div>
-                        </>
-                      )}
-                    </div>
                   </div>
                 </div>
               </div>

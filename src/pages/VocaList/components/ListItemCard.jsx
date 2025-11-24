@@ -5,10 +5,10 @@ import {
   ListItem,
   Card,
   CardActionArea,
-  CardContent,
   CardActions,
   Typography,
   IconButton,
+  Box,
   useTheme,
   alpha,
 } from "@mui/material";
@@ -21,6 +21,8 @@ import { updateVocaNameInTest } from "../../../utils/utils";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import DriveFileRenameOutlineSharpIcon from "@mui/icons-material/DriveFileRenameOutlineSharp";
 import DeleteSharpIcon from "@mui/icons-material/DeleteSharp";
+import FolderSharpIcon from "@mui/icons-material/FolderSharp";
+import DescriptionSharpIcon from "@mui/icons-material/DescriptionSharp";
 
 const ListItemCard = ({ itemKey, title, path, isDir = false }) => {
   const navigate = useNavigate();
@@ -170,31 +172,102 @@ const ListItemCard = ({ itemKey, title, path, isDir = false }) => {
           justifyContent: "center",
           paddingLeft: 0,
           paddingRight: 0,
+          width: "100%",
         }}
       >
-        <Card variant="outlined" sx={{ display: "flex", width: "83vw" }}>
-          <CardActionArea onClick={moveToNextPath}>
-            <CardContent sx={{ display: "flex" }}>
-              <img
-                src={
-                  isDir
-                    ? require("../../../assets/icons/folder_closed.png")
-                    : require("../../../assets/icons/document.png")
-                }
-                alt="フォルダまたは単語帳アイコン"
-                style={{
-                  width: "25px",
-                  height: "25px",
-                  marginRight: "15px",
-                }}
-              />
-              <Typography variant="body1" sx={{ flexGrow: 1 }}>
-                {title}
-              </Typography>
-            </CardContent>
+        <Card
+          variant="outlined"
+          sx={{
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            backgroundColor: alpha(theme.palette.slate[800], 0.5),
+            borderRadius: "16px",
+            border: `1px solid ${alpha(theme.palette.slate[700], 0.5)}`,
+            boxShadow: "0 20px 35px -20px rgba(0,0,0,0.8)",
+            backdropFilter: "blur(18px)",
+            WebkitBackdropFilter: "blur(18px)",
+            transition: "border-color 0.2s ease, transform 0.2s ease",
+            "&:hover": {
+              borderColor: alpha(theme.palette.slate[600], 0.7),
+              transform: "translateY(-1px)",
+            },
+          }}
+        >
+          <CardActionArea
+            onClick={moveToNextPath}
+            sx={{
+              flexGrow: 1,
+              display: "flex",
+              alignItems: "center",
+              gap: "16px",
+              padding: "18px 24px",
+            }}
+          >
+            <Box
+              sx={{
+                width: 44,
+                height: 44,
+                borderRadius: "12px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: isDir
+                  ? alpha(theme.palette.amber[400], 0.2)
+                  : alpha(theme.palette.slate[500], 0.2),
+                color: isDir
+                  ? theme.palette.amber[400]
+                  : theme.palette.slate[400],
+                flexShrink: 0,
+              }}
+            >
+              {isDir ? (
+                <FolderSharpIcon
+                  sx={{
+                    width: 24,
+                    height: 24,
+                    color: theme.palette.amber[250],
+                  }}
+                />
+              ) : (
+                <DescriptionSharpIcon
+                  sx={{ width: 24, height: 24, color: theme.palette.blue[400] }}
+                />
+              )}
+            </Box>
+            <Typography
+              variant="body1"
+              sx={{
+                flexGrow: 1,
+                fontWeight: 500,
+                color: theme.palette.textColors.slate200,
+                fontSize: "1rem",
+              }}
+            >
+              {title}
+            </Typography>
           </CardActionArea>
-          <CardActions>
-            <IconButton onClick={handleClickPopoverBtn}>
+          <CardActions
+            sx={{
+              paddingRight: "16px",
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+            }}
+          >
+            <IconButton
+              onClick={handleClickPopoverBtn}
+              sx={{
+                padding: "8px",
+                borderRadius: "10px",
+                color: theme.palette.textColors.slate300,
+                transition: "all 0.2s ease",
+                "&:hover": {
+                  color: theme.palette.textColors.slate100,
+                  backgroundColor: alpha(theme.palette.slate[700], 0.4),
+                },
+              }}
+            >
               <KeyboardArrowDownIcon />
             </IconButton>
             <BtnPopover
