@@ -1,4 +1,4 @@
-import { Button, useTheme, CircularProgress } from "@mui/material";
+import { Button, useTheme, CircularProgress, alpha } from "@mui/material";
 
 const GradientButton = ({
   onClick,
@@ -26,10 +26,13 @@ const GradientButton = ({
         py: 1,
         backgroundImage:
           disabled || isLoading
-            ? `linear-gradient(to right, ${theme.palette.slate[500]}, ${theme.palette.slate[500]})`
+            ? `linear-gradient(to right, ${alpha(
+                theme.palette.cyan[500],
+                0.5
+              )}, ${alpha(theme.palette.blue[500], 0.5)})`
             : `linear-gradient(to right, ${theme.palette.cyan[500]}, ${theme.palette.blue[500]})`,
         color:
-          disabled || isLoading ? theme.palette.textColors.slate400 : "white",
+          disabled || isLoading ? theme.palette.textColors.slate300 : "white",
         borderRadius: "8px",
         textTransform: "none",
         fontWeight: 500,
@@ -39,11 +42,13 @@ const GradientButton = ({
             ? "none"
             : `0 10px 15px -3px ${theme.palette.cyan[500]}33, 0 4px 6px -2px ${theme.palette.cyan[500]}33`,
         cursor: disabled || isLoading ? "not-allowed" : "pointer",
-        opacity: disabled || isLoading ? 0.6 : 1,
         "&:hover": {
           backgroundImage:
             disabled || isLoading
-              ? `linear-gradient(to right, ${theme.palette.slate[500]}, ${theme.palette.slate[500]})`
+              ? `linear-gradient(to right, ${alpha(
+                  theme.palette.cyan[500],
+                  0.5
+                )}, ${alpha(theme.palette.blue[500], 0.5)})`
               : `linear-gradient(to right, ${theme.palette.cyan[600]}, ${theme.palette.blue[600]})`,
           boxShadow:
             disabled || isLoading

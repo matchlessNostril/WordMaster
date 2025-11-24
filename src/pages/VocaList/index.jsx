@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from "react";
-import { useTheme } from "@mui/material/styles";
 import { useSearchParams } from "react-router-dom";
 import { usePathListReducer, useModal } from "../../hooks";
 import {
@@ -20,8 +19,6 @@ import { isEmpty } from "lodash";
 import { toast } from "react-toastify";
 
 const VocaList = () => {
-  const theme = useTheme();
-
   // url 쿼리스트링에서 path 값 가져오기
   const [searchParams, _] = useSearchParams();
   const path = searchParams.get("path");
