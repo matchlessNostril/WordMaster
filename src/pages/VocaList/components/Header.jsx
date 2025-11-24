@@ -2,10 +2,16 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useMemo } from "react";
 import { usePopOver } from "../../../hooks";
 import { AuthContext } from "../../../contexts/AuthContext";
-import { Stack, Typography, IconButton } from "@mui/material";
-import { RowSpaceBetween, BtnPopover } from "../../../components";
+import { Stack, Typography, IconButton, useTheme } from "@mui/material";
+import {
+  RowSpaceBetween,
+  BtnPopover,
+  GradientButton,
+} from "../../../components";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
+import AddIcon from "@mui/icons-material/Add";
+import FolderSharpIcon from "@mui/icons-material/FolderSharp";
+import DescriptionSharpIcon from "@mui/icons-material/DescriptionSharp";
 
 const Header = ({
   path,
@@ -14,7 +20,7 @@ const Header = ({
   handleClickOpenModal,
 }) => {
   const { displayName } = useContext(AuthContext);
-
+  const theme = useTheme();
   const navigate = useNavigate();
   const [popoverAnchor, setPopoverAnchor, handleClickPopoverBtn] = usePopOver();
 
@@ -38,6 +44,7 @@ const Header = ({
           setPopoverAnchor(null);
           handleClickOpenModal(modalContents);
         },
+        icon: <FolderSharpIcon sx={{ color: theme.palette.amber[250] }} />,
       },
       {
         name: "新規単語帳を作成",
@@ -50,6 +57,7 @@ const Header = ({
             },
           });
         },
+        icon: <DescriptionSharpIcon sx={{ color: theme.palette.blue[400] }} />,
       },
     ],
     [modalContents]
@@ -71,16 +79,17 @@ const Header = ({
                 }}
               />
             </IconButton>
-            <Typography variant="h5">{currentDirName}</Typography>
+            <Typography variant="h4">{currentDirName}</Typography>
           </Stack>
         ) : (
-          <Typography variant="h5">
+          <Typography
+            variant="h5"
+            sx={{ color: theme.palette.textColors.slate100 }}
+          >
             <strong>{displayName}</strong> 様の単語帳一覧
           </Typography>
         )}
-        <IconButton onClick={handleClickPopoverBtn}>
-          <AddCircleIcon sx={{ fontSize: "40px" }} />
-        </IconButton>
+        <GradientButton onClick={handleClickPopoverBtn} icon={<AddIcon />} />
         <BtnPopover
           anchor={popoverAnchor}
           setAnchor={setPopoverAnchor}

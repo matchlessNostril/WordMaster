@@ -11,12 +11,12 @@ import {
 import { logout } from "../service/auth";
 import GradientButton from "./GradientButton";
 
+import StyleSharpIcon from "@mui/icons-material/StyleSharp";
 import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import HomeIcon from "@mui/icons-material/Home";
 import CloseIcon from "@mui/icons-material/Close";
-import AutoStoriesSharpIcon from "@mui/icons-material/AutoStoriesSharp";
 
 const btnInfoList = {
   "/": {
@@ -104,7 +104,7 @@ const Header = () => {
       >
         <Toolbar>
           <Box display="flex" alignItems="center" sx={{ flexGrow: 1, gap: 1 }}>
-            <AutoStoriesSharpIcon
+            <StyleSharpIcon
               sx={{
                 width: "30px",
                 height: "30px",

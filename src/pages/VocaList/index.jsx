@@ -5,7 +5,7 @@ import { usePathListReducer, useModal } from "../../hooks";
 import {
   Transition,
   ActionModal,
-  Loading,
+  LargeLoading,
   NoFile,
   ScrollList,
   ResponsiveBox,
@@ -99,18 +99,27 @@ const VocaList = () => {
   return (
     <>
       <ResponsiveBox>
-        <Header
-          {...{
-            path,
-            currentDirName,
-            handleClickCreateDir,
-            handleClickOpenModal,
-          }}
-        />
         {isLoading ? (
-          <Loading />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100%",
+            }}
+          >
+            <LargeLoading />
+          </div>
         ) : (
           <>
+            <Header
+              {...{
+                path,
+                currentDirName,
+                handleClickCreateDir,
+                handleClickOpenModal,
+              }}
+            />
             {isEmpty(dirList) && isEmpty(vocaList) ? (
               path === "root" ? (
                 <NoFile text="まだ作成されたフォルダまたは単語帳がありません。" />

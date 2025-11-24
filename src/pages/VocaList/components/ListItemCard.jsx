@@ -9,18 +9,22 @@ import {
   CardActions,
   Typography,
   IconButton,
+  useTheme,
+  alpha,
 } from "@mui/material";
 import { BtnPopover, ActionModal } from "../../../components";
 import { getList } from "../../../service/database/getList";
 import operateData from "../../../service/database/operateData";
 import { isEmpty } from "lodash";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { toast } from "react-toastify";
 import { updateVocaNameInTest } from "../../../utils/utils";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import DriveFileRenameOutlineSharpIcon from "@mui/icons-material/DriveFileRenameOutlineSharp";
+import DeleteSharpIcon from "@mui/icons-material/DeleteSharp";
 
 const ListItemCard = ({ itemKey, title, path, isDir = false }) => {
   const navigate = useNavigate();
-
+  const theme = useTheme();
   const [popoverAnchor, setPopoverAnchor, handleClickPopoverBtn] = usePopOver();
   const [openModal, setOpenModal, modalContent, handleClickOpenModal] =
     useModal();
@@ -142,6 +146,7 @@ const ListItemCard = ({ itemKey, title, path, isDir = false }) => {
           setPopoverAnchor(null);
           handleClickOpenModal(modalContents[0]);
         },
+        icon: <DriveFileRenameOutlineSharpIcon sx={{ color: "white" }} />,
       },
       {
         name: "削除",
@@ -149,6 +154,9 @@ const ListItemCard = ({ itemKey, title, path, isDir = false }) => {
           setPopoverAnchor(null);
           handleClickOpenModal(modalContents[1]);
         },
+        icon: (
+          <DeleteSharpIcon sx={{ color: alpha(theme.palette.red[400], 0.7) }} />
+        ),
       },
     ],
     []
