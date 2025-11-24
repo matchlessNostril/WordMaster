@@ -112,7 +112,11 @@ const VocaList = () => {
         ) : (
           <>
             {isEmpty(dirList) && isEmpty(vocaList) ? (
-              <NoFile text="空のフォルダです。" />
+              path === "root" ? (
+                <NoFile text="まだ作成されたフォルダまたは単語帳がありません。" />
+              ) : (
+                <NoFile text="空のフォルダです。" />
+              )
             ) : (
               <ScrollList maxHeight="73vh">
                 {Object.entries(dirList).map(([key, value]) => (
