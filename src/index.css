@@ -14,8 +14,92 @@ body {
   );
 }
 
-:root {
-  --toastify-color-success: #6d8ecc;
-  --toastify-color-error: #ff6c6c;
-  --toastify-color-info: #dbdbdb;
+/* react-toastify 커스텀 스타일 */
+.Toastify__toast {
+  background: transparent !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+  border-radius: 12px !important;
+  border: 1px solid !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  padding: 16px 20px !important;
+  min-width: 320px !important;
+  max-width: 448px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+}
+
+.Toastify__toast--success {
+  background: linear-gradient(
+    to right,
+    rgba(6, 182, 212, 0.9),
+    rgba(59, 130, 246, 0.9)
+  ) !important;
+  border-color: rgba(34, 211, 238, 0.5) !important;
+  color: white !important;
+}
+
+.Toastify__toast--error {
+  background: linear-gradient(
+    to right,
+    rgba(239, 68, 68, 0.9),
+    rgba(244, 63, 94, 0.9)
+  ) !important;
+  border-color: rgba(248, 113, 113, 0.5) !important;
+  color: white !important;
+}
+
+.Toastify__toast--warning {
+  background: linear-gradient(
+    to right,
+    rgba(245, 158, 11, 0.9),
+    rgba(249, 115, 22, 0.9)
+  ) !important;
+  border-color: rgba(251, 191, 36, 0.5) !important;
+  color: white !important;
+}
+
+.Toastify__toast--info {
+  background: linear-gradient(
+    to right,
+    rgba(71, 85, 105, 0.9),
+    rgba(51, 65, 85, 0.9)
+  ) !important;
+  border-color: rgba(100, 116, 139, 0.5) !important;
+  color: white !important;
+}
+
+.Toastify__toast-body {
+  padding: 0 !important;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+}
+
+.Toastify__toast-icon {
+  width: 20px !important;
+  height: 20px !important;
+  flex-shrink: 0 !important;
+  color: white !important;
+}
+
+.Toastify__toast-icon svg {
+  fill: white !important;
+}
+
+.Toastify__close-button {
+  color: white !important;
+  opacity: 1 !important;
+  width: 20px !important;
+  height: 20px !important;
+  flex-shrink: 0 !important;
+}
+
+.Toastify__close-button:hover {
+  opacity: 0.7 !important;
+}
+
+.Toastify__progress-bar {
+  background: rgba(255, 255, 255, 0.3) !important;
 }
