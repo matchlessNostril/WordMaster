@@ -5,7 +5,14 @@ import {
   InputAdornment,
   IconButton,
 } from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import {
+  Visibility,
+  VisibilityOff,
+  Mail,
+  Lock,
+  Badge,
+} from "@mui/icons-material";
+import { useTheme } from "@mui/material";
 
 const InputField = ({
   fieldName,
@@ -18,6 +25,7 @@ const InputField = ({
   isPasswordVisible = true,
   handleClickShowBtn = () => {},
 }) => {
+  const theme = useTheme();
   const [validHelperText, setValidHelperText] = useState("");
 
   // 입력값이 바뀔 때마다 setValue에서 key값으로 접근해 바꿔야 하는데
@@ -52,37 +60,120 @@ const InputField = ({
     [valid]
   );
 
+  const StartIcon =
+    fieldName === "メールアドレス" ? (
+      <Mail sx={{ color: theme.palette.textColors.slate400 }} />
+    ) : fieldName === "パスワード" ? (
+      <Lock sx={{ color: theme.palette.textColors.slate400 }} />
+    ) : fieldName === "ニックネーム" ? (
+      <Badge sx={{ color: theme.palette.textColors.slate400 }} />
+    ) : null;
+
   return (
     <FormControl>
-      <TextField
-        variant="filled"
-        label={fieldName}
-        id={fieldName}
-        value={value}
-        onChange={handleChange}
-        type={
-          fieldType === "password" && !isPasswordVisible ? "password" : "text"
-        }
-        InputProps={
-          fieldType === "password"
-            ? {
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="入力値を表示"
-                      onClick={handleClickShowBtn}
-                    >
-                      {isPasswordVisible ? <Visibility /> : <VisibilityOff />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }
-            : undefined
-        }
-        // 빈 값일 때는 error가 적용되지 않도록
-        error={value ? !valid : false}
-        helperText={value ? validHelperText : ""}
-      />
+      <label
+        style={{
+          display: "block",
+          color: theme.palette.textColors.slate300,
+          fontSize: "0.875rem",
+          fontWeight: 500,
+          marginBottom: "0.5rem",
+        }}
+      >
+        {fieldName}
+      </label>
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        <TextField
+          variant="outlined"
+          id={fieldName}
+          value={value}
+          onChange={handleChange}
+          type={
+            fieldType === "password" && !isPasswordVisible ? "password" : "text"
+          }
+          autoComplete="off"
+          placeholder={
+            fieldName === "メールアドレス"
+              ? "example@email.com"
+              : fieldName === "パスワード"
+              ? "••••••••"
+              : fieldName === "ニックネーム"
+              ? "ニックネーム"
+              : ""
+          }
+          InputProps={{
+            startAdornment: StartIcon ? (
+              <InputAdornment position="start">{StartIcon}</InputAdornment>
+            ) : undefined,
+            endAdornment:
+              fieldType === "password" ? (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="入力値を表示"
+                    onClick={handleClickShowBtn}
+                    sx={{
+                      color: theme.palette.textColors.slate400,
+                      "&:hover": {
+                        color: theme.palette.textColors.slate300,
+                      },
+                    }}
+                  >
+                    {isPasswordVisible ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ) : undefined,
+            sx: {
+              backgroundColor: `${theme.palette.slate[900]}80`,
+              borderRadius: "8px",
+              color: theme.palette.textColors.slate200,
+              "& .MuiOutlinedInput-input": {
+                paddingLeft: StartIcon ? "8px" : "16px",
+                paddingRight: fieldType === "password" ? "48px" : "16px",
+                paddingTop: "12px",
+                paddingBottom: "12px",
+                color: theme.palette.textColors.slate200,
+              },
+              "& .MuiOutlinedInput-notchedOutline": {
+                borderColor: `${
+                  value && !valid
+                    ? theme.palette.red[400]
+                    : theme.palette.slate[700]
+                }`,
+              },
+              "&:hover .MuiOutlinedInput-notchedOutline": {
+                borderColor: `${
+                  value && !valid
+                    ? theme.palette.red[400]
+                    : theme.palette.slate[700]
+                }`,
+              },
+              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                borderColor: theme.palette.cyan[500],
+                borderWidth: "1px",
+              },
+              "&.Mui-focused": {
+                boxShadow: `0 0 0 2px ${theme.palette.cyan[500]}33`,
+              },
+              transition: "all 0.3s ease",
+            },
+          }}
+          sx={{
+            width: "100%",
+          }}
+        />
+        {value && validHelperText && (
+          <div
+            style={{
+              marginTop: "0.5rem",
+              fontSize: "0.75rem",
+              color: theme.palette.red[400],
+              whiteSpace: "pre-line",
+            }}
+          >
+            {validHelperText}
+          </div>
+        )}
+      </div>
     </FormControl>
   );
 };

@@ -5,11 +5,11 @@ import {
   AppBar,
   Toolbar,
   Tooltip,
-  Button,
   useTheme,
   Typography,
 } from "@mui/material";
 import { logout } from "../service/auth";
+import GradientButton from "./GradientButton";
 
 import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
@@ -122,39 +122,16 @@ const Header = () => {
             </Typography>
           </Box>
           <Tooltip title={btnInfo.title}>
-            <Button
+            <GradientButton
               onClick={
                 location.pathname === "/Main"
                   ? () => btnInfo.to()
                   : () => navigate(btnInfo.to)
               }
+              icon={btnInfo.icon}
+              text={btnInfo.onText ? btnInfo.title : ""}
               aria-label={btnInfo.title}
-              disableTouchRipple
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: 1,
-                px: 2,
-                py: 1,
-                backgroundImage: `linear-gradient(to right, ${theme.palette.cyan[500]}, ${theme.palette.blue[500]})`,
-                color: "white",
-                borderRadius: "8px",
-                textTransform: "none",
-                fontWeight: 500,
-                transition: "all 0.3s ease",
-                boxShadow: `0 10px 15px -3px ${theme.palette.cyan[500]}33, 0 4px 6px -2px ${theme.palette.cyan[500]}33`,
-                "&:hover": {
-                  backgroundImage: `linear-gradient(to right, ${theme.palette.cyan[600]}, ${theme.palette.blue[600]})`,
-                  boxShadow: `0 10px 15px -3px ${theme.palette.cyan[500]}66, 0 4px 6px -2px ${theme.palette.cyan[500]}66`,
-                },
-                "& .MuiButton-startIcon": {
-                  margin: 0,
-                },
-              }}
-              startIcon={btnInfo.icon}
-            >
-              {btnInfo.onText && btnInfo.title}
-            </Button>
+            />
           </Tooltip>
         </Toolbar>
       </AppBar>

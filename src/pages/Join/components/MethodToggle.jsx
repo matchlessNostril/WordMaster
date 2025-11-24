@@ -1,47 +1,70 @@
-import { styled, useTheme } from "@mui/material/styles";
-import { ToggleButtonGroup, ToggleButton } from "@mui/material";
-
-const StyledToggleButton = styled(ToggleButton)({
-  fontSize: "1rem",
-  "&.Mui-selected, &.Mui-selected:hover": {
-    color: "white",
-    backgroundColor: "#535353",
-  },
-});
+import { useTheme } from "@mui/material";
 
 const MethodToggle = ({ method, setMethod }) => {
   const theme = useTheme();
 
+  const tabs = ["ログイン", "会員登録"];
+
+  const handleClick = (value) => {
+    // 이미 선택된 버튼을 누르면 아무것도 하지 않음
+    if (method === value) return;
+    setMethod(value);
+  };
+
   return (
-    <>
-      <ToggleButtonGroup
-        value={method}
-        exclusive
-        onChange={(_, value) => {
-          // 이미 선택된 ToggleButton을 누르면 value가 null이 됨
-          if (!value) return;
-          setMethod(value);
-        }}
-        aria-label="ログインまたは会員登録選択"
-        sx={{
-          mb: 7,
-          [theme.breakpoints.down("sm")]: {
-            width: "300px",
-          },
-          [theme.breakpoints.up("sm")]: {
-            width: "400px",
-          },
-        }}
-      >
-        {/* 하위 컴포넌트에 모두 fullWidth를 넣음으로써 토글 요소 너비 일치 */}
-        <StyledToggleButton value="ログイン" fullWidth>
-          ログイン
-        </StyledToggleButton>
-        <StyledToggleButton value="会員登録" fullWidth>
-          会員登録
-        </StyledToggleButton>
-      </ToggleButtonGroup>
-    </>
+    <div
+      style={{
+        display: "flex",
+        gap: "0.5rem",
+        marginBottom: "2rem",
+        backgroundColor: `${theme.palette.slate[900]}80`,
+        borderRadius: "8px",
+        padding: "4px",
+      }}
+    >
+      {tabs.map((tab) => {
+        const isSelected = method === tab;
+        return (
+          <button
+            key={tab}
+            onClick={() => handleClick(tab)}
+            style={{
+              flex: 1,
+              padding: "10px 0",
+              borderRadius: "6px",
+              fontWeight: 500,
+              border: "none",
+              cursor: "pointer",
+              outline: "none",
+              ...(isSelected
+                ? {
+                    backgroundImage: `linear-gradient(to right, ${theme.palette.cyan[500]}, ${theme.palette.blue[500]})`,
+                    color: "white",
+                    boxShadow: `0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.1), 0 10px 15px -3px ${theme.palette.cyan[500]}33, 0 4px 6px -2px ${theme.palette.cyan[500]}33`,
+                  }
+                : {
+                    color: theme.palette.textColors.slate400,
+                    backgroundColor: "transparent",
+                    backgroundImage: "none",
+                    boxShadow: "none",
+                  }),
+            }}
+            onMouseEnter={(e) => {
+              if (!isSelected) {
+                e.target.style.color = theme.palette.textColors.slate200;
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (!isSelected) {
+                e.target.style.color = theme.palette.textColors.slate400;
+              }
+            }}
+          >
+            {tab}
+          </button>
+        );
+      })}
+    </div>
   );
 };
 

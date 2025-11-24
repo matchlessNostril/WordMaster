@@ -1,6 +1,7 @@
 export { default as ActionModal } from "./ActionModal";
 export { default as BtnPopover } from "./BtnPopover";
 export { default as Divider } from "./Divider";
+export { default as GradientButton } from "./GradientButton";
 export { default as Header } from "./Header";
 export { default as Loading } from "./Loading";
 export { default as LargeLoading } from "./LargeLoading";

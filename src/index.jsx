@@ -29,6 +29,8 @@ const theme = createTheme({
       900: "#0f172a",
       800: "#1e293b",
       700: "#334155",
+      600: "#475569",
+      500: "#64748b",
     },
     // 텍스트 색상
     textColors: {
@@ -61,6 +63,9 @@ const theme = createTheme({
     },
     emerald: {
       500: "#10b981",
+    },
+    red: {
+      400: "#ef4444",
     },
   },
 });

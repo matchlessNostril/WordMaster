@@ -41,47 +41,54 @@ const Form = ({ method }) => {
   }, [joinInfoValid]);
 
   return (
-    <Stack direction="column" spacing={3}>
+    <Stack
+      direction="column"
+      sx={{
+        maxWidth: "90vw",
+      }}
+    >
       <GoogleBtn method={method} handleClick={googleAuth} />
       <TextDivider method={method} />
-      {method === "会員登録" && (
+      <Stack direction="column" spacing={3}>
+        {method === "会員登録" && (
+          <InputField
+            fieldName="ニックネーム"
+            value={joinInfo.nickname}
+            setValue={setJoinInfo}
+            validCheck={isValidNickname}
+            valid={joinInfoValid.nickname}
+            setValid={setJoinInfoValid}
+          />
+        )}
         <InputField
-          fieldName="ニックネーム"
-          value={joinInfo.nickname}
+          fieldName="メールアドレス"
+          value={joinInfo.email}
           setValue={setJoinInfo}
-          validCheck={isValidNickname}
-          valid={joinInfoValid.nickname}
+          validCheck={isValidEmail}
+          valid={joinInfoValid.email}
           setValid={setJoinInfoValid}
         />
-      )}
-      <InputField
-        fieldName="メールアドレス"
-        value={joinInfo.email}
-        setValue={setJoinInfo}
-        validCheck={isValidEmail}
-        valid={joinInfoValid.email}
-        setValid={setJoinInfoValid}
-      />
-      <InputField
-        fieldName="パスワード"
-        fieldType="password"
-        value={joinInfo.password}
-        setValue={setJoinInfo}
-        validCheck={isValidPassword}
-        valid={joinInfoValid.password}
-        setValid={setJoinInfoValid}
-        isPasswordVisible={isPasswordVisible}
-        handleClickShowBtn={() => setIsPasswordVisible((prev) => !prev)}
-      />
-      <SubmitBtn
-        {...{ method, disabled }}
-        handleSubmit={
-          method === "ログイン"
-            ? () => Login(joinInfo.email, joinInfo.password)
-            : () =>
-                Register(joinInfo.nickname, joinInfo.email, joinInfo.password)
-        }
-      />
+        <InputField
+          fieldName="パスワード"
+          fieldType="password"
+          value={joinInfo.password}
+          setValue={setJoinInfo}
+          validCheck={isValidPassword}
+          valid={joinInfoValid.password}
+          setValid={setJoinInfoValid}
+          isPasswordVisible={isPasswordVisible}
+          handleClickShowBtn={() => setIsPasswordVisible((prev) => !prev)}
+        />
+        <SubmitBtn
+          {...{ method, disabled }}
+          handleSubmit={
+            method === "ログイン"
+              ? () => Login(joinInfo.email, joinInfo.password)
+              : () =>
+                  Register(joinInfo.nickname, joinInfo.email, joinInfo.password)
+          }
+        />
+      </Stack>
     </Stack>
   );
 };

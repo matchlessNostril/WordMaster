@@ -1,9 +1,23 @@
 import React from "react";
-import { Divider } from "@mui/material";
+import { Divider, useTheme } from "@mui/material";
 
 const TextDivider = ({ method }) => {
+  const theme = useTheme();
+
   return (
-    <Divider sx={{ p: 3, fontSize: "small" }}>メールアドレスで{method}</Divider>
+    <Divider
+      sx={{
+        py: 4,
+        fontSize: "small",
+        color: theme.palette.slate[500],
+        borderColor: theme.palette.slate[500],
+        "&::before, &::after": {
+          borderColor: theme.palette.slate[500],
+        },
+      }}
+    >
+      メールアドレスで{method}
+    </Divider>
   );
 };
 
