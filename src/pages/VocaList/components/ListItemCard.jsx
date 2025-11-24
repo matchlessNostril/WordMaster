@@ -127,6 +127,9 @@ const ListItemCard = ({ itemKey, title, path, isDir = false }) => {
         title: "名前を変更",
         textField: {
           label: "新しい名前",
+          placeholder: "新しい名前を入力してください。",
+          helperText:
+            "フォルダ内にすでに存在する名前や「 . # $ [ ] 」記号は使用できません。",
         },
         btnName: "変更",
         handleClickBtn: handleClickChangeBtn,

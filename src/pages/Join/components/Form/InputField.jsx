@@ -1,10 +1,5 @@
 import React, { useState, useMemo, useCallback } from "react";
-import {
-  FormControl,
-  TextField,
-  InputAdornment,
-  IconButton,
-} from "@mui/material";
+import { FormControl, InputAdornment, IconButton } from "@mui/material";
 import {
   Visibility,
   VisibilityOff,
@@ -13,6 +8,7 @@ import {
   Badge,
 } from "@mui/icons-material";
 import { useTheme } from "@mui/material";
+import StyledTextField from "../../../../components/StyledTextField";
 
 const InputField = ({
   fieldName,
@@ -71,27 +67,15 @@ const InputField = ({
 
   return (
     <FormControl>
-      <label
-        style={{
-          display: "block",
-          color: theme.palette.textColors.slate300,
-          fontSize: "0.875rem",
-          fontWeight: 500,
-          marginBottom: "0.5rem",
-        }}
-      >
-        {fieldName}
-      </label>
       <div style={{ display: "flex", flexDirection: "column" }}>
-        <TextField
-          variant="outlined"
+        <StyledTextField
           id={fieldName}
+          labelText={fieldName}
           value={value}
           onChange={handleChange}
           type={
             fieldType === "password" && !isPasswordVisible ? "password" : "text"
           }
-          autoComplete="off"
           placeholder={
             fieldName === "メールアドレス"
               ? "example@email.com"
@@ -101,65 +85,30 @@ const InputField = ({
               ? "ニックネーム"
               : ""
           }
-          InputProps={{
-            startAdornment: StartIcon ? (
+          startAdornment={
+            StartIcon ? (
               <InputAdornment position="start">{StartIcon}</InputAdornment>
-            ) : undefined,
-            endAdornment:
-              fieldType === "password" ? (
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="入力値を表示"
-                    onClick={handleClickShowBtn}
-                    sx={{
-                      color: theme.palette.textColors.slate400,
-                      "&:hover": {
-                        color: theme.palette.textColors.slate300,
-                      },
-                    }}
-                  >
-                    {isPasswordVisible ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              ) : undefined,
-            sx: {
-              backgroundColor: `${theme.palette.slate[900]}80`,
-              borderRadius: "8px",
-              color: theme.palette.textColors.slate200,
-              "& .MuiOutlinedInput-input": {
-                paddingLeft: StartIcon ? "8px" : "16px",
-                paddingRight: fieldType === "password" ? "48px" : "16px",
-                paddingTop: "12px",
-                paddingBottom: "12px",
-                color: theme.palette.textColors.slate200,
-              },
-              "& .MuiOutlinedInput-notchedOutline": {
-                borderColor: `${
-                  value && !valid
-                    ? theme.palette.red[400]
-                    : theme.palette.slate[700]
-                }`,
-              },
-              "&:hover .MuiOutlinedInput-notchedOutline": {
-                borderColor: `${
-                  value && !valid
-                    ? theme.palette.red[400]
-                    : theme.palette.slate[700]
-                }`,
-              },
-              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                borderColor: theme.palette.cyan[500],
-                borderWidth: "1px",
-              },
-              "&.Mui-focused": {
-                boxShadow: `0 0 0 2px ${theme.palette.cyan[500]}33`,
-              },
-              transition: "all 0.3s ease",
-            },
-          }}
-          sx={{
-            width: "100%",
-          }}
+            ) : undefined
+          }
+          endAdornment={
+            fieldType === "password" ? (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="入力値を表示"
+                  onClick={handleClickShowBtn}
+                  sx={{
+                    color: theme.palette.textColors.slate400,
+                    "&:hover": {
+                      color: theme.palette.textColors.slate300,
+                    },
+                  }}
+                >
+                  {isPasswordVisible ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            ) : undefined
+          }
+          error={value && !valid}
         />
         {value && validHelperText && (
           <div

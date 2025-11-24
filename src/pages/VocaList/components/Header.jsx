@@ -29,6 +29,9 @@ const Header = ({
       title: "新規フォルダ作成",
       textField: {
         label: "フォルダ名",
+        placeholder: "フォルダ名を入力してください。",
+        helperText:
+          "フォルダ内にすでに存在する名前や「 . # $ [ ] 」記号は使用できません。",
       },
       btnName: "作成",
       handleClickBtn: handleClickCreateDir,
