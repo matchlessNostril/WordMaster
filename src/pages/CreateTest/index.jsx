@@ -49,7 +49,7 @@ const CreateTest = () => {
 
       // 중복된 이름으로 생성 불가능
       if (testList.includes(testName)) {
-        toast.error(`すでに存在する名前では作成できません。`);
+        toast.error(`フォルダ内にすでに存在する名前では作成できません。`);
         return;
       }
 

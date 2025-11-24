@@ -77,7 +77,7 @@ const SaveVoca = () => {
       // 현재 디렉토리 내에서 중복된 이름으로 생성 불가능
       if (entireList.includes(vocaName)) {
         toast.error(
-          `現在のフォルダ内に、すでに存在する名前では ${
+          `フォルダ内にすでに存在する名前では ${
             mode === "Modify" ? "変更" : "作成"
           }できません。`
         );

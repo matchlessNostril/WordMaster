@@ -109,13 +109,13 @@ const SetTest = () => {
 
     if (radio === "word" && numOfPassedWord === wordListLength) {
       toast.info(
-        "現在の単語テストの達成率は100%です。単語テストを新しく始めたい場合は、リセットボタンを押してください。"
+        "単語テストの達成率は100%です。単語テストを新しく始めたい場合は、リセットボタンを押してください。"
       );
       return;
     }
     if (radio === "mean" && numOfPassedMean === wordListLength) {
       toast.info(
-        "現在の意味テストの達成率は100%です。意味テストを新しく始めたい場合は、リセットボタンを押してください。"
+        "意味テストの達成率は100%です。意味テストを新しく始めたい場合は、リセットボタンを押してください。"
       );
       return;
     }
