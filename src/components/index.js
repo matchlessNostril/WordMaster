@@ -3,6 +3,8 @@ export { default as BtnPopover } from "./BtnPopover";
 export { default as Divider } from "./Divider";
 export { default as Header } from "./Header";
 export { default as Loading } from "./Loading";
+export { default as LargeLoading } from "./LargeLoading";
+export { default as SmallLoading } from "./SmallLoading";
 export { default as NoFile } from "./NoFile";
 export { default as ProgressBar } from "./ProgressBar";
 export { default as RowSpaceBetween } from "./RowSpaceBetween";
