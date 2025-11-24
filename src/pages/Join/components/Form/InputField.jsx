@@ -8,7 +8,7 @@ import {
   Badge,
 } from "@mui/icons-material";
 import { useTheme } from "@mui/material";
-import StyledTextField from "../../../../components/StyledTextField";
+import { StyledTextField } from "../../../../components";
 
 const InputField = ({
   fieldName,

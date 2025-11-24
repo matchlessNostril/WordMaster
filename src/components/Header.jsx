@@ -1,13 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import {
-  Box,
-  AppBar,
-  Toolbar,
-  Tooltip,
-  useTheme,
-  Typography,
-} from "@mui/material";
+import { Box, AppBar, Toolbar, useTheme, Typography } from "@mui/material";
 import { logout } from "../service/auth";
 import GradientButton from "./GradientButton";
 
@@ -73,7 +66,12 @@ const btnInfoList = {
     to: "/TestList",
     icon: <NavigateBeforeIcon />,
   },
-  "/Test": { title: "テストを終了", onText: true, to: -1, icon: <CloseIcon /> },
+  "/Test": {
+    title: "テストを終了",
+    onText: true,
+    to: -1,
+    icon: <CloseIcon />,
+  },
 };
 
 const Header = () => {
@@ -121,18 +119,17 @@ const Header = () => {
               WM
             </Typography>
           </Box>
-          <Tooltip title={btnInfo.title}>
-            <GradientButton
-              onClick={
-                location.pathname === "/Main"
-                  ? () => btnInfo.to()
-                  : () => navigate(btnInfo.to)
-              }
-              icon={btnInfo.icon}
-              text={btnInfo.onText ? btnInfo.title : ""}
-              aria-label={btnInfo.title}
-            />
-          </Tooltip>
+
+          <GradientButton
+            onClick={
+              location.pathname === "/Main"
+                ? () => btnInfo.to()
+                : () => navigate(btnInfo.to)
+            }
+            icon={btnInfo.icon}
+            text={btnInfo.onText ? btnInfo.title : ""}
+            aria-label={btnInfo.title}
+          />
         </Toolbar>
       </AppBar>
     </Box>

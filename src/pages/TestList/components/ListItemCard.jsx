@@ -1,26 +1,20 @@
 import React, { useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { usePopOver, useModal } from "../../../hooks";
-import {
-  ListItem,
-  Card,
-  CardActionArea,
-  CardContent,
-  CardActions,
-  Typography,
-  IconButton,
-} from "@mui/material";
-import { BtnPopover, ActionModal } from "../../../components";
+import { ListItem, Box, useTheme, alpha } from "@mui/material";
+import { ActionModal, StyledListItemCard } from "../../../components";
 import { getList } from "../../../service/database/getList";
 import operateData from "../../../service/database/operateData";
 import { isEmpty } from "lodash";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { toast } from "react-toastify";
 import { updateTestListInVoca } from "../../../utils/utils";
+import DriveFileRenameOutlineSharpIcon from "@mui/icons-material/DriveFileRenameOutlineSharp";
+import DeleteSharpIcon from "@mui/icons-material/DeleteSharp";
+import QuizSharpIcon from "@mui/icons-material/QuizSharp";
 
 const ListItemCard = ({ itemKey, title }) => {
   const navigate = useNavigate();
-
+  const theme = useTheme();
   const [popoverAnchor, setPopoverAnchor, handleClickPopoverBtn] = usePopOver();
   const [openModal, setOpenModal, modalContent, handleClickOpenModal] =
     useModal();
@@ -97,6 +91,9 @@ const ListItemCard = ({ itemKey, title }) => {
         title: "名前を変更",
         textField: {
           label: "新しい名前",
+          placeholder: "新しい名前を入力してください。",
+          helperText:
+            "すでに存在する名前や「 . # $ [ ] 」記号は使用できません。",
         },
         btnName: "変更",
         handleClickBtn: handleClickChangeBtn,
@@ -118,6 +115,7 @@ const ListItemCard = ({ itemKey, title }) => {
           setPopoverAnchor(null);
           handleClickOpenModal(modalContents[0]);
         },
+        icon: <DriveFileRenameOutlineSharpIcon sx={{ color: "white" }} />,
       },
       {
         name: "削除",
@@ -125,6 +123,9 @@ const ListItemCard = ({ itemKey, title }) => {
           setPopoverAnchor(null);
           handleClickOpenModal(modalContents[1]);
         },
+        icon: (
+          <DeleteSharpIcon sx={{ color: alpha(theme.palette.red[400], 0.7) }} />
+        ),
       },
     ],
     []
@@ -140,34 +141,30 @@ const ListItemCard = ({ itemKey, title }) => {
           paddingRight: 0,
         }}
       >
-        <Card variant="outlined" sx={{ display: "flex", width: "83vw" }}>
-          <CardActionArea onClick={() => navigate(`/SetTest?title=${title}`)}>
-            <CardContent sx={{ display: "flex" }}>
-              <img
-                src={require("../../../assets/icons/test.png")}
-                alt="テストアイコン"
-                style={{
-                  width: "25px",
-                  height: "25px",
-                  marginRight: "15px",
-                }}
+        <StyledListItemCard
+          onClickCard={() => navigate(`/SetTest?title=${title}`)}
+          iconComponent={
+            <Box
+              sx={{
+                width: 44,
+                height: 44,
+                borderRadius: "12px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: alpha(theme.palette.purple[600], 0.2),
+                color: theme.palette.purple[600],
+                flexShrink: 0,
+              }}
+            >
+              <QuizSharpIcon
+                sx={{ width: 24, height: 24, color: theme.palette.purple[400] }}
               />
-              <Typography variant="body1" sx={{ flexGrow: 1 }}>
-                {title}
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-          <CardActions>
-            <IconButton onClick={handleClickPopoverBtn}>
-              <KeyboardArrowDownIcon />
-            </IconButton>
-            <BtnPopover
-              anchor={popoverAnchor}
-              setAnchor={setPopoverAnchor}
-              buttons={popoverBtns}
-            />
-          </CardActions>
-        </Card>
+            </Box>
+          }
+          title={title}
+          popoverBtns={popoverBtns}
+        />
       </ListItem>
       <ActionModal
         open={openModal}

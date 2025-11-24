@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { usePathListReducer } from "../../hooks";
 import {
   Transition,
-  Loading,
+  LargeLoading,
   NoFile,
   ScrollList,
   ResponsiveBox,
@@ -28,13 +28,31 @@ const TestList = () => {
 
   return (
     <ResponsiveBox>
-      <Header />
       {isLoading ? (
-        <Loading />
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
+          }}
+        >
+          <LargeLoading />
+        </div>
       ) : (
         <>
+          <Header />
           {isEmpty(testList) ? (
-            <NoFile text="まだ作成されたテストがありません。" />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "100%",
+              }}
+            >
+              <NoFile text="まだ作成されたテストがありません。" />
+            </div>
           ) : (
             <ScrollList maxHeight="73vh">
               {Object.entries(testList).map(([key, value]) => (

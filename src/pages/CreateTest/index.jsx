@@ -127,8 +127,8 @@ const CreateTest = () => {
                   <Typography variant="subtitle1">
                     <strong>単語帳を選択</strong>
                   </Typography>
-                  {vocaTree === "NoFile" ? (
-                    <NoFile text="単語帳が空です。" />
+                  {vocaTree !== "NoFile" ? (
+                    <NoFile text="まだ作成された単語帳がありません。" />
                   ) : (
                     <ScrollList maxHeight="48vh">
                       {dirList &&
