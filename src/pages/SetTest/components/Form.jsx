@@ -1,82 +1,31 @@
 import React from "react";
-import {
-  Box,
-  Stack,
-  Typography,
-  FormControl,
-  FormControlLabel,
-  RadioGroup,
-  Radio,
-  Checkbox,
-  TextField,
-  InputAdornment,
-} from "@mui/material";
+import { Box, FormControl, useTheme } from "@mui/material";
+import TestTypeSelector from "./TestTypeSelector";
+import TimerToggle from "./TimerToggle";
 
 const Form = ({ radio, handleRadio, timer, handleTimer }) => {
+  const theme = useTheme();
+
   return (
-    <Box sx={{ pl: 1 }}>
-      <Typography variant="subtitle1">
-        <strong>テスト設定</strong>
-      </Typography>
-      <FormControl>
-        <RadioGroup
-          row
-          value={radio}
-          onChange={(event) => handleRadio(event.target.value)}
-          sx={{
-            marginLeft: "-10px",
-          }}
-        >
-          <Box sx={{ display: "flex", alignItems: "center", mr: 3 }}>
-            <Radio value="word" id="word-radio" />
-            <label htmlFor="word-radio" style={{ cursor: "pointer" }}>
-              単語テスト
-            </label>
-            <span
-              style={{
-                fontSize: "0.75rem",
-                color: "rgba(0, 0, 0, 0.6)",
-                marginLeft: "4px",
-              }}
-            >
-              (単語を見て意味を答える形式)
-            </span>
-          </Box>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Radio value="mean" id="mean-radio" />
-            <label htmlFor="mean-radio" style={{ cursor: "pointer" }}>
-              意味テスト
-            </label>
-            <span
-              style={{
-                fontSize: "0.75rem",
-                color: "rgba(0, 0, 0, 0.6)",
-                marginLeft: "4px",
-              }}
-            >
-              (意味を見て単語を答える形式)
-            </span>
-          </Box>
-        </RadioGroup>
-        <Stack direction="row">
-          <FormControlLabel
-            control={<Checkbox onChange={() => handleTimer("ON")} />}
-            label="タイマー"
-          />
-          {timer.onTimer && (
-            <TextField
-              variant="standard"
-              autoComplete="off"
-              onChange={(event) => handleTimer("TIME", event.target.value)}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">(秒)</InputAdornment>
-                ),
-              }}
-              sx={{ marginLeft: "10px" }}
-            />
-          )}
-        </Stack>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "10px",
+      }}
+    >
+      <strong
+        style={{
+          fontSize: "1.25rem",
+          color: theme.palette.textColors.slate200,
+          marginBottom: "8px",
+        }}
+      >
+        テスト設定
+      </strong>
+      <FormControl sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+        <TestTypeSelector value={radio} onChange={handleRadio} />
+        <TimerToggle timer={timer} handleTimer={handleTimer} />
       </FormControl>
     </Box>
   );

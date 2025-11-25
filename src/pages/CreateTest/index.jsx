@@ -1,16 +1,10 @@
-import React, {
-  useState,
-  useMemo,
-  useContext,
-  useCallback,
-  useEffect,
-} from "react";
+import React, { useState, useMemo, useContext, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   VocaPathContext,
   VocaPathProvider,
 } from "../../contexts/VocaPathContext";
-import { Typography, Card, useTheme } from "@mui/material";
+import { Card, useTheme } from "@mui/material";
 import { alpha } from "@mui/material";
 import {
   Transition,
@@ -30,9 +24,6 @@ import { updateTestListInVoca, saveWordInTest } from "../../utils/utils";
 
 const CreateTest = () => {
   const theme = useTheme();
-  useEffect(() => {
-    toast.warning("デザインを修正中です。");
-  }, []);
 
   const navigate = useNavigate();
   const [testName, setTestName] = useState();

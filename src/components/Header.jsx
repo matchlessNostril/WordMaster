@@ -89,50 +89,47 @@ const Header = () => {
   }, [location]);
 
   return (
-    <Box component="header">
-      <AppBar
-        position="fixed"
-        elevation={0}
-        sx={{
-          backgroundColor: `${theme.palette.slate[900]}80`,
-          backdropFilter: "blur(4px)",
-          WebkitBackdropFilter: "blur(4px)",
-          borderBottom: `1px solid ${theme.palette.slate[700]}80`,
-        }}
-      >
-        <Toolbar>
-          <Box display="flex" alignItems="center" sx={{ flexGrow: 1, gap: 1 }}>
-            <StyleSharpIcon
-              sx={{
-                width: "30px",
-                height: "30px",
-                color: theme.palette.cyan[400],
-              }}
-            />
-            <Typography
-              variant="h6"
-              sx={{
-                color: theme.palette.textColors.slate100,
-                fontWeight: "bold",
-              }}
-            >
-              WM
-            </Typography>
-          </Box>
-
-          <GradientButton
-            onClick={
-              location.pathname === "/Main"
-                ? () => btnInfo.to()
-                : () => navigate(btnInfo.to)
-            }
-            icon={btnInfo.icon}
-            text={btnInfo.onText ? btnInfo.title : ""}
-            aria-label={btnInfo.title}
+    <AppBar
+      elevation={0}
+      sx={{
+        backgroundColor: `${theme.palette.slate[900]}80`,
+        backdropFilter: "blur(4px)",
+        WebkitBackdropFilter: "blur(4px)",
+        borderBottom: `1px solid ${theme.palette.slate[700]}80`,
+      }}
+    >
+      <Toolbar>
+        <Box display="flex" alignItems="center" sx={{ flexGrow: 1, gap: 1 }}>
+          <StyleSharpIcon
+            sx={{
+              width: "30px",
+              height: "30px",
+              color: theme.palette.cyan[400],
+            }}
           />
-        </Toolbar>
-      </AppBar>
-    </Box>
+          <Typography
+            variant="h6"
+            sx={{
+              color: theme.palette.textColors.slate100,
+              fontWeight: "bold",
+            }}
+          >
+            WM
+          </Typography>
+        </Box>
+
+        <GradientButton
+          onClick={
+            location.pathname === "/Main"
+              ? () => btnInfo.to()
+              : () => navigate(btnInfo.to)
+          }
+          icon={btnInfo.icon}
+          text={btnInfo.onText ? btnInfo.title : ""}
+          aria-label={btnInfo.title}
+        />
+      </Toolbar>
+    </AppBar>
   );
 };
 

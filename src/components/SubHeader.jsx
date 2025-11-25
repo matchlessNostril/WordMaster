@@ -13,7 +13,7 @@ const SubHeader = ({ title, disabled, btnName, handleClickBtn }) => {
         mt={2}
         ml={2}
         sx={{
-          fontSize: "1.75rem",
+          fontSize: "2rem",
           fontWeight: "bold",
           backgroundImage: `linear-gradient(to right, ${theme.palette.cyan[400]}, ${theme.palette.blue[400]}, ${theme.palette.purple[500]})`,
           backgroundClip: "text",

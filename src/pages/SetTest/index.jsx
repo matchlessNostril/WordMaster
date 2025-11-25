@@ -1,14 +1,13 @@
 import { useState, useCallback, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { Stack, Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import {
   Transition,
   SubHeader,
-  Loading,
-  Divider,
-  ResponsiveBox,
+  LargeLoading,
+  StyledCard,
 } from "../../components";
-import { Form, AchievementRate, ProgressBar, VocaList } from "./components";
+import { Form, ProgressSection, VocaList } from "./components";
 import operateData from "../../service/database/operateData";
 import { getList } from "../../service/database/getList";
 import { isEmpty } from "lodash";
@@ -20,12 +19,8 @@ const getLengthOfwordList = (wordList) => {
     .map(({ addressList }) => addressList)
     .flat().length;
 };
-
 const SetTest = () => {
-  useEffect(() => {
-    toast.warning("デザインを修正中です。");
-  }, []);
-
+  const theme = useTheme();
   const navigate = useNavigate();
   const [searchParams, _] = useSearchParams();
   const title = searchParams.get("title");
@@ -158,56 +153,93 @@ const SetTest = () => {
   }, []);
 
   return (
-    <ResponsiveBox>
-      <SubHeader
-        title={title}
-        disabled={
-          !timer.onTimer || (typeof timer.time === "number" && timer.time > 0)
-            ? false
-            : true
-        }
-        btnName="スタート"
-        handleClickBtn={() => handleClickStartBtn(testInfo, radio, timer)}
-      />
-      <div style={{ padding: "0 10px" }}>
-        <Divider margin={2} />
-        {isLoading ? (
-          <Loading />
-        ) : (
-          <>
-            <Form {...{ radio, handleRadio, timer, handleTimer }} />
-            <Divider margin={2} />
-            {!isEmpty(testInfo) && (
-              <Box sx={{ pl: 1 }}>
-                <AchievementRate
-                  wordRound={testInfo.wordRound}
-                  meanRound={testInfo.meanRound}
-                />
-                <Stack mt={1}>
-                  <ProgressBar
-                    title={title}
-                    type="word"
-                    numOfPassed={testInfo.numOfPassedWord}
-                    listLength={testInfo.wordListLength}
-                    setTestInfo={setTestInfo}
-                  />
-                  <ProgressBar
-                    title={title}
-                    type="mean"
-                    numOfPassed={testInfo.numOfPassedMean}
-                    listLength={testInfo.wordListLength}
-                    setTestInfo={setTestInfo}
-                    vocaPaths={vocaPaths}
-                  />
-                </Stack>
-              </Box>
-            )}
-            <Divider margin={2} />
-            <VocaList {...{ vocaPaths }} />
-          </>
-        )}
-      </div>
-    </ResponsiveBox>
+    <>
+      {isLoading ? (
+        <LargeLoading />
+      ) : (
+        <Box
+          sx={{
+            width: "100vw",
+            [theme.breakpoints.down("sm")]: { height: "90vh" },
+            [theme.breakpoints.up("sm")]: {
+              height: "85vh",
+            },
+            overflowY: "scroll",
+            mt: 2,
+            display: "flex",
+            justifyContent: "center",
+            "&::-webkit-scrollbar": {
+              width: "10px",
+              height: "10px",
+            },
+            "&::-webkit-scrollbar-thumb": {
+              backgroundColor: theme.palette.slate[600],
+              borderRadius: "12px",
+            },
+            "&::-webkit-scrollbar-thumb:hover": {
+              backgroundColor: theme.palette.slate[500],
+            },
+            "&::-webkit-scrollbar-track": {
+              backgroundColor: theme.palette.slate[800],
+              borderRadius: "12px",
+            },
+          }}
+        >
+          <Box
+            component="section"
+            sx={{
+              [theme.breakpoints.down("sm")]: { width: "90vw" },
+              [theme.breakpoints.up("sm")]: {
+                width: "75vw",
+              },
+            }}
+          >
+            <div style={{ marginBottom: "20px" }}>
+              <SubHeader
+                title={title}
+                disabled={
+                  !timer.onTimer ||
+                  (typeof timer.time === "number" && timer.time > 0)
+                    ? false
+                    : true
+                }
+                btnName="スタート"
+                handleClickBtn={() =>
+                  handleClickStartBtn(testInfo, radio, timer)
+                }
+              />
+            </div>
+
+            <div
+              style={{
+                padding: "0 10px",
+                display: "flex",
+                flexDirection: "column",
+                gap: "20px",
+              }}
+            >
+              <StyledCard maxHeight="">
+                <Form {...{ radio, handleRadio, timer, handleTimer }} />
+                {!isEmpty(testInfo) && (
+                  <Box sx={{ pl: 1 }}>
+                    <ProgressSection
+                      title={title}
+                      wordRound={testInfo.wordRound}
+                      meanRound={testInfo.meanRound}
+                      numOfPassedWord={testInfo.numOfPassedWord}
+                      numOfPassedMean={testInfo.numOfPassedMean}
+                      wordListLength={testInfo.wordListLength}
+                      setTestInfo={setTestInfo}
+                    />
+                  </Box>
+                )}
+              </StyledCard>
+              <VocaList {...{ vocaPaths }} />
+            </div>
+          </Box>
+        </Box>
+      )}
+    </>
   );
 };
 

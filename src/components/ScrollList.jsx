@@ -9,6 +9,7 @@ const ScrollList = ({ maxHeight, children }) => {
       sx={{
         maxHeight: { maxHeight },
         width: "100%",
+        height: "fit-content",
         maxWidth: "92vw",
         overflow: "auto",
         pr: 1,

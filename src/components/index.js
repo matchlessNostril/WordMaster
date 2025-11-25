@@ -17,3 +17,5 @@ export { default as Transition } from "./Transition";
 export { default as ResponsiveBox } from "./ResponsiveBox";
 export { default as StyledListItemCard } from "./StyledListItemCard";
 export { default as StyledTextField } from "./StyledTextField";
+export { default as VocaListItemIconBox } from "./VocaListItemIconBox";
+export { default as StyledCard } from "./StyledCard";
