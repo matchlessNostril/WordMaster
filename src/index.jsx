@@ -59,6 +59,7 @@ const theme = createTheme({
     },
     // 서브 포인트 색상 (Purple-Pink 그라데이션)
     purple: {
+      400: "#d8b4fe",
       500: "#c084fc",
       600: "#a855f7",
       700: "#9333ea",

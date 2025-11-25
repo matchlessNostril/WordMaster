@@ -1,5 +1,6 @@
 export { default as ActionModal } from "./ActionModal";
 export { default as BtnPopover } from "./BtnPopover";
+export { default as ChipButton } from "./ChipButton";
 export { default as Divider } from "./Divider";
 export { default as GradientButton } from "./GradientButton";
 export { default as Header } from "./Header";

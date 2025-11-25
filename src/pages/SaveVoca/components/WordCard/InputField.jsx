@@ -1,19 +1,17 @@
 import React from "react";
-import { Box, TextField } from "@mui/material";
+import { StyledTextField } from "../../../../components";
 
 const InputField = React.memo(
-  ({ label, value, autoFocus = false, type, handleInput }) => {
+  ({ label, value, autoFocus = false, type, handleInput, placeholder }) => {
     return (
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <TextField
-          {...{ label, value, autoFocus }}
-          variant="standard"
-          multiline
-          autoComplete="off"
-          onChange={(event) => handleInput(event, type)}
-          sx={{ width: "95%" }}
-        />
-      </Box>
+      <StyledTextField
+        labelText={label}
+        value={value}
+        placeholder={placeholder}
+        onChange={(event) => handleInput(event, type)}
+        autoFocus={autoFocus}
+        multiline
+      />
     );
   }
 );

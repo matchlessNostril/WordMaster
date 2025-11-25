@@ -1,9 +1,19 @@
 import React, { useState, useCallback } from "react";
-import { ListItem, Card, CardContent, Grid } from "@mui/material";
+import {
+  ListItem,
+  Card,
+  CardContent,
+  Grid,
+  useTheme,
+  alpha,
+} from "@mui/material";
 import { Header, WordCardForm } from "./WordCard/index";
 import { isEqual } from "lodash";
+import { ChipButton } from "../../../components";
 
 const WordCard = ({ index, word, wordListDispatch, autoFocus }) => {
+  const theme = useTheme();
+
   const [checkList, setCheckList] = useState({
     pronunciation: word.hasOwnProperty("pronunciation") ? true : false,
     explain: word.hasOwnProperty("explain") ? true : false,
@@ -45,14 +55,70 @@ const WordCard = ({ index, word, wordListDispatch, autoFocus }) => {
   );
 
   return (
-    <ListItem>
-      <Card variant="outlined" sx={{ display: "flex", width: "83vw" }}>
-        <CardContent sx={{ width: "100%" }}>
+    <ListItem sx={{ padding: "0", marginBottom: "16px" }}>
+      <Card
+        sx={{
+          display: "flex",
+          width: "100%",
+          backgroundColor: "transparent",
+          backgroundImage: `linear-gradient(to bottom right, ${
+            theme.palette.slate[800]
+          }, ${alpha(theme.palette.slate[800], 0.7)})`,
+          backdropFilter: "blur(4px)",
+          WebkitBackdropFilter: "blur(4px)",
+          borderRadius: "12px",
+          border: `1px solid ${alpha(theme.palette.slate[700], 0.5)}`,
+          boxShadow:
+            "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+          padding: "24px",
+          transition: "all 0.3s ease",
+          "&:hover": {
+            borderColor: alpha(theme.palette.cyan[500], 0.3),
+          },
+        }}
+      >
+        <CardContent
+          sx={{
+            width: "100%",
+            padding: 0,
+            "&.MuiCardContent-root:last-child": {
+              paddingBottom: 0,
+            },
+          }}
+        >
           <Grid container>
             <Header {...{ index, handleRemove }} />
-            <WordCardForm
-              {...{ word, checkList, autoFocus, handleInput, handleCheck }}
-            />
+            <WordCardForm {...{ word, checkList, autoFocus, handleInput }} />
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "flex-end",
+                gap: 8,
+              }}
+            >
+              {[
+                {
+                  propName: "pronunciation",
+                  text: "発音",
+                },
+                {
+                  propName: "explain",
+                  text: "説明",
+                },
+                {
+                  propName: "example",
+                  text: "例文",
+                },
+              ].map(({ propName, text }, index) => (
+                <ChipButton
+                  key={propName + index}
+                  text={text}
+                  selected={checkList[propName]}
+                  onClick={() => handleCheck(propName)}
+                />
+              ))}
+            </div>
           </Grid>
         </CardContent>
       </Card>

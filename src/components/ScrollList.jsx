@@ -19,7 +19,6 @@ const ScrollList = ({ maxHeight, children }) => {
         "&::-webkit-scrollbar-thumb": {
           backgroundColor: theme.palette.slate[600],
           borderRadius: "12px",
-          border: `2px solid ${theme.palette.slate[900]}`,
         },
         "&::-webkit-scrollbar-thumb:hover": {
           backgroundColor: theme.palette.slate[500],

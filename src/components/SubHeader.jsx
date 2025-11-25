@@ -1,21 +1,35 @@
 import React from "react";
-import { Typography, Button } from "@mui/material";
+import { Typography, useTheme } from "@mui/material";
 import RowSpaceBetween from "./RowSpaceBetween";
+import GradientButton from "./GradientButton";
 
 const SubHeader = ({ title, disabled, btnName, handleClickBtn }) => {
+  const theme = useTheme();
+
   return (
     <RowSpaceBetween>
-      <Typography variant="h5" ml={2}>
-        <strong>{title}</strong>
-      </Typography>
-      <Button
-        variant="contained"
-        disabled={disabled}
-        onClick={handleClickBtn}
-        sx={{ marginRight: "20px" }}
+      <Typography
+        variant="h4"
+        ml={2}
+        sx={{
+          fontSize: "1.75rem",
+          fontWeight: "bold",
+          backgroundImage: `linear-gradient(to right, ${theme.palette.cyan[400]}, ${theme.palette.blue[400]}, ${theme.palette.purple[500]})`,
+          backgroundClip: "text",
+          WebkitBackgroundClip: "text",
+          color: "transparent",
+          WebkitTextFillColor: "transparent",
+        }}
       >
-        {btnName}
-      </Button>
+        {title}
+      </Typography>
+      <div style={{ marginRight: "15px" }}>
+        <GradientButton
+          disabled={disabled}
+          onClick={handleClickBtn}
+          text={btnName}
+        />
+      </div>
     </RowSpaceBetween>
   );
 };

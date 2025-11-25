@@ -4,11 +4,12 @@ import useWordListReducer from "./useWordListReducer";
 import {
   Transition,
   SubHeader,
-  Loading,
+  LargeLoading,
   ScrollList,
   ResponsiveBox,
+  StyledTextField,
 } from "../../components";
-import { InputField, WordCard, AddBtn } from "./components";
+import { WordCard, AddBtn } from "./components";
 import { getList } from "../../service/database/getList";
 import operateData from "../../service/database/operateData";
 import { toast } from "react-toastify";
@@ -180,31 +181,44 @@ const SaveVoca = () => {
   }, []);
 
   return (
-    <ResponsiveBox>
-      <SubHeader
-        title={mode === "Modify" ? "単語帳を編集" : "新規単語帳を作成"}
-        disabled={vocaName ? false : true}
-        btnName={mode === "Modify" ? "編集" : "作成"}
-        handleClickBtn={() => handleClickSaveBtn(vocaName, wordList)}
-      />
-      <ScrollList maxHeight="75vh">
-        <InputField {...{ vocaName, setVocaName }} />
-        {isLoading ? (
-          <Loading />
-        ) : (
-          <>
-            {wordList.map((word, index) => (
-              <WordCard
-                key={index}
-                {...{ index, word, wordListDispatch }}
-                autoFocus={index === wordList.length - 1}
+    <>
+      {isLoading ? (
+        <LargeLoading />
+      ) : (
+        <>
+          <ResponsiveBox>
+            <div style={{ marginBottom: "20px" }}>
+              <SubHeader
+                title={mode === "Modify" ? "単語帳を編集" : "新規単語帳を作成"}
+                disabled={vocaName ? false : true}
+                btnName={mode === "Modify" ? "編集" : "作成"}
+                handleClickBtn={() => handleClickSaveBtn(vocaName, wordList)}
               />
-            ))}
-            <AddBtn handleClick={handleClickAddBtn} />
-          </>
-        )}
-      </ScrollList>
-    </ResponsiveBox>
+            </div>
+            <ScrollList maxHeight="75vh">
+              <div style={{ padding: "0 15px" }}>
+                <div style={{ marginBottom: "30px" }}>
+                  <StyledTextField
+                    labelText="単語帳名"
+                    value={vocaName}
+                    onChange={(event) => setVocaName(event.target.value)}
+                    placeholder="単語帳名を入力してください。"
+                  />
+                </div>
+                {wordList.map((word, index) => (
+                  <WordCard
+                    key={index}
+                    {...{ index, word, wordListDispatch }}
+                    autoFocus={index === wordList.length - 1}
+                  />
+                ))}
+              </div>
+              <AddBtn handleClick={handleClickAddBtn} />
+            </ScrollList>
+          </ResponsiveBox>
+        </>
+      )}
+    </>
   );
 };
 

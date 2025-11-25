@@ -53,6 +53,9 @@ const StyledTextField = ({
               paddingTop: "12px",
               paddingBottom: "12px",
               color: theme.palette.textColors.slate200,
+              "&::placeholder": {
+                fontSize: "0.875rem",
+              },
             },
             "& .MuiOutlinedInput-notchedOutline": {
               borderColor: error
@@ -70,6 +73,9 @@ const StyledTextField = ({
             },
             "&.Mui-focused": {
               boxShadow: `0 0 0 2px ${theme.palette.cyan[500]}33`,
+            },
+            "&.MuiInputBase-multiline": {
+              padding: 0,
             },
             transition: "all 0.3s ease",
           },
