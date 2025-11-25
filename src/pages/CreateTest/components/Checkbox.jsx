@@ -6,11 +6,21 @@ import React, {
   useCallback,
 } from "react";
 import { VocaPathContext } from "../../../contexts/VocaPathContext";
-import { Stack, Checkbox as MuiCheckbox, Button } from "@mui/material";
+import {
+  Stack,
+  Checkbox as MuiCheckbox,
+  Button,
+  useTheme,
+} from "@mui/material";
 import listObjToArr from "../../../utils/listObjToArr";
+import { Box, alpha } from "@mui/material";
+import FolderSharpIcon from "@mui/icons-material/FolderSharp";
+import DescriptionSharpIcon from "@mui/icons-material/DescriptionSharp";
 
 // 디렉토리 or 단어장 체크 박스 컴포넌트
 const Checkbox = ({ index, isDir = false, name, path, currentTree }) => {
+  const theme = useTheme();
+
   // VocaPathContext에서 모든 단어장 Path 배열, 선택된 단어장 Path 배열 State와 Setter 함수 불러오기
   const { allVocaPaths, selectedVocaPaths, setSelectedVocaPaths } =
     useContext(VocaPathContext);
@@ -106,29 +116,128 @@ const Checkbox = ({ index, isDir = false, name, path, currentTree }) => {
           indeterminate={indeterminate}
           disabled={isDir && allSubVocaPaths.length === 0}
           onChange={isDir ? () => handleCheckDir(checked) : handleCheckVoca}
+          disableRipple
+          icon={
+            <Box
+              className="custom-checkbox-icon"
+              sx={{
+                width: 20,
+                height: 20,
+                borderRadius: "6px",
+                border: `2px solid ${theme.palette.slate[600]}`,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                transition: "all 0.2s ease",
+                backgroundColor: "transparent",
+              }}
+            />
+          }
+          checkedIcon={
+            <Box
+              className="custom-checkbox-icon"
+              sx={{
+                width: 20,
+                height: 20,
+                borderRadius: "6px",
+                border: `2px solid ${theme.palette.cyan[400]}`,
+                backgroundImage: `linear-gradient(135deg, ${theme.palette.cyan[500]}, ${theme.palette.blue[500]})`,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                transition: "all 0.2s ease",
+              }}
+            >
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="white"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M5 13l4 4L19 7" />
+              </svg>
+            </Box>
+          }
+          indeterminateIcon={
+            <Box
+              className="custom-checkbox-icon"
+              sx={{
+                width: 20,
+                height: 20,
+                borderRadius: "6px",
+                border: `2px solid ${theme.palette.cyan[400]}`,
+                backgroundImage: `linear-gradient(135deg, ${theme.palette.cyan[500]}, ${theme.palette.blue[500]})`,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                transition: "all 0.2s ease",
+              }}
+            >
+              <Box
+                component="span"
+                sx={{
+                  width: 10,
+                  height: 2,
+                  borderRadius: 999,
+                  backgroundColor: "white",
+                }}
+              />
+            </Box>
+          }
+          sx={{
+            p: 0,
+            mr: 1.5,
+            "&:hover .custom-checkbox-icon": {
+              borderColor: theme.palette.slate[400],
+            },
+          }}
         />
         <Button
           onClick={isDir ? () => setOpenDir((prev) => !prev) : handleCheckVoca}
           startIcon={
-            <img
-              src={
-                !isDir
-                  ? require("../../../assets/icons/document.png")
-                  : openDir
-                  ? require("../../../assets/icons/folder_opened.png")
-                  : require("../../../assets/icons/folder_closed.png")
-              }
-              style={{
-                width: "20px",
-                height: "20px",
+            <Box
+              sx={{
+                width: 44,
+                height: 44,
+                borderRadius: "12px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: isDir
+                  ? alpha(theme.palette.amber[400], 0.2)
+                  : alpha(theme.palette.slate[500], 0.2),
+                color: isDir
+                  ? theme.palette.amber[400]
+                  : theme.palette.slate[400],
+                flexShrink: 0,
               }}
-            />
+            >
+              {isDir ? (
+                <FolderSharpIcon
+                  sx={{
+                    width: 24,
+                    height: 24,
+                    color: theme.palette.amber[250],
+                  }}
+                />
+              ) : (
+                <DescriptionSharpIcon
+                  sx={{ width: 24, height: 24, color: theme.palette.blue[400] }}
+                />
+              )}
+            </Box>
           }
           // minWidth를 unset로 해야 startIcon과 내부 Text를 모두 감쌀 수 있음
           sx={{
             whiteSpace: "nowrap",
             minWidth: "unset",
             textTransform: "none",
+            fontSize: "0.875rem",
+            color: theme.palette.textColors.slate200,
           }}
         >
           {name}

@@ -10,17 +10,18 @@ import {
   VocaPathContext,
   VocaPathProvider,
 } from "../../contexts/VocaPathContext";
-import { Typography } from "@mui/material";
+import { Typography, Card, useTheme } from "@mui/material";
+import { alpha } from "@mui/material";
 import {
   Transition,
   SubHeader,
-  Loading,
+  LargeLoading,
   NoFile,
-  Divider,
+  StyledTextField,
   ScrollList,
   ResponsiveBox,
 } from "../../components";
-import { InputField, Checkbox } from "./components";
+import { Checkbox } from "./components";
 import { getList } from "../../service/database/getList";
 import operateData from "../../service/database/operateData";
 import listObjToArr from "../../utils/listObjToArr";
@@ -28,6 +29,7 @@ import { toast } from "react-toastify";
 import { updateTestListInVoca, saveWordInTest } from "../../utils/utils";
 
 const CreateTest = () => {
+  const theme = useTheme();
   useEffect(() => {
     toast.warning("デザインを修正中です。");
   }, []);
@@ -112,58 +114,98 @@ const CreateTest = () => {
 
   return (
     <>
-      {isLoading ? (
-        <Loading onMarginTop={false} />
+      {isLoading || vocaTree === "Waiting" ? (
+        <LargeLoading />
       ) : (
         <>
           <ResponsiveBox>
-            <SubHeader
-              title="新規テストを作成"
-              disabled={
-                !testName || selectedVocaPaths.length === 0 ? true : false
-              }
-              btnName="作成"
-              handleClickBtn={() =>
-                handleClickCreateBtn(testName, selectedVocaPaths)
-              }
-            />
-            <div style={{ padding: "0 10px" }}>
-              <InputField {...{ handleInput }} />
-              <Divider margin={2} />
-              {vocaTree === "Waiting" ? (
-                <Loading />
+            <div style={{ marginBottom: "20px" }}>
+              <SubHeader
+                title="新規テストを作成"
+                disabled={
+                  !testName || selectedVocaPaths.length === 0 ? true : false
+                }
+                btnName="作成"
+                handleClickBtn={() =>
+                  handleClickCreateBtn(testName, selectedVocaPaths)
+                }
+              />
+            </div>
+            <div style={{ padding: "0 15px" }}>
+              <div style={{ marginBottom: "30px" }}>
+                <StyledTextField
+                  labelText="テスト名"
+                  value={testName}
+                  onChange={(event) => handleInput(event.target.value)}
+                  placeholder="テスト名を入力してください。"
+                />
+              </div>
+              {vocaTree === "NoFile" ? (
+                <NoFile text="まだ作成された単語帳がありません。" />
               ) : (
-                <>
-                  <Typography variant="subtitle1">
-                    <strong>単語帳を選択</strong>
-                  </Typography>
-                  {vocaTree === "NoFile" ? (
-                    <NoFile text="まだ作成された単語帳がありません。" />
-                  ) : (
-                    <ScrollList maxHeight="48vh">
-                      {dirList &&
-                        dirList.map((value, key) => (
-                          <Checkbox
-                            key={key}
-                            index={0}
-                            isDir
-                            name={value}
-                            path="Voca/root"
-                            currentTree={vocaTree[value]}
-                          />
-                        ))}
-                      {vocaList &&
-                        vocaList.map((value, key) => (
-                          <Checkbox
-                            key={key}
-                            index={0}
-                            name={value}
-                            path="Voca/root"
-                          />
-                        ))}
-                    </ScrollList>
-                  )}
-                </>
+                <Card
+                  sx={{
+                    display: "flex",
+                    minHeight: "55vh",
+                    flexDirection: "column",
+                    backgroundColor: "transparent",
+                    backgroundImage: `linear-gradient(to bottom right, ${
+                      theme.palette.slate[800]
+                    }, ${alpha(theme.palette.slate[800], 0.7)})`,
+                    backdropFilter: "blur(4px)",
+                    WebkitBackdropFilter: "blur(4px)",
+                    borderRadius: "12px",
+                    border: `1px solid ${alpha(theme.palette.slate[700], 0.5)}`,
+                    boxShadow:
+                      "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+                    padding: "24px",
+                    transition: "all 0.3s ease",
+                    "&:hover": {
+                      borderColor: alpha(theme.palette.cyan[500], 0.3),
+                    },
+                  }}
+                >
+                  <strong
+                    style={{
+                      fontSize: "1.25rem",
+                      color: theme.palette.textColors.slate200,
+                      marginBottom: "8px",
+                    }}
+                  >
+                    単語帳を選択
+                  </strong>
+                  <span
+                    style={{
+                      fontSize: "0.875rem",
+                      color: theme.palette.textColors.slate400,
+                    }}
+                  >
+                    フォルダをタップすると、フォルダが開きます。
+                  </span>
+
+                  <ScrollList maxHeight="48vh">
+                    {dirList &&
+                      dirList.map((value, key) => (
+                        <Checkbox
+                          key={key}
+                          index={0}
+                          isDir
+                          name={value}
+                          path="Voca/root"
+                          currentTree={vocaTree[value]}
+                        />
+                      ))}
+                    {vocaList &&
+                      vocaList.map((value, key) => (
+                        <Checkbox
+                          key={key}
+                          index={0}
+                          name={value}
+                          path="Voca/root"
+                        />
+                      ))}
+                  </ScrollList>
+                </Card>
               )}
             </div>
           </ResponsiveBox>
