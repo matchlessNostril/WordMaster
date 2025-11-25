@@ -22,6 +22,10 @@ const getLengthOfwordList = (wordList) => {
 };
 
 const SetTest = () => {
+  useEffect(() => {
+    toast.warning("デザインを修正中です。");
+  }, []);
+
   const navigate = useNavigate();
   const [searchParams, _] = useSearchParams();
   const title = searchParams.get("title");

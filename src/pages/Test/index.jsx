@@ -10,6 +10,10 @@ import { Box } from "@mui/system";
 import { toast } from "react-toastify";
 
 const Test = () => {
+  useEffect(() => {
+    toast.warning("デザインを修正中です。");
+  }, []);
+
   const isPortrait = useMediaQuery("(orientation: portrait)");
   const navigate = useNavigate();
   const location = useLocation();

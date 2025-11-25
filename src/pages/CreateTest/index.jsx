@@ -1,4 +1,10 @@
-import React, { useState, useMemo, useContext, useCallback } from "react";
+import React, {
+  useState,
+  useMemo,
+  useContext,
+  useCallback,
+  useEffect,
+} from "react";
 import { useNavigate } from "react-router-dom";
 import {
   VocaPathContext,
@@ -22,6 +28,10 @@ import { toast } from "react-toastify";
 import { updateTestListInVoca, saveWordInTest } from "../../utils/utils";
 
 const CreateTest = () => {
+  useEffect(() => {
+    toast.warning("デザインを修正中です。");
+  }, []);
+
   const navigate = useNavigate();
   const [testName, setTestName] = useState();
   const [isLoading, setIsLoading] = useState(false);
