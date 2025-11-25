@@ -7,19 +7,19 @@ import {
   CircularProgress,
 } from "@mui/material";
 import RotateLeftSharpIcon from "@mui/icons-material/RotateLeftSharp";
-import operateData from "../../../service/database/operateData";
-import { saveWordInTest } from "../../../utils/utils";
-import { getList } from "../../../service/database/getList";
+import operateData from "../service/database/operateData";
+import { saveWordInTest } from "../utils/utils";
+import { getList } from "../service/database/getList";
 
-const ProgressItem = ({
+export const ProgressItem = ({
   label,
   type,
   numOfPassed,
   listLength,
-  isLoading,
-  onReset,
-  theme,
+  isLoading = null,
+  onReset = null,
 }) => {
+  const theme = useTheme();
   const percentage = Math.floor((numOfPassed / listLength) * 100);
   const isDisabled = !numOfPassed || isLoading;
 
@@ -43,36 +43,38 @@ const ProgressItem = ({
           >
             {label}テスト
           </Box>
-          <IconButton
-            onClick={onReset}
-            disabled={isDisabled}
-            sx={{
-              padding: "6px",
-              "&:hover:not(:disabled)": {
-                backgroundColor: alpha(theme.palette.slate[700], 0.5),
-              },
-              "&:disabled": {
-                opacity: 0.3,
-              },
-              transition: "all 0.2s ease",
-            }}
-            title="リセット"
-          >
-            {isLoading ? (
-              <CircularProgress size={18} />
-            ) : (
-              <RotateLeftSharpIcon
-                sx={{
-                  width: "18px",
-                  height: "18px",
-                  color: isDisabled
-                    ? theme.palette.slate[600]
-                    : theme.palette.textColors.slate300,
-                  transition: "color 0.2s ease",
-                }}
-              />
-            )}
-          </IconButton>
+          {onReset && (
+            <IconButton
+              onClick={onReset}
+              disabled={isDisabled}
+              sx={{
+                padding: "6px",
+                "&:hover:not(:disabled)": {
+                  backgroundColor: alpha(theme.palette.slate[700], 0.5),
+                },
+                "&:disabled": {
+                  opacity: 0.3,
+                },
+                transition: "all 0.2s ease",
+              }}
+              title="リセット"
+            >
+              {isLoading ? (
+                <CircularProgress size={18} />
+              ) : (
+                <RotateLeftSharpIcon
+                  sx={{
+                    width: "18px",
+                    height: "18px",
+                    color: isDisabled
+                      ? theme.palette.slate[600]
+                      : theme.palette.textColors.slate300,
+                    transition: "color 0.2s ease",
+                  }}
+                />
+              )}
+            </IconButton>
+          )}
         </Box>
         <Box
           sx={{
@@ -220,7 +222,6 @@ const ProgressSection = ({
           listLength={wordListLength}
           isLoading={item.isLoading}
           onReset={item.onReset}
-          theme={theme}
         />
       ))}
     </Box>

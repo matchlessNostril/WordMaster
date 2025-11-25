@@ -1,19 +1,23 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import useQuestionReducer from "./useQuestionReducer";
-import { useMediaQuery, Stack } from "@mui/material";
-import { Transition, Loading, TextChip } from "../../components";
-import { Progress, QuestionCard, NextBtns } from "./components";
+import {
+  useMediaQuery,
+  Stack,
+  useTheme,
+  alpha,
+  Box,
+  Typography,
+} from "@mui/material";
+import { Transition, LargeLoading, ProgressItem } from "../../components";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import { QuestionCard, NextBtns } from "./components";
 import operateData from "../../service/database/operateData";
 import { shuffle } from "lodash";
-import { Box } from "@mui/system";
 import { toast } from "react-toastify";
 
 const Test = () => {
-  useEffect(() => {
-    toast.warning("デザインを修正中です。");
-  }, []);
-
+  const theme = useTheme();
   const isPortrait = useMediaQuery("(orientation: portrait)");
   const navigate = useNavigate();
   const location = useLocation();
@@ -229,13 +233,18 @@ const Test = () => {
   return (
     <>
       {isLoading ? (
-        <Loading onMarginTop={false} />
+        <LargeLoading />
       ) : (
-        <Stack spacing={2} sx={{ width: isPortrait ? "80vw" : "50vw" }}>
+        <Stack
+          spacing={2}
+          sx={{ width: isPortrait ? "80vw" : "60vw", marginTop: 2 }}
+        >
           {question.numOfPassed !== null && (
-            <Progress
+            <ProgressItem
+              label={`${type === "word" ? "単語" : "意味"}`}
+              type={type}
               numOfPassed={question.numOfPassed}
-              {...{ type, listLength: currentListLength }}
+              listLength={currentListLength}
             />
           )}
           <QuestionCard
@@ -244,36 +253,73 @@ const Test = () => {
             questionDispatch={questionDispatch}
             setCurrentListLength={setCurrentListLength}
           />
-          <Box
-            sx={{
-              fontSize: "0.8rem",
-              color: "#999",
-              backgroundColor: "#f0f0f0",
-              p: 0.5,
-              borderRadius: 1,
-            }}
-          >
+          <Box sx={{ marginBottom: "24px" }}>
             {question.currentQuestion.vocaPath && (
-              <>
-                出典 :{" "}
-                {question.currentQuestion.vocaPath.split("Voca/root/")[1]}
-              </>
+              <Box
+                sx={{
+                  fontSize: "0.875rem",
+                  color: theme.palette.textColors.slate400,
+                  backgroundColor: alpha(theme.palette.slate[800], 0.3),
+                  border: `1px solid ${alpha(theme.palette.slate[700], 0.5)}`,
+                  borderRadius: "8px",
+                  padding: "12px 16px",
+                }}
+              >
+                出典：{question.currentQuestion.vocaPath.split("Voca/root/")[1]}
+              </Box>
             )}
           </Box>
           <Stack
             direction="row"
             justifyContent={onTimer ? "space-between" : "flex-end"}
+            alignItems="center"
           >
             {onTimer && (
-              <TextChip
-                label={`${questionTimer}`}
-                sx={
-                  questionTimer === 0 && {
-                    color: "white",
-                    backgroundColor: "#ff6c6c",
-                  }
-                }
-              />
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  padding: "8px 16px",
+                  backgroundColor:
+                    questionTimer === 0
+                      ? alpha(theme.palette.red[500], 0.2)
+                      : alpha(theme.palette.slate[700], 0.4),
+                  border: `2px solid ${
+                    questionTimer === 0
+                      ? alpha(theme.palette.red[500], 0.5)
+                      : alpha(theme.palette.slate[600], 0.5)
+                  }`,
+                  borderRadius: "12px",
+                  transition: "all 0.2s ease",
+                }}
+              >
+                <AccessTimeIcon
+                  sx={{
+                    fontSize: "18px",
+                    color:
+                      questionTimer === 0
+                        ? theme.palette.red[400]
+                        : theme.palette.textColors.slate300,
+                    transition: "color 0.2s ease",
+                  }}
+                />
+                <Typography
+                  sx={{
+                    fontSize: "1rem",
+                    fontWeight: 600,
+                    color:
+                      questionTimer === 0
+                        ? theme.palette.red[400]
+                        : theme.palette.textColors.slate200,
+                    transition: "color 0.2s ease",
+                    minWidth: "24px",
+                    textAlign: "center",
+                  }}
+                >
+                  {questionTimer}
+                </Typography>
+              </Box>
             )}
             <NextBtns
               handleClickPassBtn={() => handleClickPassBtn(question)}

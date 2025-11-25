@@ -1,13 +1,16 @@
 import React from "react";
-import { Button } from "@mui/material";
+import { Button, useTheme, alpha } from "@mui/material";
 import { BtnPopover, ActionModal } from "../../../components";
 import { usePopOver, useModal } from "../../../hooks";
 import { removeWordInDB } from "../../../utils/utils";
 import { toast } from "react-toastify";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import EditWordForm from "./EditWordForm";
+import DriveFileRenameOutlineSharpIcon from "@mui/icons-material/DriveFileRenameOutlineSharp";
+import DeleteSharpIcon from "@mui/icons-material/DeleteSharp";
 
 const PopOverBtn = ({ question, questionDispatch, setCurrentListLength }) => {
+  const theme = useTheme();
   const [openModal, setOpenModal, modalContent, handleClickOpenModal] =
     useModal();
 
@@ -57,6 +60,7 @@ const PopOverBtn = ({ question, questionDispatch, setCurrentListLength }) => {
         setPopoverAnchor(null);
         handleClickOpenModal(modalContents[0]);
       },
+      icon: <DriveFileRenameOutlineSharpIcon sx={{ color: "white" }} />,
     },
     {
       name: "削除",
@@ -64,6 +68,9 @@ const PopOverBtn = ({ question, questionDispatch, setCurrentListLength }) => {
         setPopoverAnchor(null);
         handleClickOpenModal(modalContents[1]);
       },
+      icon: (
+        <DeleteSharpIcon sx={{ color: alpha(theme.palette.red[400], 0.7) }} />
+      ),
     },
   ];
 
@@ -74,22 +81,29 @@ const PopOverBtn = ({ question, questionDispatch, setCurrentListLength }) => {
         sx={{
           position: "absolute",
           top: 0,
-          right: 5,
+          right: "16px",
+          zIndex: 50,
+          padding: "3px 8px",
+          backgroundColor: alpha(theme.palette.slate[700], 0.8),
           borderTopLeftRadius: 0,
           borderTopRightRadius: 0,
-          minWidth: 30,
-          width: 30,
-          height: 20,
-          backgroundColor: "white",
+          borderBottomLeftRadius: "8px",
+          borderBottomRightRadius: "8px",
+          minWidth: "auto",
+          transition: "background-color 0.2s ease",
           "&:hover": {
-            backgroundColor: "#f0f0f0",
-            transform: "scale(0.975)",
-            transition: "transform 0.1s ease-in-out",
+            backgroundColor: theme.palette.slate[700],
           },
         }}
         onClick={handleClickPopoverBtn}
       >
-        <KeyboardArrowDownIcon sx={{ fontSize: 16, color: "#535353" }} />
+        <KeyboardArrowDownIcon
+          sx={{
+            width: "16px",
+            height: "16px",
+            color: theme.palette.textColors.slate300,
+          }}
+        />
       </Button>
       <BtnPopover
         anchor={popoverAnchor}
@@ -107,4 +121,3 @@ const PopOverBtn = ({ question, questionDispatch, setCurrentListLength }) => {
 };
 
 export default PopOverBtn;
-

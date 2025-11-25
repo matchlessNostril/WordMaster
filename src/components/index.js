@@ -19,3 +19,4 @@ export { default as StyledListItemCard } from "./StyledListItemCard";
 export { default as StyledTextField } from "./StyledTextField";
 export { default as VocaListItemIconBox } from "./VocaListItemIconBox";
 export { default as StyledCard } from "./StyledCard";
+export { default as ProgressSection, ProgressItem } from "./ProgressSection";

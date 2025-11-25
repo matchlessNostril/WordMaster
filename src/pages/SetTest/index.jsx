@@ -6,8 +6,9 @@ import {
   SubHeader,
   LargeLoading,
   StyledCard,
+  ProgressSection,
 } from "../../components";
-import { Form, ProgressSection, VocaList } from "./components";
+import { Form, VocaList } from "./components";
 import operateData from "../../service/database/operateData";
 import { getList } from "../../service/database/getList";
 import { isEmpty } from "lodash";
