@@ -1,6 +1,6 @@
 import React from "react";
 import { useTheme } from "@mui/material";
-import AutoStoriesSharpIcon from "@mui/icons-material/AutoStoriesSharp";
+import StyleSharpIcon from "@mui/icons-material/StyleSharp";
 
 const SmallLoading = () => {
   const theme = useTheme();
@@ -38,7 +38,7 @@ const SmallLoading = () => {
           justifyContent: "center",
         }}
       >
-        <AutoStoriesSharpIcon
+        <StyleSharpIcon
           sx={{
             width: "12px",
             height: "12px",
@@ -64,4 +64,3 @@ const SmallLoading = () => {
 };
 
 export default SmallLoading;
-

@@ -10,6 +10,7 @@ const SubHeader = ({ title, disabled, btnName, handleClickBtn }) => {
     <RowSpaceBetween>
       <Typography
         variant="h4"
+        mt={2}
         ml={2}
         sx={{
           fontSize: "1.75rem",

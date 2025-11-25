@@ -1,6 +1,6 @@
 import React from "react";
 import { useTheme } from "@mui/material";
-import AutoStoriesSharpIcon from "@mui/icons-material/AutoStoriesSharp";
+import StyleSharpIcon from "@mui/icons-material/StyleSharp";
 
 const LargeLoading = () => {
   const theme = useTheme();
@@ -84,7 +84,7 @@ const LargeLoading = () => {
                 animation: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
               }}
             >
-              <AutoStoriesSharpIcon
+              <StyleSharpIcon
                 sx={{
                   width: "32px",
                   height: "32px",

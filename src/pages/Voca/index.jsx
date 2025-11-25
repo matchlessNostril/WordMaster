@@ -1,22 +1,16 @@
 import { useEffect, useState, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import {
-  FormControl,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-  Checkbox,
-} from "@mui/material";
+import { FormControl, Box } from "@mui/material";
 import {
   Transition,
   SubHeader,
-  Loading,
-  Divider,
-  RowSpaceBetween,
+  LargeLoading,
   ScrollList,
   ResponsiveBox,
+  ChipButton,
 } from "../../components";
 import WordCard from "./components/WordCard";
+import CustomRadioButton from "./components/CustomRadioButton";
 import { getList } from "../../service/database/getList";
 
 const Voca = () => {
@@ -51,52 +45,49 @@ const Voca = () => {
 
   return (
     <>
-      <ResponsiveBox>
-        <SubHeader
-          title={title}
-          disabled={false}
-          btnName="編集"
-          handleClickBtn={handleClickModifyBtn}
-        />
-        <Divider margin={3} />
-        {isLoading ? (
-          <Loading />
-        ) : (
-          <>
-            <FormControl sx={{ width: "100%" }}>
-              <div
-                style={{
-                  display: "flex",
-                  width: "100%",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
+      {isLoading ? (
+        <LargeLoading />
+      ) : (
+        <ResponsiveBox>
+          <SubHeader
+            title={title}
+            disabled={false}
+            btnName="編集"
+            handleClickBtn={handleClickModifyBtn}
+          />
+          <FormControl sx={{ width: "100%", my: 2 }}>
+            <div
+              style={{
+                display: "flex",
+                width: "100%",
+                alignItems: "center",
+                gap: 30,
+              }}
+            >
+              <Box
+                sx={{ display: "flex", alignItems: "center", gap: 3, ml: 2 }}
               >
-                <RadioGroup
-                  row
-                  value={radio}
-                  onChange={(event) => setRadio(event.target.value)}
-                  sx={{ ml: 2 }}
-                >
-                  <FormControlLabel
-                    value="word"
-                    control={<Radio />}
-                    label="単語"
-                  />
-                  <FormControlLabel
-                    value="mean"
-                    control={<Radio />}
-                    label="意味"
-                  />
-                </RadioGroup>
-                <FormControlLabel
-                  control={
-                    <Checkbox onChange={() => setIsChecked((prev) => !prev)} />
-                  }
-                  label="答えを隠す"
+                <CustomRadioButton
+                  value="word"
+                  selected={radio === "word"}
+                  label="単語"
+                  onClick={() => setRadio("word")}
                 />
-              </div>
-            </FormControl>
+                <CustomRadioButton
+                  value="mean"
+                  selected={radio === "mean"}
+                  label="意味"
+                  onClick={() => setRadio("mean")}
+                />
+              </Box>
+              <ChipButton
+                text="答えを隠す"
+                selected={isChecked}
+                onClick={() => setIsChecked((prev) => !prev)}
+              />
+            </div>
+          </FormControl>
+          <div style={{ padding: "0 15px" }}>
             <ScrollList maxHeight="65vh">
               {wordList.map((word, index) => (
                 <WordCard
@@ -108,9 +99,9 @@ const Voca = () => {
                 />
               ))}
             </ScrollList>
-          </>
-        )}
-      </ResponsiveBox>
+          </div>
+        </ResponsiveBox>
+      )}
     </>
   );
 };
