@@ -4,7 +4,14 @@ import { InputField } from "./index";
 const WordCardForm = ({ word, checkList, handleInput, autoFocus = false }) => {
   const checkCount = Object.values(checkList).filter(Boolean).length;
   return (
-    <Grid item xs={12} sx={{ marginBottom: checkCount > 0 ? "16px" : 0 }}>
+    <Grid
+      item
+      xs={12}
+      sx={{
+        marginBottom: checkCount > 0 ? "16px" : 0,
+        minWidth: "70vw",
+      }}
+    >
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <Grid container spacing={2} direction="column">

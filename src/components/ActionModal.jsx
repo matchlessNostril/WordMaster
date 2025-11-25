@@ -39,7 +39,7 @@ const ActionModal = ({ open, setOpen, content }) => {
               position: "relative",
               zIndex: 1,
               width: "fit-content",
-              minWidth: 420,
+              minWidth: theme.breakpoints.down("sm") ? 300 : 420,
               backgroundColor: alpha(theme.palette.slate[800], 0.95),
               borderRadius: "20px",
               border: `1px solid ${alpha(theme.palette.slate[700], 0.5)}`,
