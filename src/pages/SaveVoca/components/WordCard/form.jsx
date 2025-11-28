@@ -1,7 +1,13 @@
 import { Grid } from "@mui/material";
 import { InputField } from "./index";
 
-const WordCardForm = ({ word, checkList, handleInput, autoFocus = false }) => {
+const WordCardForm = ({
+  word,
+  checkList,
+  handleInput,
+  autoFocus = false,
+  minWidth = null,
+}) => {
   const checkCount = Object.values(checkList).filter(Boolean).length;
   return (
     <Grid
@@ -10,6 +16,8 @@ const WordCardForm = ({ word, checkList, handleInput, autoFocus = false }) => {
       sx={{
         marginBottom: checkCount > 0 ? "16px" : 0,
         width: "100%",
+        minWidth: minWidth ?? null,
+        marginBottom: 2,
       }}
     >
       <Grid container spacing={2}>

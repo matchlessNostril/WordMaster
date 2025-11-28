@@ -65,7 +65,13 @@ const EditWordForm = ({ question, setOpenModal, questionDispatch }) => {
   return (
     <div>
       <WordCardForm
-        {...{ word: newWord, checkList, handleInput, handleCheck }}
+        {...{
+          word: newWord,
+          checkList,
+          handleInput,
+          handleCheck,
+          minWidth: "70vw",
+        }}
       />
       <div
         style={{
