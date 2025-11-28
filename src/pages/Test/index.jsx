@@ -59,7 +59,7 @@ const Test = () => {
         const shuffledWordList = shuffle(
           Object.entries(waitingList || {}).flatMap(
             ([testWordPathKey, { path, addressList }]) =>
-              addressList.map((address) => ({
+              (addressList || []).map((address) => ({
                 testWordPathKey,
                 vocaPath: path,
                 wordAddress: address,
