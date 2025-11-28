@@ -91,6 +91,32 @@ const AnswerTable = ({ type, questionWord }) => {
             gap: "20px",
           }}
         >
+          {/* Pronunciation */}
+          {hasPronunciation && (
+            <Box>
+              <Typography
+                sx={{
+                  fontSize: "0.875rem",
+                  fontWeight: 600,
+                  color: theme.palette.textColors.slate400,
+                  marginBottom: "8px",
+                }}
+              >
+                発音
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: "1rem",
+                  color: theme.palette.textColors.slate200,
+                  whiteSpace: "pre-line",
+                  wordBreak: "break-word",
+                }}
+              >
+                {questionWord.pronunciation}
+              </Typography>
+            </Box>
+          )}
+
           {/* Explanation */}
           {hasExplain && (
             <Box>
@@ -114,32 +140,6 @@ const AnswerTable = ({ type, questionWord }) => {
                 }}
               >
                 {questionWord.explain}
-              </Typography>
-            </Box>
-          )}
-
-          {/* Pronunciation */}
-          {hasPronunciation && (
-            <Box>
-              <Typography
-                sx={{
-                  fontSize: "0.875rem",
-                  fontWeight: 600,
-                  color: theme.palette.textColors.slate400,
-                  marginBottom: "8px",
-                }}
-              >
-                発音
-              </Typography>
-              <Typography
-                sx={{
-                  fontSize: "1rem",
-                  color: theme.palette.textColors.slate200,
-                  whiteSpace: "pre-line",
-                  wordBreak: "break-word",
-                }}
-              >
-                {questionWord.pronunciation}
               </Typography>
             </Box>
           )}

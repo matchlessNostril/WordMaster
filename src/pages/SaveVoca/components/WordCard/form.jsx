@@ -9,7 +9,7 @@ const WordCardForm = ({ word, checkList, handleInput, autoFocus = false }) => {
       xs={12}
       sx={{
         marginBottom: checkCount > 0 ? "16px" : 0,
-        minWidth: "70vw",
+        width: "100%",
       }}
     >
       <Grid container spacing={2}>
@@ -49,30 +49,28 @@ const WordCardForm = ({ word, checkList, handleInput, autoFocus = false }) => {
                 handleInput={handleInput}
               />
             </Grid>
-            {[
-              {
-                propName: "explain",
-                label: "説明",
-                placeholder: "単語の説明を入力してください",
-              },
-              {
-                propName: "example",
-                label: "例文",
-                placeholder: "単語を使った例文を入力してください",
-              },
-            ].map(({ propName, label, placeholder }) => (
-              <Grid item xs={12} key={propName}>
-                {checkList[propName] && (
-                  <InputField
-                    label={label}
-                    placeholder={placeholder}
-                    value={word[propName]}
-                    type={propName}
-                    handleInput={handleInput}
-                  />
-                )}
+            {checkList.explain && (
+              <Grid item xs={12}>
+                <InputField
+                  label="説明"
+                  placeholder="単語の説明を入力してください"
+                  value={word.explain}
+                  type="explain"
+                  handleInput={handleInput}
+                />
               </Grid>
-            ))}
+            )}
+            {checkList.example && (
+              <Grid item xs={12}>
+                <InputField
+                  label="例文"
+                  placeholder="単語を使った例文を入力してください"
+                  value={word.example}
+                  type="example"
+                  handleInput={handleInput}
+                />
+              </Grid>
+            )}
           </Grid>
         </Grid>
       </Grid>
