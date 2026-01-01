@@ -82,7 +82,10 @@ const Header = () => {
   const [btnInfo, setBtnInfo] = useState({ title: "", to: "", icon: null });
   useEffect(() => {
     if (location.pathname === "/Voca" && location.state.isAfterModify) {
-      setBtnInfo({ ...btnInfoList[location.pathname], to: -3 });
+      setBtnInfo({
+        ...btnInfoList[location.pathname],
+        to: `/VocaList?path=${location.state.path}`,
+      });
       return;
     }
     setBtnInfo(btnInfoList[location.pathname]);

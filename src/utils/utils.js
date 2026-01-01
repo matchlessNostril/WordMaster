@@ -113,6 +113,7 @@ export const getAllTestNamesContainingVocaOrDir = async (
   isDir = false
 ) => {
   const vocaPathsList = await getAllVocaPathsListInTest();
+  if (!vocaPathsList) return null;
 
   const filteredTestNames = vocaPathsList
     .filter(({ vocaPaths }) => {
