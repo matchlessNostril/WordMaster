@@ -72,7 +72,11 @@ const Header = ({
         {path !== "root" ? (
           <Stack direction="row" alignItems="center">
             <IconButton
-              onClick={() => navigate(-1)}
+              onClick={() =>
+                navigate(
+                  `/VocaList?path=${path.split("/").slice(0, -1).join("/")}`
+                )
+              }
               sx={{
                 padding: "6px",
                 borderRadius: "10px",
