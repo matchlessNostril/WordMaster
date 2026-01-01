@@ -31,7 +31,31 @@
 - `Tablet`
 - `Mobile`
 
-## 📌 機能
+## ⭐️ メインフロー
+
+### 1. 単語帳の登録
+
+<img width="768" height="459" alt="image" src="https://github.com/user-attachments/assets/64da5ae2-f4ca-4966-b834-9044e4082d77" />
+
+- 暗記中の単語帳を WordMaster に登録してください。
+  
+<img width="768" height="459" alt="image" src="https://github.com/user-attachments/assets/f09f0fb2-fa95-48e6-8ed4-4f1ebfebf73a" />
+
+- フォルダ機能を利用して、単語帳を体系的に管理できます。
+  
+### 2. テスト
+
+<img width="768" height="459" alt="image" src="https://github.com/user-attachments/assets/a1277786-489f-4712-a717-32bddcc1671c" />
+
+- 一緒に暗記する単語帳を選択し、テストを作成してください。
+
+<img width="768" height="459" alt="image" src="https://github.com/user-attachments/assets/adc1fe69-31bc-4c8d-851c-37fbe56c1484" />
+<img width="768" height="459" alt="image" src="https://github.com/user-attachments/assets/1f44305e-0f1a-4f2c-a5a5-d35682acb34c" />
+
+- テストオプションを設定した後、ランダムに出題されるテストを通して、単語を確実に暗記しましょう。カードをめくると正解が表示されます。
+
+
+## 📌 詳細画面・機能
 
 - [サイトへ](https://wordmaster-6c8d8.web.app)
 - **テスト用アカウント**（データはバックアップされていますので、ご自由にお試しください。）
