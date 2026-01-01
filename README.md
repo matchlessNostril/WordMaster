@@ -62,105 +62,55 @@
 	- Email : test555@example.com
  	- Password : password555! 
 
-### 1️⃣ WELCOME、ログイン／会員登録
+### 1. WELCOME、ログイン／会員登録
 
-<img src="https://github.com/user-attachments/assets/4832386f-9f72-4455-9022-21fbc45f25eb" width="900" />
+<img width="768" height="459" alt="image" src="https://github.com/user-attachments/assets/8a64506c-67db-48b6-92b0-2fd7cfa29291" />
 
-- Word Master は、あなた専用の単語帳＆テストサイトです。🤗
-- 右上のアイコンをクリックすると、ログイン画面に移動します。
+- Word Master は、あなた専用の単語帳＆テストサイトです。
+- 右上のアイコンをクリックすると、ログイン画面に遷移します。
 
-<img src="https://github.com/user-attachments/assets/8ef60270-910d-4c3d-9f27-83adc055fb5a" width="700" />
+<img width="768" height="700" alt="image" src="https://github.com/user-attachments/assets/997b7c5a-fd1f-4d91-8ae8-32db7213559c" />
 
-- ログイン／会員登録 を切り替えることができます。
-- Google アカウントでのログイン・登録が可能です。
-- 入力内容に不備があると、エラーメッセージが表示されます。
-- パスワード欄の👁️ボタンをクリックすると、入力したパスワードが表示されます。
-- 入力がすべて正しい場合のみ、ボタンが有効になります
-- ログイン／登録が成功すると、ホーム画面に移動します。
+- Google アカウントでログイン・登録できます。
+- 入力内容に不備がある場合、エラーメッセージが表示されます。
+- パスワード欄の 👁️ ボタンをクリックすると、入力したパスワードが表示されます。
+- すべての入力が正しい場合のみ、ボタンが有効になります。
 
-### 2️⃣ 「単語帳 & テスト」モードの選択（ホーム）
+### 2. 「単語帳 & テスト」 モードの選択
 
-<img src="https://github.com/user-attachments/assets/e8421219-e16a-47e7-922e-229138c44dbc" width="900" />
+<img width="768" height="459" alt="image" src="https://github.com/user-attachments/assets/040e20c2-0160-428e-8389-d6e0523962d3" />
 
-- **単語帳（Voca）**
-  - フォルダを作成して、自分の好きな形で単語帳を整理できます。
-- **テスト**
-  - テストしたい単語帳を選んで、繰り返し・ランダムテストができます。
+- **「単語帳」モード**：暗記中の単語帳を体系的に登録・管理します。
+- **「テスト」モード**：一緒に暗記する単語帳を選択してテストを作成し、ランダムに出題されるテストを通して単語を暗記します。
 
-### 3️⃣ 単語帳モード
+### 3. 「単語帳」モード
 
-<img src="https://github.com/user-attachments/assets/582afe4c-9ef1-4177-b97d-b3f155c9dc51" width="900" />
+<img width="768" height="918" alt="image" src="https://github.com/user-attachments/assets/75af54e2-4a8a-43d3-aa80-e98ccb64d66a" />
 
-- フォルダ構造で、自由に単語帳を作成できます。
-- フォルダーをクリックすると、その中に移動します。
-- 単語帳をクリックすると、単語帳が開きます。
+- フォルダ構造で、単語帳を体系的に登録・管理できます。
+- フォルダをクリックすると、該当フォルダ内に移動します。
 
-<img src="https://github.com/user-attachments/assets/f701907f-e96c-49a5-a0c2-9b787ad8d5ca" width="700" />
+<img width="768" height="600" alt="image" src="https://github.com/user-attachments/assets/c4410dc9-54f7-4b57-b4e5-a251623e4129" />
 
-- ➕ボタンをクリックすると、新しいフォルダまたは単語帳の作成できます。
+- 🔽 ボタンをクリックすると、フォルダまたは単語帳の名前を変更・削除できます。
 
-<img src="https://github.com/user-attachments/assets/36c48862-5301-4d6f-ab99-f5c9763ff674" width="700" />
+<img width="768" height="350" alt="image" src="https://github.com/user-attachments/assets/751bd340-5863-44a9-8119-b61f8a24a12d" />
 
-- 🔽ボタンをクリックすると、名前の変更または削除ができます。
+- ➕ ボタンをクリックすると、新しいフォルダまたは単語帳を作成できます。
+- **新規単語帳を作成**ボタンを押すと、単語入力画面に遷移します。
 
-### 4️⃣ 単語帳の作成
+<img width="768" height="459" alt="image" src="https://github.com/user-attachments/assets/740a1476-4d19-4498-b0d8-28278d566b74" />
 
-<img src="https://github.com/user-attachments/assets/8dfdcf32-70f3-4bf7-9cca-9b28a59978aa" width="900" />
+- 各単語は **単語・意味** の入力が必須で、**発音・説明・例文** は必要に応じて追加できます。
 
-- 登録する単語を入力します。
-- 「単語・意味・発音」、三つのフィールドがあります。
-- 日本語の場合、漢字の発音も一緒に登録して、テストすることができます。
+<img width="768" height="459" alt="image" src="https://github.com/user-attachments/assets/ff48d208-a9c7-4bb9-a502-df155f9cb6a4" />
 
-### 5️⃣ 単語帳
+- 単語帳をクリックすると、該当する単語帳画面に遷移します。
 
-<img src="https://github.com/user-attachments/assets/eae5dc3a-7d4f-4143-bdda-29a62660edd4" width="900" />
+<img width="768" height="459" alt="image" src="https://github.com/user-attachments/assets/b096e153-6de5-4c86-9572-c165492c6071" />
 
-- テストの前に、作成した単語帳を開いて学習します。
-- また、「答えを隠す」機能で簡単にテストできます。
+- **単語** または **意味** を基準に並び替えができ、**答えを隠す**機能を使って、テスト前に単語帳ごとの簡単な暗記が可能です。
 
-<img src="https://github.com/user-attachments/assets/2030bd11-e31e-48b2-bb0d-bb19f9a54ede" width="900" />
+### 4. 「テスト」モード
 
-- 並び替えの基準を変更できます。
 
-<img src="https://github.com/user-attachments/assets/7475621f-a7ce-48b3-a54a-1402a67cf041" width="900" />
-
-<img src="https://github.com/user-attachments/assets/4d2682bf-8ae0-42cc-a1c9-7d4d1cda268e" width="900" />
-
-- 「答えを隠す」機能を使うと、右側が隠され、🔽ボタンで答えを確認できます。
-
-### 6️⃣ テストモード
-
-<img src="https://github.com/user-attachments/assets/531a39be-4d19-45e9-ba52-40f918e90ce0" width="900" />
-
-- テストしたい単語帳を複数選んで、繰り返し・ランダムテストができます。
-- ➕ボタンをクリックすると、テスト作成画面に移動します。
-- テストをクリックすると、テスト設定画面に移動します。
-
-### 7️⃣ テストの作成
-
-<img src="https://github.com/user-attachments/assets/25d279db-acfa-47c4-baab-5ae23a2c4366" width="900" />
-
-<img src="https://github.com/user-attachments/assets/d87b822a-8ace-4747-a05b-68a8ef675df7" width="900" />
-
-- 自分の単語帳フォルダ構造が下部に表示され、テストしたい単語帳をすべて選んで、テストを作成します。
-
-### 8️⃣ テストの設定
-
-<img src="https://github.com/user-attachments/assets/c64733c7-b3cc-49c6-a5d7-758337169beb" width="900" />
-
-- テストを始める前に、設定を行います。
-- タイマーも設定できます。
-- 現在の達成率を確認できます。また、🔄️ボタンを通じてリセットすることもできます。
-
-### 9️⃣ テスト
-
-<img src="https://github.com/user-attachments/assets/2a533853-62a7-4975-9e50-7c336af87062" width="900" />
-
-- 真ん中の単語カードを見て、知っている単語なら✔️（正解）ボタンを、知らないなら✖️（不正解）をクリックします。
-- ✖️をクリックした単語は、後でランダムに再出題されます。
-- タイマーを設定した場合、左下にタイマーが表示され、０秒になると▶（次へ）ボタンが現れます。
-- 上部に達成率が表示されます。
-
-<img src="https://github.com/matchlessNostril/WordMaster/assets/144131324/992571bf-c2ad-4a6f-93f0-465da0996147" width="100" />
-
-- いつでも✖️ボタンをクリックしてテストを中断できます。
