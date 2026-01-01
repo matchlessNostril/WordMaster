@@ -113,4 +113,41 @@
 
 ### 4. 「テスト」モード
 
+<img width="768" height="459" alt="image" src="https://github.com/user-attachments/assets/1e1c1e49-e9e6-4d35-adbc-bdcc3dbbfd81" />
 
+- 暗記する単語帳を選択してテストを作成し、ランダムに出題されるテストを繰り返すことで、単語を暗記できます。
+- ➕ ボタンをクリックすると、テスト作成画面に遷移します。
+
+<img width="768" height="459" alt="image" src="https://github.com/user-attachments/assets/d5cf6b13-b238-43ec-a731-b1021fcc9b57" />
+
+- テストに出題する単語帳またはフォルダを選択し、テストを作成します。
+- フォルダをクリックすると、フォルダ内のフォルダと単語帳の一覧が表示されます。
+
+<img width="768" height="459" alt="image" src="https://github.com/user-attachments/assets/f2c01629-fe2f-4651-8c3e-95317195cde6" />
+
+- テストをクリックするして、テスト設定画面に遷移します。
+- テスト形式は、**単語テスト**（単語を見て意味を答える形式）または **意味テスト**（意味を見て単語を答える形式）から選択できます。
+- 単語ごとのタイマーを設定できます。
+- **スタート**ボタンをクリックして、テストを開始します。
+
+<img width="768" height="430" alt="image" src="https://github.com/user-attachments/assets/2e3761de-a80d-4eeb-9b05-f3df0636e55e" />
+
+- テストの進行状況を確認でき、🔄️ ボタンをクリックするとテストをリセットできます。
+- また、このテストに含まれるフォルダおよび単語帳も確認できます。
+
+<img width="768" height="459" alt="image" src="https://github.com/user-attachments/assets/92ec26f8-4660-41be-9d25-c8e7e78abe7a" />
+<img width="768" height="459" alt="image" src="https://github.com/user-attachments/assets/d6111294-4eff-456d-98ca-c3adf9c1399a" />
+
+- テストでは問題がカード形式で表示され、カードをクリックすると裏返り、正解が表示されます。
+- 正解した問題は **「正解」** ボタンを、間違えた問題は **「不正解」** ボタンをクリックし、すべて正解するまでテストを進めます。
+- タイマーが設定されている場合、指定された時間が経過すると自動的に不正解として処理されます。
+
+<img width="768" height="860" alt="image" src="https://github.com/user-attachments/assets/d2bd55f9-a4de-435e-bee8-f7ed657ea2bd" />
+
+- テスト中でも単語の編集・削除が可能です。
+- 単語の登録内容に誤りがある場合や、説明・例文を追加したい場合に便利です。
+
+<img width="350" height="110" alt="image" src="https://github.com/user-attachments/assets/1cca1e22-5b2f-4e3a-b611-0bea54a60e18" />
+
+- 画面上部の **テスト終了** ボタンから、テストを中断できます。
+- いつでも再度テストを実行できます。
